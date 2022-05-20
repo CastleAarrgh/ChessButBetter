@@ -1,6 +1,6 @@
 class Board{
-  final int BLACK = -1;
-  final int WHITE = 1;
+  final static int BLACK = -1;
+  final static int WHITE = 1;
   private Piece[][] board;
   private int[] passantSquare;
   private boolean[] castlingRights;
