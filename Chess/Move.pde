@@ -5,4 +5,10 @@ class Move{
    this.start = start;
    this.target = target;
  }
+ public int[] getStart(){
+   return start;
+ }
+ public int[] getTarget(){
+   return target;
+ }
 }

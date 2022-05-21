@@ -4,7 +4,12 @@ abstract class Piece{
   int col;
   //generate all possible moves for a piece
   abstract Move[] generateMoves();
+  abstract PImage getPieceImage();
   public Move[] generateSlidingMoves(int[][]  offsets){
     return new Move[0];
   }
+  public int getColor(){
+    return col;
+  }
+  
 }
