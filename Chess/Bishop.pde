@@ -3,6 +3,10 @@ public class Bishop extends Piece{
     return new Move[0];
   }
   public PImage getPieceImage(){
-    return new PImage();
+   if(col == WHITE){
+    return loadImage("Pieces/WhiteBishop");
+   } else{
+    return loadImage("Pieces/BlackBishop");
+   }
   }
 }
