@@ -6,6 +6,8 @@ class Board{
   private boolean[] castlingRights;
   private int activePlayer;
   private int numMovesPlayed;
+  final private int size = 800;
+  final private int squareSize = size / 8;
   /*
   Board constructor takes in no positions and generates 
   the default starting chess position.
