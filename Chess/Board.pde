@@ -21,6 +21,10 @@ class Board{
   }
   // display the board background and the pieces
   public void displayBoard(){
+    color Black  = color(118,150,86);
+    color White = color(238,238,210);
+    
+    
   }
   //display background that the pieces will go onto.
   public void displayBackground(){
