@@ -3,6 +3,10 @@ class Queen extends Piece{
     return new Move[0];
   }
   public PImage getPieceImage(){
-    return new PImage();
+   if(col == WHITE){
+    return loadImage("Pieces/WhiteQueen");
+   } else{
+    return loadImage("Pieces/BlackQueen");
+   }
   }
 }

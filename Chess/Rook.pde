@@ -3,6 +3,10 @@ class Rook extends Piece{
     return new Move[0];
   }
   public PImage getPieceImage(){
-    return new PImage();
+   if(col == WHITE){
+    return loadImage("Pieces/WhiteRook");
+   } else{
+    return loadImage("Pieces/BlackRook");
+   }
   }
 }
