@@ -19,5 +19,8 @@ abstract class Piece{
   public int getType(){
     return type;
   }
+  public String toString(){
+    return "" + type;
+  }
   
 }
