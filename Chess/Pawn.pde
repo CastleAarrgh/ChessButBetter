@@ -3,6 +3,10 @@ class Pawn extends Piece{
     return new Move[0];
   }
   public PImage getPieceImage(){
-    return new PImage();
+   if(col == WHITE){
+    return loadImage("Pieces/WhitePawn");
+   } else{
+    return loadImage("Pieces/BlackPawn");
+   }
   }
 }
