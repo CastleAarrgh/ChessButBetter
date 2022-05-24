@@ -1,10 +1,12 @@
 abstract class Piece{
   final public static int BLACK = -1;
   final public static int WHITE = 1;
-  int col;
+  private char type;
+  private int col;
   //generate all possible moves for a piece
-  public Piece(int col){
+  public Piece(int col, char type){
     this.col = col;
+    this.type = type;
   }
   abstract Move[] generateMoves();
   abstract PImage getPieceImage();
@@ -13,6 +15,9 @@ abstract class Piece{
   }
   public int getColor(){
     return col;
+  }
+  public int getType(){
+    return type;
   }
   
 }

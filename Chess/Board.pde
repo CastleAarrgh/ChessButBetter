@@ -94,4 +94,14 @@ class Board{
       }
     }
   }
+  public String toString(){
+    String out = "";
+    for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        out += board[i][j] + " ";
+      }
+      out += "\n";
+    }
+    return out;
+  }
 }
