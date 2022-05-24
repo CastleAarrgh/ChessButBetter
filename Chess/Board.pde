@@ -6,7 +6,8 @@ class Board{
   private int[] passantSquare;
   private boolean[] castlingRights;
   private int activePlayer;
-  private int numMovesPlayed;
+  private int halfmoveclock;
+  private int fullmoveclock;
   final private int size = 800;
   final private int squareSize = size / 8;
   /*
@@ -53,11 +54,14 @@ class Board{
   }
   private void importFEN(String fen){
     board = new Piece[8][8];
+    String[] fenString = fen.split(" ");
+    String boardString = fenString[0];
     int row = 0;
     int col = 0;
     int colour;
-    for(int i = 0; i < fen.length(); i++){
-      char c = fen.charAt(i);
+    System.out.println(boardString);
+    for(int i = 0; i < boardString.length(); i++){
+      char c = boardString.charAt(i);
       if(Character.isUpperCase(c)){
         colour = WHITE;
       } else{
@@ -66,11 +70,11 @@ class Board{
       c = Character.toLowerCase(c);
       Piece piece;
       if(c == '/'){
-        row = 0;
-        col++;
+        col = 0;
+        row++;
       }
       else if(Character.isDigit(c)){
-        row += Character.getNumericValue(c);
+        col += Character.getNumericValue(c);
       }
       else{
         switch(c){
@@ -86,11 +90,14 @@ class Board{
           case 'q':
             piece = new Queen(colour);
             break;
+          case 'r':
+            piece = new Rook(colour);
           default:
             piece = new King(colour);
             break;
-        }
-        board[row][col] = piece;
+        }      
+          board[row][col] = piece;
+          col++; 
       }
     }
   }
