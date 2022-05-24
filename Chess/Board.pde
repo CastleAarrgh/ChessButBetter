@@ -63,11 +63,34 @@ class Board{
       } else{
         colour = BLACK;
       }
-      if(c == 'p'){
-        board[row][col] = new Pawn(colour);
+      c = Character.toLowerCase(c);
+      Piece piece;
+      if(c == '/'){
+        row = 0;
+        col++;
       }
-      if(c == 'r'){
-        board[row][col] = new Rook(colour);
+      else if(Character.isDigit(c)){
+        row += Character.getNumericValue(c);
+      }
+      else{
+        switch(c){
+          case 'p':
+            piece = new Pawn(colour);
+            break;
+          case 'n':
+            piece = new Knight(colour);
+            break;
+          case 'b':
+            piece = new Bishop(colour);
+            break;
+          case 'q':
+            piece = new Queen(colour);
+            break;
+          default:
+            piece = new King(colour);
+            break;
+        }
+        board[row][col] = piece;
       }
     }
   }
