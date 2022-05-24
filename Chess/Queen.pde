@@ -1,4 +1,7 @@
 class Queen extends Piece{
+  public Queen(int col){
+    super(col);
+  }
   public Move[] generateMoves(){
     return new Move[0];
   }

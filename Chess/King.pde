@@ -1,4 +1,7 @@
 class King extends Piece{
+  public King(int col){
+    super(col);
+  }
   public Move[] generateMoves(){
     return new Move[0];
   }

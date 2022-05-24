@@ -3,6 +3,9 @@ abstract class Piece{
   final public static int WHITE = 1;
   int col;
   //generate all possible moves for a piece
+  public Piece(int col){
+    this.col = col;
+  }
   abstract Move[] generateMoves();
   abstract PImage getPieceImage();
   public Move[] generateSlidingMoves(int[][]  offsets){

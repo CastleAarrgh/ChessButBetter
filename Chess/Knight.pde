@@ -1,4 +1,7 @@
 class Knight extends Piece{
+  public Knight(int col){
+    super(col);
+  }
   public Move[] generateMoves(){
     return new Move[0];
   }

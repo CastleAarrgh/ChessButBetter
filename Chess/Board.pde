@@ -1,3 +1,4 @@
+import java.util.*;
 class Board{
   final static int BLACK = -1;
   final static int WHITE = 1;
@@ -13,11 +14,12 @@ class Board{
   the default starting chess position.
   */
   Board(){
-    
+    importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
   /* Generate Board based on provided FEN starting position
   */
   Board(String startingFen){
+    importFEN(startingFen);
   }
   // display the board background and the pieces
   public void displayBoard(){
@@ -50,5 +52,23 @@ class Board{
     return true;
   }
   private void importFEN(String fen){
+    board = new Piece[8][8];
+    int row = 0;
+    int col = 0;
+    int colour;
+    for(int i = 0; i < fen.length(); i++){
+      char c = fen.charAt(i);
+      if(Character.isUpperCase(c)){
+        colour = WHITE;
+      } else{
+        colour = BLACK;
+      }
+      if(c == 'p'){
+        board[row][col] = new Pawn(colour);
+      }
+      if(c == 'r'){
+        board[row][col] = new Rook(colour);
+      }
+    }
   }
 }

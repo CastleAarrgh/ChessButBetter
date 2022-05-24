@@ -1,4 +1,7 @@
 public class Bishop extends Piece{
+  public Bishop(int col){
+    super(col);
+  }
   public Move[] generateMoves(){
     return new Move[0];
   }

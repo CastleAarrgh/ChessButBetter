@@ -1,4 +1,7 @@
 class Pawn extends Piece{
+  public Pawn(int col){
+    super(col);
+  }
   public Move[] generateMoves(){
     return new Move[0];
   }

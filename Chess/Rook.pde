@@ -1,4 +1,7 @@
 class Rook extends Piece{
+  public Rook(int col){
+    super(col);
+  }
   public Move[] generateMoves(){
     return new Move[0];
   }
