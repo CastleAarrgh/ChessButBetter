@@ -21,11 +21,23 @@ class Board{
   }
   // display the board background and the pieces
   public void displayBoard(){
+final int BLOCKX = width / 8;
+final int BLOCKY = height / 8;
     color Black  = color(118,150,86);
     color White = color(238,238,210);
-    
-    
+  
+  for (int i = 0; i < 8; i ++) {
+    for (int j = 0; j < 8; j ++) {
+      if ((i + j + 1) % 2 == 0) {
+        fill(White); // white
+      } else {
+        fill(Black); // black
+      }
+      rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);     
+    } 
   }
+  }
+  
   //display background that the pieces will go onto.
   public void displayBackground(){
   }
