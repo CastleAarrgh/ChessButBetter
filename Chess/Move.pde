@@ -1,3 +1,4 @@
+import java.util.*;
 class Move{
  public int[] start;
  public int[] target;
@@ -10,5 +11,8 @@ class Move{
  }
  public int[] getTarget(){
    return target;
+ }
+ public boolean equals(Move other){
+   return getStart() == other.getStart() && getTarget() == other.getTarget();
  }
 }

@@ -4,6 +4,7 @@ class Board{
   final static int WHITE = 1;
   private Piece[][] board;
   private int[] passantSquare;
+  //castlingRights[0]: White Kingside, castlingRights[1]: White Queenside, [2]: Black Kingside, [3]: Black Queenside
   private boolean[] castlingRights;
   private int activePlayer;
   private int halfmoveclock;
@@ -50,7 +51,19 @@ class Board{
     return new Move[0];
   }
   private boolean isValid(Move move){
-    return true;
+    Move[] possibleMoves = generateMoves();
+    for(Move possibleMove: possibleMoves){
+      if(move.equals(possibleMove)){
+        return true;
+      }
+    }
+    return false;
+  }
+  public int[] notationToPos(String str){
+    char firstLetter = str.charAt(0);
+    int firstNum = firstLetter - 'a';
+    int secondNum = Integer.parseInt("" + str.charAt(1));
+    return new int[]{firstNum, secondNum};
   }
   private void importFEN(String fen){
     board = new Piece[8][8];
@@ -59,7 +72,6 @@ class Board{
     int row = 0;
     int col = 0;
     int colour;
-    System.out.println(boardString);
     for(int i = 0; i < boardString.length(); i++){
       char c = boardString.charAt(i);
       if(Character.isUpperCase(c)){
@@ -100,6 +112,18 @@ class Board{
           col++; 
       }
     }
+    activePlayer = fenString[1] == "w" ? WHITE: BLACK;
+    castlingRights = new boolean[4];
+    String castleStr = fenString[2];
+    castlingRights[0] = castleStr.indexOf("K") != -1;
+    castlingRights[1] = castleStr.indexOf("Q") != -1;
+    castlingRights[2] = castleStr.indexOf("k") != -1;
+    castlingRights[3] = castleStr.indexOf("q") != -1;
+    if(!fenString[3].equals("-")){
+      passantSquare = notationToPos(fenString[3]);
+    }
+    halfmoveclock = Integer.parseInt(fenString[4]);
+    fullmoveclock = Integer.parseInt(fenString[5]);
   }
   public String toString(){
     String out = "";
