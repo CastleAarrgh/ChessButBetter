@@ -52,14 +52,23 @@ class Board{
   private boolean isValid(Move move){
     return true;
   }
+  public int[] notationToPos(String str){
+    char firstLetter = str.charAt(0);
+    int firstNum = firstLetter - 'a';
+    int secondNum = Integer.parseInt("" + str.charAt(1));
+    return new int[]{firstNum, secondNum};
+  }
   private void importFEN(String fen){
     board = new Piece[8][8];
     String[] fenString = fen.split(" ");
     String boardString = fenString[0];
+    activePlayer = fenString[1] == "w" ? WHITE: BLACK;
+    if(!fenString[3].equals("-")){
+      passantSquare = notationToPos(fenString[3]);
+    }
     int row = 0;
     int col = 0;
     int colour;
-    System.out.println(boardString);
     for(int i = 0; i < boardString.length(); i++){
       char c = boardString.charAt(i);
       if(Character.isUpperCase(c)){
