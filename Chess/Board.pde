@@ -38,7 +38,7 @@ class Board {
           fill(Black); // black
         }
         rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);  
-        if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8);
+        if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8, squareSize, squareSize);
       }
     }
   }
