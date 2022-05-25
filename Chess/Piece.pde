@@ -8,8 +8,8 @@ abstract class Piece{
     this.col = col;
     this.type = type;
   }
-  abstract Move[] generateMoves();
-  abstract PImage getPieceImage();
+  abstract public Move[] generateMoves(int[] square);
+  abstract public PImage getPieceImage();
   public Move[] generateSlidingMoves(int[][]  offsets){
     return new Move[0];
   }
