@@ -10,4 +10,5 @@ It’s Chess, the 1500-year-old open  pvp strategy game, but with additional var
   ### Sam
     5/21 - created README Skeleton and finished the project skeleton I started on Friday.
     5/23 - added new methods to Piece classes and did some work on importFEN and the Board class in general
+    5/24 - finished importFEN, added various structural methods/fields to Board class
   ### Jason
