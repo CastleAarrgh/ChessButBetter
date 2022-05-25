@@ -62,10 +62,6 @@ class Board{
     board = new Piece[8][8];
     String[] fenString = fen.split(" ");
     String boardString = fenString[0];
-    activePlayer = fenString[1] == "w" ? WHITE: BLACK;
-    if(!fenString[3].equals("-")){
-      passantSquare = notationToPos(fenString[3]);
-    }
     int row = 0;
     int col = 0;
     int colour;
@@ -109,6 +105,18 @@ class Board{
           col++; 
       }
     }
+    activePlayer = fenString[1] == "w" ? WHITE: BLACK;
+    castlingRights = new boolean[4];
+    String castleStr = fenString[2];
+    castlingRights[0] = castleStr.indexOf("K") != -1;
+    castlingRights[1] = castleStr.indexOf("Q") != -1;
+    castlingRights[2] = castleStr.indexOf("k") != -1;
+    castlingRights[3] = castleStr.indexOf("q") != -1;
+    if(!fenString[3].equals("-")){
+      passantSquare = notationToPos(fenString[3]);
+    }
+    halfmoveclock = Integer.parseInt(fenString[4]);
+    fullmoveclock = Integer.parseInt(fenString[5]);
   }
   public String toString(){
     String out = "";
