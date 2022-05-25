@@ -111,10 +111,11 @@ class Board {
         case 'q':
           piece = new Queen(colour);
           break;
-        case 'r':
-          piece = new Rook(colour);
-        default:
+        case 'k':
           piece = new King(colour);
+          break;
+        default:
+          piece = new Rook(colour);
           break;
         }      
         board[row][col] = piece;
