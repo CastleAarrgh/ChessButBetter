@@ -4,6 +4,7 @@ class Board{
   final static int WHITE = 1;
   private Piece[][] board;
   private int[] passantSquare;
+  //castlingRights[0]: White Kingside, castlingRights[1]: White Queenside, [2]: Black Kingside, [3]: Black Queenside
   private boolean[] castlingRights;
   private int activePlayer;
   private int halfmoveclock;
@@ -50,7 +51,13 @@ class Board{
     return new Move[0];
   }
   private boolean isValid(Move move){
-    return true;
+    Move[] possibleMoves = generateMoves();
+    for(Move possibleMove: possibleMoves){
+      if(move.equals(possibleMove)){
+        return true;
+      }
+    }
+    return false;
   }
   public int[] notationToPos(String str){
     char firstLetter = str.charAt(0);
