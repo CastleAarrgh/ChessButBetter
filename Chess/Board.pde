@@ -39,15 +39,10 @@ final int BLOCKY = height / 8;
       }
       rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);     
     } 
+            if (board[j][i] != null) image(board[j][i], i*width/8, j*height/8);
+}
   }
-  }
-  
-  //display background that the pieces will go onto.
-  public void displayBackground(){
-  }
-  //display all picees from the board array
-  public void displayPieces(){
-  }
+
   //board accessor method
   public Piece[][] getBoard(){
     return board;
