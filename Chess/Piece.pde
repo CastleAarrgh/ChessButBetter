@@ -28,6 +28,7 @@ abstract class Piece{
         } else{
           break;
         }
+        target = {target[0] + offset[0], target[1] + offset[1]};
       }
     }
     return moves;
