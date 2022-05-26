@@ -58,6 +58,13 @@ class Board {
   //display game over screen
   private void GameOver() {
   }
+  private void makeMove(Move move){
+    int[] target = move.getTarget();
+    int[] start = move.getStart();
+    Piece piece = board[start[0]][start[1]];
+    board[target[0]][target[1]] = piece;
+    board[start[0]][start[1]] = null;
+  }
   private ArrayList<Move> generateMoves() {
     ArrayList<Move> moves = new ArrayList<Move>();
     return moves;
