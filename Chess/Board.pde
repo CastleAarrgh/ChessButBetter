@@ -11,6 +11,8 @@ class Board {
   private int fullmoveclock;
   final private int size = 800;
   final private int squareSize = size / 8;
+  private boolean firstclick = true;
+  private Piece heldpiece;
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
@@ -25,8 +27,6 @@ class Board {
   }
   // display the board background and the pieces
   public void displayBoard() {
-    final int BLOCKX = width / 8;
-    final int BLOCKY = height / 8;
     color Black  = color(118, 150, 86);
     color White = color(238, 238, 210);
 
@@ -37,7 +37,7 @@ class Board {
         } else {
           fill(Black); // black
         }
-        rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);  
+        rect(i * squareSize, j * squareSize, (i + 1) * squareSize, (j + 1) * squareSize);  
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8, squareSize, squareSize);
       }
     }
@@ -83,7 +83,7 @@ class Board {
     return moves;
   }
   private boolean isValid(Move move) {
-    ArrayList<Move> possibleMoves = generateMoves();
+    ArrayList<Move> possibleMoves = generateAllMoves();
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
@@ -169,5 +169,18 @@ class Board {
       out += "\n";
     }
     return out;
+  }
+  public void mouseClicked(){
+    print("hello");
+    Boolean ispiece = false;
+    if (firstclick){
+          if (board[mouseX/squareSize][mouseY/squareSize] != null){
+                  firstclick = false;
+    }
+  }
+else{
+  board[mouseX/squareSize][mouseY/squareSize] = heldpiece;
+}
+
   }
 }
