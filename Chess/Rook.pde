@@ -2,8 +2,9 @@ class Rook extends Piece{
   public Rook(int col){
     super(col, 'r');
   }
-  public ArrayList<Move> generateMoves(Piece[][] board,int[] square){
-    ArrayList<Move> moves = new ArrayList<Move>();
+  public ArrayList<Move> generateMoves(Piece[][] board,int[] start){
+    int[][] rookOffsets = {{1,0},{-1,0},{0,1},{0,-1}};
+    ArrayList<Move> moves = generateSlidingMoves(board, start, rookOffsets);
     return moves;
   }
   public PImage getPieceImage(){

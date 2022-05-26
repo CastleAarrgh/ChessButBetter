@@ -2,8 +2,9 @@ class Queen extends Piece{
   public Queen(int col){
     super(col, 'q');
   }
-  public ArrayList<Move> generateMoves(Piece[][] board,int[] square){
-    ArrayList<Move> moves = new ArrayList<Move>();
+  public ArrayList<Move> generateMoves(Piece[][] board,int[] start){
+    int[][] queenMoves = {{1,1},{1,0},{1,-1},{0,1},{0,-1},{-1,1},{-1,0},{-1,-1}};
+    ArrayList<Move> moves = generateSlidingMoves(board, start, queenMoves);
     return moves;
   }
   public PImage getPieceImage(){
