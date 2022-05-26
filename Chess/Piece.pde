@@ -8,16 +8,27 @@ abstract class Piece{
     this.col = col;
     this.type = type;
   }
-  abstract public Move[] generateMoves(int[] square);
+  abstract public ArrayList<Move> generateMoves(Piece[][] board, int[] square);
   abstract public PImage getPieceImage();
   public boolean inBounds(int[] square){
     return square[0] >= 0 && square[0] <= 7 && square[1] >= 0 && square[1] <= 7;
   }
-  public ArrayList<Move> generateSlidingMoves(int[] square, int[][]  offsets){
+  public ArrayList<Move> generateSlidingMoves(Piece[][] board, int[] start, int[][]  offsets){
     ArrayList<Move> moves = new ArrayList<Move>();
     for(int[] offset: offsets){
-      int[] target = {square[0] + offset[0], square[1] + offset[1]};
-      while(
+      int[] target = {start[0] + offset[0], start[1] + offset[1]};
+      int col = board[target[0]][target[1]].getColor();
+      while(inBounds(target)){
+        Piece piece = board[target[0]][target[1]]
+        if(piece == null){
+          moves.add(new Move(start, target));
+        } else if(piece.getColor() != col){
+          moves.add(new Move(start, target));
+          break;
+        } else{
+          break;
+        }
+      }
     }
     return moves;
   }
