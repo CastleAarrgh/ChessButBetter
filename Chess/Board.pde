@@ -58,7 +58,7 @@ class Board {
   //display game over screen
   private void GameOver() {
   }
-  private Move[] generateMoves() {
+  private ArrayList<Move> generateMoves() {
     return new Move[0];
   }
   private boolean isValid(Move move) {

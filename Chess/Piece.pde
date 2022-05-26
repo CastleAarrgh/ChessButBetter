@@ -10,8 +10,16 @@ abstract class Piece{
   }
   abstract public Move[] generateMoves(int[] square);
   abstract public PImage getPieceImage();
-  public Move[] generateSlidingMoves(int[][]  offsets){
-    return new Move[0];
+  public boolean inBounds(int[] square){
+    return square[0] >= 0 && square[0] <= 7 && square[1] >= 0 && square[1] <= 7;
+  }
+  public ArrayList<Move> generateSlidingMoves(int[] square, int[][]  offsets){
+    ArrayList<Move> moves = new ArrayList<Move>();
+    for(int[] offset: offsets){
+      int[] target = {square[0] + offset[0], square[1] + offset[1]};
+      while(
+    }
+    return moves;
   }
   public int getColor(){
     return col;
