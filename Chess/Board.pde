@@ -65,8 +65,21 @@ class Board {
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
   }
-  private ArrayList<Move> generateMoves() {
+  private ArrayList<Move> generateMoves(int[] start) {
+    ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(board, start);
+    return moves;
+  }
+  private ArrayList<Move> generateAllMoves() {
     ArrayList<Move> moves = new ArrayList<Move>();
+    for(int r = 0; r < 8; r++){
+      for(int c = 0; c < 8; c++){
+        int[] square = {r,c};
+        Piece piece = board[r][c];
+        if(piece != null){
+          moves.addAll(piece.generateMoves(board, square));
+        }
+      }
+    }
     return moves;
   }
   private boolean isValid(Move move) {
