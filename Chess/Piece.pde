@@ -19,7 +19,7 @@ abstract class Piece{
       int[] target = {start[0] + offset[0], start[1] + offset[1]};
       int col = board[target[0]][target[1]].getColor();
       while(inBounds(target)){
-        Piece piece = board[target[0]][target[1]]
+        Piece piece = board[target[0]][target[1]];
         if(piece == null){
           moves.add(new Move(start, target));
         } else if(piece.getColor() != col){
@@ -28,7 +28,8 @@ abstract class Piece{
         } else{
           break;
         }
-        target = {target[0] + offset[0], target[1] + offset[1]};
+        target[0] += offset[0];
+        target[1] += offset[1];
       }
     }
     return moves;

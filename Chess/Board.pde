@@ -59,10 +59,11 @@ class Board {
   private void GameOver() {
   }
   private ArrayList<Move> generateMoves() {
-    return new Move[0];
+    ArrayList<Move> moves = new ArrayList<Move>();
+    return moves;
   }
   private boolean isValid(Move move) {
-    Move[] possibleMoves = generateMoves();
+    ArrayList<Move> possibleMoves = generateMoves();
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
@@ -139,7 +140,11 @@ class Board {
     String out = "";
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        out += board[i][j] + " ";
+        if(board[i][j] != null){
+          out += board[i][j] + " ";
+        } else{
+          out += "- ";
+        }
       }
       out += "\n";
     }
