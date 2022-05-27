@@ -11,7 +11,7 @@ class King extends Piece{
       int[] target = {start[0] + offset[0], start[1] + offset[1]};
       if(inBounds(target)){
         Piece piece = board[target[0]][target[1]];
-        if(piece != null || piece.getColor() != col){
+        if(piece != null && piece.getColor() != col){
           moves.add(new Move(start, target));
         }
       }
