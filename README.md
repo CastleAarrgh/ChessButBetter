@@ -3,6 +3,10 @@ Sam Lubelsky, Jason Xia
 
 It’s Chess, the 1500-year-old open  pvp strategy game, but with additional variants and features attached that make it objectively better and cooler. These will range from being fairly small changes that are easy to implement to larger overhauls of the game that will require a greater work investment, such as alternate game variations.
 
+Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actually Jason writing code because it is her windows account Jason is using. 
+
+
+
 ## Link To The Prototype: https://docs.google.com/document/d/1uOZb5EjacHRWJZKRKkogWzKWCsG52Fl7tPDo-tDyDxk/edit?usp=sharing
 ## How to Compile/Run:
 
@@ -16,4 +20,6 @@ It’s Chess, the 1500-year-old open  pvp strategy game, but with additional var
   ### Jason
     5/23 - figured out git branching, finished method displaying board background in board class
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
+    5/25 - started work on piece dragging, fixed git problems
+    5/27 - finished piece draggging mechanics, tested, resolved merge conflict
     
