@@ -32,17 +32,7 @@ class Pawn extends Piece{
       target = new int[]{square[0] + pawnOffset[0], square[1] + pawnOffset[1]};
       if(inBounds(target)){
         Piece piece = pieceOn(board, target);
-        println("Passant Square: ");
-        printArray(passantSquare);
-        println("Target: ");
-        printArray(target);
-        println(passantSquare != null);
-        if(passantSquare != null){
-          println(Arrays.equals(target, passantSquare));
-          println(piece != null);
-        }
         if((piece != null && piece.getColor() != col) || (passantSquare != null && Arrays.equals(target, passantSquare))){
-          println("passant found");
           moves.add(new Move(square, target));
         }
       }

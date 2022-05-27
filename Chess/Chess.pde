@@ -38,10 +38,13 @@ void mouseClicked() {
     if(mouseX > 20 && mouseX < 780 && mouseY > 240 && mouseY < 440) menu = CHESS;
   }
   if(menu == CHESS){
+    Piece[][] pieces = board.getBoard();
     if (board.firstClick) {
       board.row1 = mouseY/100;
       board.col1 = mouseX/100;
-      board.firstClick = false;
+      if(pieces[board.row1][board.col1] != null && pieces[board.row1][board.col1].getColor() == board.activePlayer){
+        board.firstClick = false;
+      }
     } else {
       board.row2 = mouseY/100;
       board.col2 = mouseX/100;

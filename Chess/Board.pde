@@ -63,7 +63,7 @@ class Board {
   private void GameOver() {
   }
   private void makeMove(Move move){
-    println(passantSquare);
+    println(move);
     if(isValid(move)){
       int[] target = move.getTarget();
       int[] start = move.getStart();
@@ -75,7 +75,11 @@ class Board {
       } else{
         passantSquare = null;
       }
-      if(piece.getType() == 'p' && Arrays.equals(target, passantSquare)){
+      println("passantSquare:");
+      printArray(passantSquare);
+      println("target:");
+      printArray(target);
+      if(piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)){
         board[start[0]][target[1]] = null;
       }
       activePlayer = -activePlayer;
