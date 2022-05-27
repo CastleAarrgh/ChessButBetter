@@ -121,7 +121,7 @@ class Board {
     int secondNum = Integer.parseInt("" + str.charAt(1));
     return new int[]{firstNum, secondNum};
   }
-  private void importFEN(String fen) {
+  public void importFEN(String fen) {
     board = new Piece[8][8];
     String[] fenString = fen.split(" ");
     String boardString = fenString[0];
