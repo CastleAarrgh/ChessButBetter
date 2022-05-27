@@ -68,6 +68,26 @@ class Board {
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
   }
+  public ArrayList<Move> removeChecks(ArrayList<Move> moves){
+    ArrayList<Move> newMoves = new ArrayList<Move>();
+    for(Move move: moves){
+      boolean isValid = true;
+      makeMove(move);
+      ArrayList<Move> possibleKingCaptures = generateAllMoves();
+      for(Move newMove: possibleKingCaptures){
+        int[] target = newMove.getTarget();
+        Piece piece = board[target[0]][target[1]];
+        if(piece.getType() == 'k'){
+          isValid = false;
+          break;
+        }
+      }
+      if(isValid){
+        newMoves.add(move);
+      }
+    }
+    return newMoves;
+  }
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     return moves;
