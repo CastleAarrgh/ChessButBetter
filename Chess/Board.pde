@@ -54,8 +54,8 @@ class Board {
     return "";
   }
   //-1: black wins, 1: white wins, 0: tie
-  public int isEnded() {
-    return 0;
+  public boolean isEnded() {
+    return generateAllMoves(activePlayer).size() == 0;
   }
   //display game over screen
   private void GameOver() {
@@ -68,11 +68,13 @@ class Board {
     board[start[0]][start[1]] = null;
   }
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
+    int[] start = moves.get(0).getStart();
+    int col = board[start[0]][start[1]].getColor();
     ArrayList<Move> newMoves = new ArrayList<Move>();
     for(Move move: moves){
       boolean isValid = true;
       makeMove(move);
-      ArrayList<Move> possibleKingCaptures = generateAllMoves();
+      ArrayList<Move> possibleKingCaptures = generateAllMoves(-col);
       for(Move newMove: possibleKingCaptures){
         int[] target = newMove.getTarget();
         Piece piece = board[target[0]][target[1]];
@@ -92,13 +94,13 @@ class Board {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     return moves;
   }
-  private ArrayList<Move> generateAllMoves() {
+  private ArrayList<Move> generateAllMoves(int col) {
     ArrayList<Move> moves = new ArrayList<Move>();
     for(int r = 0; r < 8; r++){
       for(int c = 0; c < 8; c++){
         int[] square = {r,c};
         Piece piece = board[r][c];
-        if(piece != null){
+        if(piece != null && piece.getColor() == col){
           moves.addAll(piece.generateMoves(this, square));
         }
       }
