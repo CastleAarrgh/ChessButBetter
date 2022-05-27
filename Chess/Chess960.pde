@@ -2,6 +2,7 @@ import java.util.*;
 public class Chess960 extends Board{
   Chess960(){
     String startingPos = makeStartingPosition();
+    println(startingPos);
     importFEN(startingPos);
   }
   Chess960(String startingFen){
