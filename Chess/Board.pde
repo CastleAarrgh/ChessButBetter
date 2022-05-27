@@ -198,4 +198,6 @@ class Board {
     }
     return out;
   }
+  public void castlingRights(){
+      }
 }
