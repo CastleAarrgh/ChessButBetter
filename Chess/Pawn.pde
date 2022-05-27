@@ -27,11 +27,24 @@ class Pawn extends Piece{
       }
     }
     //capture move and en-passant
-    int[][] pawnOffsets = new int[][]{{1, -col}, {-1, -col}};
+    int[][] pawnOffsets = new int[][]{{-col, 1}, {-col, -1}};
     for(int[] pawnOffset: pawnOffsets){
       target = new int[]{square[0] + pawnOffset[0], square[1] + pawnOffset[1]};
-      if(board[square[0]][square[1]].getColor() != col || (passantSquare != null && Arrays.equals(target, passantSquare))){
-        moves.add(new Move(square, target));
+      if(inBounds(target)){
+        Piece piece = pieceOn(board, target);
+        println("Passant Square: ");
+        printArray(passantSquare);
+        println("Target: ");
+        printArray(target);
+        println(passantSquare != null);
+        if(passantSquare != null){
+          println(Arrays.equals(target, passantSquare));
+          println(piece != null);
+        }
+        if((piece != null && piece.getColor() != col) || (passantSquare != null && Arrays.equals(target, passantSquare))){
+          println("passant found");
+          moves.add(new Move(square, target));
+        }
       }
     }
     

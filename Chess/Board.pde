@@ -63,12 +63,21 @@ class Board {
   private void GameOver() {
   }
   private void makeMove(Move move){
+    println(passantSquare);
     if(isValid(move)){
       int[] target = move.getTarget();
       int[] start = move.getStart();
       Piece piece = board[start[0]][start[1]];
       board[target[0]][target[1]] = piece;
       board[start[0]][start[1]] = null;
+      if(piece.getType() == 'p' && abs(target[0] - start[0]) == 2){
+        passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
+      } else{
+        passantSquare = null;
+      }
+      if(piece.getType() == 'p' && Arrays.equals(target, passantSquare)){
+        board[start[0]][target[1]] = null;
+      }
       activePlayer = -activePlayer;
     } else{
       print("move: " + move + " is invalid!");
@@ -119,7 +128,7 @@ class Board {
     return col;
   }
   private boolean isValid(Move move) {
-    println(activePlayer);
+    //println(activePlayer);
     ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
     println(possibleMoves);
     for (Move possibleMove : possibleMoves) {
