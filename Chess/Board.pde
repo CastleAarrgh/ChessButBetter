@@ -1,5 +1,7 @@
 import java.util.*;
-class Board {
+
+public class Board {
+  
   final static int BLACK = -1;
   final static int WHITE = 1;
   private Piece[][] board;
@@ -14,7 +16,6 @@ class Board {
   private boolean firstClick;
   int row1, col1, row2, col2;
 
-public class Board{
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
@@ -22,11 +23,13 @@ public class Board{
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
+  
   /* Generate Board based on provided FEN starting position
    */
   Board(String startingFen) {
     importFEN(startingFen);
   }
+  
   // display the board background and the pieces
   public void displayBoard() {
     color Black  = color(118, 150, 86);
@@ -49,20 +52,25 @@ public class Board{
   public Piece[][] getBoard() {
     return board;
   }
+  
   public int[] getPassant(){
     return passantSquare;
   }
+  
   //export board state as fen
   public String exportFen() {
     return "";
   }
+  
   //-1: black wins, 1: white wins, 0: tie
   public int isEnded() {
     return 0;
   }
+  
   //display game over screen
   private void GameOver() {
   }
+  
   private void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
@@ -70,10 +78,12 @@ public class Board{
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
   }
+  
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     return moves;
   }
+  
   private ArrayList<Move> generateAllMoves() {
     ArrayList<Move> moves = new ArrayList<Move>();
     for (int r = 0; r < 8; r++) {
@@ -87,6 +97,7 @@ public class Board{
     }
     return moves;
   }
+  
   private boolean isValid(Move move) {
     ArrayList<Move> possibleMoves = generateAllMoves();
     for (Move possibleMove : possibleMoves) {
@@ -96,12 +107,14 @@ public class Board{
     }
     return false;
   }
+  
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
     int firstNum = firstLetter - 'a';
     int secondNum = Integer.parseInt("" + str.charAt(1));
     return new int[]{firstNum, secondNum};
   }
+  
   private void importFEN(String fen) {
     board = new Piece[8][8];
     String[] fenString = fen.split(" ");
@@ -148,6 +161,7 @@ public class Board{
         col++;
       }
     }
+    
     activePlayer = fenString[1] == "w" ? WHITE: BLACK;
     castlingRights = new boolean[4];
     String castleStr = fenString[2];
@@ -158,9 +172,11 @@ public class Board{
     if (!fenString[3].equals("-")) {
       passantSquare = notationToPos(fenString[3]);
     }
+    
     halfmoveclock = Integer.parseInt(fenString[4]);
     fullmoveclock = Integer.parseInt(fenString[5]);
   }
+  
   public String toString() {
     String out = "";
     for (int i = 0; i < 8; i++) {
@@ -175,6 +191,7 @@ public class Board{
     }
     return out;
   }
+  
   void mouseReleased() {
     if (firstClick) {
       row1 = mouseY/100;
@@ -190,4 +207,4 @@ public class Board{
       }
     }
   }
-}}
+}
