@@ -11,8 +11,10 @@ class Board {
   private int fullmoveclock;
   final private int size = 800;
   final private int squareSize = size / 8;
-  private boolean firstclick = true;
-  private Piece heldpiece;
+  private boolean firstClick;
+  int row1, col1, row2, col2;
+
+public class Board{
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
@@ -58,7 +60,7 @@ class Board {
   //display game over screen
   private void GameOver() {
   }
-  private void makeMove(Move move){
+  private void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
@@ -71,11 +73,11 @@ class Board {
   }
   private ArrayList<Move> generateAllMoves() {
     ArrayList<Move> moves = new ArrayList<Move>();
-    for(int r = 0; r < 8; r++){
-      for(int c = 0; c < 8; c++){
-        int[] square = {r,c};
+    for (int r = 0; r < 8; r++) {
+      for (int c = 0; c < 8; c++) {
+        int[] square = {r, c};
         Piece piece = board[r][c];
-        if(piece != null){
+        if (piece != null) {
           moves.addAll(piece.generateMoves(board, square));
         }
       }
@@ -160,9 +162,9 @@ class Board {
     String out = "";
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        if(board[i][j] != null){
+        if (board[i][j] != null) {
           out += board[i][j] + " ";
-        } else{
+        } else {
           out += "- ";
         }
       }
@@ -171,20 +173,18 @@ class Board {
     return out;
   }
   void mouseReleased() {
-  if (firstClick) {
-    row1 = mouseY/100;
-    col1 = mouseX/100;
-    firstClick = false;
-  } else {
-    row2 = mouseY/100;
-    col2 = mouseX/100;
-    if (!(row2 == row1 && col2 == col1)) {
-      grid[row2][col2] = grid[row1][col1];
-      grid[row1][col1] = ' ';
-      firstClick = true;
+    if (firstClick) {
+      row1 = mouseY/100;
+      col1 = mouseX/100;
+      firstClick = false;
+    } else {
+      row2 = mouseY/100;
+      col2 = mouseX/100;
+      if (!(row2 == row1 && col2 == col1)) {
+        board[row2][col2] = board[row1][col1];
+        board[row1][col1] = null;
+        firstClick = true;
+      }
     }
   }
-
-
-  }
-}
+}}
