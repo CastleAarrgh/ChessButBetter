@@ -170,17 +170,18 @@ class Board {
     }
     return out;
   }
-  public void mouseClicked(){
-    print("hello");
-    Boolean ispiece = false;
-    if (firstclick){
-          if (board[mouseX/squareSize][mouseY/squareSize] != null){
-                  firstclick = false;
+  void mouseReleased() {
+  if (firstClick) {
+    row1 = mouseY/100;
+    col1 = mouseX/100;
+    firstClick = false;
+  } else {
+    row2 = mouseY/100;
+    col2 = mouseX/100;
+    if (!(row2 == row1 && col2 == col1)) {
+      grid[row2][col2] = grid[row1][col1];
+      grid[row1][col1] = ' ';
+      firstClick = true;
     }
-  }
-else{
-  board[mouseX/squareSize][mouseY/squareSize] = heldpiece;
-}
-
   }
 }
