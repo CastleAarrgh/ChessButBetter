@@ -37,7 +37,7 @@ abstract class Piece{
   public int getColor(){
     return col;
   }
-  public int getType(){
+  public char getType(){
     return type;
   }
   public String toString(){

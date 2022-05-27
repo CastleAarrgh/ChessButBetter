@@ -5,6 +5,9 @@ void setup(){
  board = new Board();
   System.out.println(board);
     board.displayBoard();
+ // Board board = new Chess960();
+  board.displayBoard();
+  size(800, 800);
 }
 void draw() {
     board.displayBoard();
