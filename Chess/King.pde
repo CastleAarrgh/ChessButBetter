@@ -2,7 +2,8 @@ class King extends Piece{
   public King(int col){
     super(col, 'k');
   }
-  public ArrayList<Move> generateMoves(Piece[][] board,int[] square){
+  public ArrayList<Move> generateMoves(Board BOARD,int[] square){
+    Piece[][] board = BOARD.getBoard();
     ArrayList<Move> moves = new ArrayList<Move>();
     return moves;
   }

@@ -2,7 +2,8 @@ class Queen extends Piece{
   public Queen(int col){
     super(col, 'q');
   }
-  public ArrayList<Move> generateMoves(Piece[][] board,int[] start){
+  public ArrayList<Move> generateMoves(Board BOARD,int[] start){
+    Piece[][] board = BOARD.getBoard();
     int[][] queenMoves = {{1,1},{1,0},{1,-1},{0,1},{0,-1},{-1,1},{-1,0},{-1,-1}};
     ArrayList<Move> moves = generateSlidingMoves(board, start, queenMoves);
     return moves;

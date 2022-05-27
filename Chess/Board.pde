@@ -47,6 +47,9 @@ class Board {
   public Piece[][] getBoard() {
     return board;
   }
+  public int[] getPassant(){
+    return passantSquare;
+  }
   //export board state as fen
   public String exportFen() {
     return "";
