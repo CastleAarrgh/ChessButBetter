@@ -82,6 +82,7 @@ class Board {
           break;
         }
       }
+      makeMove(new Move(move.getTarget(), move.getStart()));
       if(isValid){
         newMoves.add(move);
       }
