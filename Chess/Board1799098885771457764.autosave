@@ -79,7 +79,7 @@ class Board {
         int[] square = {r,c};
         Piece piece = board[r][c];
         if(piece != null){
-          moves.addAll(piece.generateMoves(board, square));
+          moves.addAll(piece.generateMoves(this, square));
         }
       }
     }
