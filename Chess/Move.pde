@@ -16,6 +16,6 @@ class Move{
    return Arrays.equals(getStart(), other.getStart()) && Arrays.equals(getTarget(), other.getTarget());
  }
  public String toString(){
-   return "  start: (" + start[0] + ", " + start[1] + ") target: (" + target[0] + ", " + target[1] + ").";
+   return "start: (" + start[0] + ", " + start[1] + ") target: (" + target[0] + ", " + target[1] + ").";
  }
 }

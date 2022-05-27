@@ -10,12 +10,20 @@ class Pawn extends Piece{
     int col = getColor();
     //single move
     int[] target = {square[0] - col, square[1]};
-    moves.add(new Move(square, target));
-    //double move
-    if((col == WHITE && square[1] == 6) || (col == BLACK && square[1] == 1)){
-      target = new int[]{square[0], square[1] - col * 2};
-      if(inBounds(target)){
+    if(inBounds(target)){
+      Piece piece = pieceOn(board, target);
+      if(piece == null){
         moves.add(new Move(square, target));
+      }
+    }
+    //double move
+    if((col == WHITE && square[0] == 6) || (col == BLACK && square[0] == 1)){
+      target = new int[]{square[0] - col * 2, square[1]};
+      if(inBounds(target)){
+        Piece piece = pieceOn(board, target);
+        if(piece == null){
+          moves.add(new Move(square, target));
+        }
       }
     }
     //capture move and en-passant

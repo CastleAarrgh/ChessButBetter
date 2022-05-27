@@ -69,8 +69,9 @@ class Board {
       Piece piece = board[start[0]][start[1]];
       board[target[0]][target[1]] = piece;
       board[start[0]][start[1]] = null;
+      activePlayer = -activePlayer;
     } else{
-      print("move is invalid!");
+      print("move: " + move + " is invalid!");
     }
   }
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){

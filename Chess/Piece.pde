@@ -34,6 +34,10 @@ abstract class Piece{
     }
     return moves;
   }
+  public Piece pieceOn(Piece[][] board, int[] square){
+    Piece piece = board[square[0]][square[1]];
+    return piece;
+  }
   public int getColor(){
     return col;
   }
