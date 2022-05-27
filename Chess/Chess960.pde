@@ -2,6 +2,7 @@ import java.util.*;
 public class Chess960 extends Board{
   Chess960(){
     String startingPos = makeStartingPosition();
+    println(startingPos);
     importFEN(startingPos);
   }
   Chess960(String startingFen){
@@ -12,14 +13,17 @@ public class Chess960 extends Board{
     boolean kingPlaced = false;
     boolean evenBishop = false;
     boolean oddBishop = false;
-    Piece[] pieces = {new Knight(BLACK), new Knight(BLACK), new Bishop(BLACK), new Bishop(BLACK), new Rook(BLACK), new Rook(BLACK), new King(BLACK), new Queen(BLACK)};
+    List<Piece> pieces = new ArrayList<Piece>(Arrays.asList(new Piece[]{new Knight(BLACK), new Knight(BLACK), new Bishop(BLACK), new Bishop(BLACK), new Rook(BLACK), new Rook(BLACK), new King(BLACK), new Queen(BLACK)}));
     String newRow = "";
-    for(int i = 0; i < 8; i++){
+    int i = 0;
+    while(pieces.size() > 0){
       boolean squareFound = false;
-      Piece piece = pieces[0];
+      Piece piece = pieces.get(0);
+      int pieceIndex = 0;
+      int j = 0;
       while(!squareFound){
-        int pieceIndex = int(random(0, pieces.length));
-        piece = pieces[pieceIndex];
+        pieceIndex = int(random(0, pieces.size()));
+        piece = pieces.get(pieceIndex);
         if(piece.getType() == 'k'){
           if(rookPlaced){
             squareFound = true;
@@ -42,11 +46,23 @@ public class Chess960 extends Board{
         }else{
           squareFound = true;
         }
+        j++;
+        if(j > 10){
+            i = 0;
+            newRow = "";
+            evenBishop = false;
+            oddBishop = false;
+            kingPlaced = false;
+            rookPlaced = false;
+            continue;
+        }
       }
+      pieces.remove(pieceIndex);
       newRow += piece.getType();
+      i++;
     }
     String whiteRow = newRow.toUpperCase();
-    String out = newRow + "/pppppppp/8/8/8/8/PPPPPPPP/" + whiteRow + "w KQkq - 0 1";
+    String out = newRow + "/pppppppp/8/8/8/8/PPPPPPPP/" + whiteRow + " w KQkq - 0 1";
     return out;
   }
   //random but:

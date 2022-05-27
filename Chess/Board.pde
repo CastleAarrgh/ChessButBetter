@@ -29,7 +29,6 @@ class Board {
     final int BLOCKY = height / 8;
     color Black  = color(118, 150, 86);
     color White = color(238, 238, 210);
-
     for (int i = 0; i < 8; i ++) {
       for (int j = 0; j < 8; j ++) {
         if ((i + j + 1) % 2 == 0) {
