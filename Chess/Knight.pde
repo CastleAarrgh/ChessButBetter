@@ -10,7 +10,8 @@ class Knight extends Piece{
     for(int[] offset: knightOffsets){
       int[] target = {start[0] + offset[0], start[1] + offset[1]};
       if(inBounds(target)){
-        if(board[start[0]][start[1]] == null || board[start[0]][start[1]].getColor() != col){
+        Piece piece = pieceOn(board, target);
+        if(piece == null || piece.getColor() != col){
           moves.add(new Move(start, target));
         }
       }
