@@ -8,7 +8,7 @@ abstract class Piece{
     this.col = col;
     this.type = type;
   }
-  abstract public ArrayList<Move> generateMoves(Board board, int[] square);
+  abstract public ArrayList<Move> generateMoves(Board board, int[] piece);
   abstract public PImage getPieceImage();
   public boolean inBounds(int[] square){
     return square[0] >= 0 && square[0] <= 7 && square[1] >= 0 && square[1] <= 7;
@@ -17,7 +17,7 @@ abstract class Piece{
     ArrayList<Move> moves = new ArrayList<Move>();
     for(int[] offset: offsets){
       int[] target = {start[0] + offset[0], start[1] + offset[1]};
-      int col = board[target[0]][target[1]].getColor();
+      int col = board[start[0]][start[1]].getColor();
       while(inBounds(target)){
         Piece piece = board[target[0]][target[1]];
         if(piece == null){

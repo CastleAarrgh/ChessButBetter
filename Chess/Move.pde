@@ -15,4 +15,7 @@ class Move{
  public boolean equals(Move other){
    return getStart() == other.getStart() && getTarget() == other.getTarget();
  }
+ public String toString(){
+   return "  start: (" + start[0] + ", " + start[1] + ") target: (" + target[0] + ", " + target[1] + ").";
+ }
 }

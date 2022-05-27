@@ -22,7 +22,7 @@ class Pawn extends Piece{
     int[][] pawnOffsets = new int[][]{{1, -col}, {-1, -col}};
     for(int[] pawnOffset: pawnOffsets){
       target = new int[]{square[0] + pawnOffset[0], square[1] + pawnOffset[1]};
-      if(board[target[0]][target[1]].getColor() != col || (passantSquare != null && Arrays.equals(target, passantSquare))){
+      if(board[square[0]][square[1]].getColor() != col || (passantSquare != null && Arrays.equals(target, passantSquare))){
         moves.add(new Move(square, target));
       }
     }

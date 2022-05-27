@@ -29,12 +29,26 @@ void draw(){
     board.displayBoard();
   }
 }
-void mouseClicked(){
+void mouseClicked() {
   if(menu == GAMESELECT){
     println("going");
     if(mouseX > 20 && mouseX < 780 && mouseY > 20 && mouseY < 220) menu = INPUTSELECT;
   }
   if(menu == INPUTSELECT){
     if(mouseX > 20 && mouseX < 780 && mouseY > 240 && mouseY < 440) menu = CHESS;
+  }
+  if(menu == CHESS){
+    if (board.firstClick) {
+      board.row1 = mouseY/100;
+      board.col1 = mouseX/100;
+      board.firstClick = false;
+    } else {
+      board.row2 = mouseY/100;
+      board.col2 = mouseX/100;
+      if (!(board.row2 == board.row1 && board.col2 == board.col1)) {
+        board.makeMove(new Move(new int[]{board.row1, board.col1},new int[]{board.row2, board.col2}));
+        board.firstClick = true;
+      }
+    }
   }
 }

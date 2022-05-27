@@ -11,6 +11,8 @@ class Board {
   private int fullmoveclock;
   final private int size = 800;
   final private int squareSize = size / 8;
+  public boolean firstClick = true; 
+  public int row1, row2, col1, col2;
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
@@ -61,11 +63,15 @@ class Board {
   private void GameOver() {
   }
   private void makeMove(Move move){
-    int[] target = move.getTarget();
-    int[] start = move.getStart();
-    Piece piece = board[start[0]][start[1]];
-    board[target[0]][target[1]] = piece;
-    board[start[0]][start[1]] = null;
+    if(isValid(move)){
+      int[] target = move.getTarget();
+      int[] start = move.getStart();
+      Piece piece = board[start[0]][start[1]];
+      board[target[0]][target[1]] = piece;
+      board[start[0]][start[1]] = null;
+    } else{
+      print("move is invalid!");
+    }
   }
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
     int col = getMoveColor(moves.get(0));
@@ -112,7 +118,9 @@ class Board {
     return col;
   }
   private boolean isValid(Move move) {
+    println(activePlayer);
     ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
+    println(possibleMoves);
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
@@ -172,7 +180,7 @@ class Board {
         col++;
       }
     }
-    activePlayer = fenString[1] == "w" ? WHITE: BLACK;
+    activePlayer = fenString[1].equals("w")  ? WHITE: BLACK;
     castlingRights = new boolean[4];
     String castleStr = fenString[2];
     castlingRights[0] = castleStr.indexOf("K") != -1;
