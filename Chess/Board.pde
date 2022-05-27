@@ -184,4 +184,7 @@ class Board {
       firstClick = true;
     }
   }
+
+
+  }
 }
