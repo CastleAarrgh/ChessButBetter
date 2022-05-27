@@ -9,7 +9,7 @@ class Pawn extends Piece{
     ArrayList<Move> moves = new ArrayList<Move>();
     int col = getColor();
     //single move
-    int[] target = {square[0], square[1] - col};
+    int[] target = {square[0] - col, square[1]};
     moves.add(new Move(square, target));
     //double move
     if((col == WHITE && square[1] == 6) || (col == BLACK && square[1] == 1)){
