@@ -1,4 +1,7 @@
-import java.util.*;
+
+  
+  
+  import java.util.*;
 class Board {
   final static int BLACK = -1;
   final static int WHITE = 1;
@@ -11,6 +14,8 @@ class Board {
   private int fullmoveclock;
   final private int size = 800;
   final private int squareSize = size / 8;
+  public boolean firstClick = true; 
+  public int row1, row2, col1, col2;
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.

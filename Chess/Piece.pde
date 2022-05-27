@@ -8,7 +8,7 @@ abstract class Piece{
     this.col = col;
     this.type = type;
   }
-  abstract public ArrayList<Move> generateMoves(Board board, int[] square);
+  abstract public ArrayList<Move> generateMoves(Board board, int[] piece);
   abstract public PImage getPieceImage();
   public boolean inBounds(int[] square){
     return square[0] >= 0 && square[0] <= 7 && square[1] >= 0 && square[1] <= 7;
