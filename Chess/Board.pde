@@ -68,8 +68,7 @@ class Board {
     board[start[0]][start[1]] = null;
   }
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
-    int[] start = moves.get(0).getStart();
-    int col = board[start[0]][start[1]].getColor();
+    int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
     for(Move move: moves){
       boolean isValid = true;
@@ -94,7 +93,7 @@ class Board {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     return moves;
   }
-  private ArrayList<Move> generateAllMoves(int col) {
+  private ArrayList<Move> generateAllMoves(int col){
     ArrayList<Move> moves = new ArrayList<Move>();
     for(int r = 0; r < 8; r++){
       for(int c = 0; c < 8; c++){
@@ -107,8 +106,13 @@ class Board {
     }
     return moves;
   }
+  private int getMoveColor(Move move){
+    int[] start = move.getStart();
+    int col = board[start[0]][start[1]].getColor();
+    return col;
+  }
   private boolean isValid(Move move) {
-    ArrayList<Move> possibleMoves = generateAllMoves();
+    ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
