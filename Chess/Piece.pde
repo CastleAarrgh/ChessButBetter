@@ -21,10 +21,6 @@ abstract class Piece{
       while(inBounds(target)){
         Piece piece = board[target[0]][target[1]];
         if(piece == null){
-          println("start:");
-          printArray(start);
-          println("target:");
-          printArray(target);
           moves.add(new Move(start.clone(), target.clone()));
           println("moves: " + moves);
         } else if(piece.getColor() != col){
@@ -37,7 +33,6 @@ abstract class Piece{
         target[1] += offset[1];
       }
     }
-    println("moves: " + moves);
     return moves;
   }
   public Piece pieceOn(Piece[][] board, int[] square){
