@@ -63,7 +63,6 @@ class Board {
   private void GameOver() {
   }
   private void makeMove(Move move){
-    println(move);
     if(isValid(move)){
       int[] target = move.getTarget();
       int[] start = move.getStart();
@@ -130,12 +129,12 @@ class Board {
   private boolean isValid(Move move) {
     //println(activePlayer);
     ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
-    println(possibleMoves);
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
       }
     }
+    println(possibleMoves);
     return false;
   }
   public int[] notationToPos(String str) {
