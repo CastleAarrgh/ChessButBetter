@@ -70,17 +70,13 @@ class Board {
       Piece piece = board[start[0]][start[1]];
       board[target[0]][target[1]] = piece;
       board[start[0]][start[1]] = null;
-      if(piece.getType() == 'p' && abs(target[0] - start[0]) == 2){
-        passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-      } else{
-        passantSquare = null;
-      }
-      println("passantSquare:");
-      printArray(passantSquare);
-      println("target:");
-      printArray(target);
       if(piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)){
         board[start[0]][target[1]] = null;
+      }
+      if(piece.getType() == 'p' && abs(target[0] - start[0]) == 2){
+        passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
+      }  else{
+        passantSquare = null;
       }
       activePlayer = -activePlayer;
     } else{
