@@ -22,7 +22,6 @@ abstract class Piece{
         Piece piece = board[target[0]][target[1]];
         if(piece == null){
           moves.add(new Move(start.clone(), target.clone()));
-          println("moves: " + moves);
         } else if(piece.getColor() != col){
           moves.add(new Move(start.clone(), target.clone()));
           break;
