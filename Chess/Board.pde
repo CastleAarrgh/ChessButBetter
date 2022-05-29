@@ -63,9 +63,16 @@ class Board {
   //display game over screen
   private void GameOver() {
   }
-  //make a move requested by the main.
-  public void makeMove(Move move){
+  //make a move requested by the main if it is legal
+  public void makeLegalMove(Move move){
     if(isValid(move)){
+      makeMove(move);
+    } else{
+      print("move: " + move + " is invalid!");
+    }
+  }
+  //make move that is determined to be legal.
+  private void makeMove(Move move){
       int[] target = move.getTarget();
       int[] start = move.getStart();
       Piece piece = board[start[0]][start[1]];
@@ -80,9 +87,6 @@ class Board {
         passantSquare = null;
       }
       activePlayer = -activePlayer;
-    } else{
-      print("move: " + move + " is invalid!");
-    }
   }
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
   is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
@@ -91,20 +95,24 @@ class Board {
     int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
     for(Move move: moves){
-      boolean isValid = true;
+      boolean IsValid = true;
       makeMove(move);
       ArrayList<Move> possibleKingCaptures = generateAllMoves(-col);
       for(Move newMove: possibleKingCaptures){
         int[] target = newMove.getTarget();
         Piece piece = board[target[0]][target[1]];
-        if(piece.getType() == 'k'){
-          isValid = false;
+        if(piece != null && piece.getType() == 'k'){
+          IsValid = false;
           break;
         }
       }
       makeMove(new Move(move.getTarget(), move.getStart()));
-      if(isValid){
-        newMoves.add(move);
+      if(IsValid){
+        try{
+          newMoves.add((Move)move.clone());
+        }catch(CloneNotSupportedException e){
+          e.printStackTrace();
+        }
       }
     }
     return newMoves;
@@ -140,7 +148,8 @@ class Board {
     //ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
     int[] start = move.getStart();
     ArrayList<Move> possibleMoves = generateMoves(new int[]{start[0], start[1]});
-    for (Move possibleMove : possibleMoves) {
+    possibleMoves = removeChecks(possibleMoves);
+    for (Move possibleMove : possibleMoves){
       if (move.equals(possibleMove)) {
         return true;
       }
