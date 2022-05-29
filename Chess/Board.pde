@@ -48,6 +48,7 @@ class Board {
   public Piece[][] getBoard() {
     return board;
   }
+  //passantSquare accessor method
   public int[] getPassant(){
     return passantSquare;
   }
@@ -62,7 +63,8 @@ class Board {
   //display game over screen
   private void GameOver() {
   }
-  private void makeMove(Move move){
+  //make a move requested by the main.
+  public void makeMove(Move move){
     if(isValid(move)){
       int[] target = move.getTarget();
       int[] start = move.getStart();
@@ -82,6 +84,9 @@ class Board {
       print("move: " + move + " is invalid!");
     }
   }
+  /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
+  is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
+  move would lead to the capture of the king next turn */
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
     int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
@@ -104,10 +109,12 @@ class Board {
     }
     return newMoves;
   }
+  //generates all possible moves for one piece
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     return moves;
   }
+  //generatesAllMoves posssible for the board(every piece on board of correct color
   private ArrayList<Move> generateAllMoves(int col){
     ArrayList<Move> moves = new ArrayList<Move>();
     for(int r = 0; r < 8; r++){
@@ -121,14 +128,18 @@ class Board {
     }
     return moves;
   }
+  //get the color of the piece being moved
   private int getMoveColor(Move move){
     int[] start = move.getStart();
     int col = board[start[0]][start[1]].getColor();
     return col;
   }
+  //check if a move attempted by the player isValid
   private boolean isValid(Move move) {
     //println(activePlayer);
-    ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
+    //ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
+    int[] start = move.getStart();
+    ArrayList<Move> possibleMoves = generateMoves(new int[]{start[0], start[1]});
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
@@ -137,12 +148,14 @@ class Board {
     println(possibleMoves);
     return false;
   }
+  //convert chess Notation(e.g. e6) to something understandable by the program(int[])
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
     int firstNum = firstLetter - 'a';
     int secondNum = Integer.parseInt("" + str.charAt(1));
     return new int[]{firstNum, secondNum};
   }
+  //import standardized chess FORMAT FEN into Board class
   public void importFEN(String fen) {
     board = new Piece[8][8];
     String[] fenString = fen.split(" ");
@@ -202,6 +215,7 @@ class Board {
     halfmoveclock = Integer.parseInt(fenString[4]);
     fullmoveclock = Integer.parseInt(fenString[5]);
   }
+  //print the board
   public String toString() {
     String out = "";
     for (int i = 0; i < 8; i++) {
