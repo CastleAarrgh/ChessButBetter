@@ -49,7 +49,7 @@ void mouseClicked() {
       board.row2 = mouseY/100;
       board.col2 = mouseX/100;
       if (!(board.row2 == board.row1 && board.col2 == board.col1)) {
-        board.makeMove(new Move(new int[]{board.row1, board.col1},new int[]{board.row2, board.col2}));
+        board.makeLegalMove(new Move(new int[]{board.row1, board.col1},new int[]{board.row2, board.col2}));
         board.firstClick = true;
       }
     }
