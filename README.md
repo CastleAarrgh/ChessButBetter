@@ -17,6 +17,8 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     5/24 - finished importFEN, added various structural methods/fields to Board class
     5/25 - displayBoard and importFEN() integrated, various other small changes
     5/26 - Added Piece Logic for all Pieces and Check Detection, though everything is untested currently.
+    5/27 - Started fixing bugs with Piece move logic. Knight moves are working and pawn moves are mostly working.
+    5/28 - Fixed logic for all regular pieces(castling and checking are still not done)
   ### Jason
     5/23 - figured out git branching, finished method displaying board background in board class
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
