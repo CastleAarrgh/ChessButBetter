@@ -67,12 +67,15 @@ class Board {
   public void makeLegalMove(Move move){
     if(isValid(move)){
       makeMove(move);
+      //println(passantSquare);
     } else{
       print("move: " + move + " is invalid!");
     }
   }
   //make move that is determined to be legal.
   private void makeMove(Move move){
+      println(this);
+      println(move);
       int[] target = move.getTarget();
       int[] start = move.getStart();
       Piece piece = board[start[0]][start[1]];
@@ -83,10 +86,12 @@ class Board {
       }
       if(piece.getType() == 'p' && abs(target[0] - start[0]) == 2){
         passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-      }  else{
+      }else{
         passantSquare = null;
       }
       activePlayer = -activePlayer;
+      println(this);
+      println(move);
   }
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
   is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
@@ -94,6 +99,13 @@ class Board {
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
     int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
+    int[] oldPassantSquare = null;
+    if(passantSquare != null){
+      oldPassantSquare = passantSquare.clone();
+    }
+    boolean[] oldCastlingRights = castlingRights.clone();
+    int oldActivePlayer = activePlayer;
+    Piece[][] oldBoard = deepCopy(board);
     for(Move move: moves){
       boolean IsValid = true;
       makeMove(move);
@@ -106,7 +118,6 @@ class Board {
           break;
         }
       }
-      makeMove(new Move(move.getTarget(), move.getStart()));
       if(IsValid){
         try{
           newMoves.add((Move)move.clone());
@@ -114,7 +125,18 @@ class Board {
           e.printStackTrace();
         }
       }
+      board = deepCopy(oldBoard);
+      if(oldPassantSquare == null){
+        passantSquare = null;
+      } else{
+      passantSquare = oldPassantSquare.clone();
+      }
+      castlingRights = oldCastlingRights.clone();
     }
+    board = oldBoard;
+    passantSquare = oldPassantSquare;
+    castlingRights = oldCastlingRights;
+    activePlayer = oldActivePlayer;
     return newMoves;
   }
   //generates all possible moves for one piece
@@ -225,6 +247,13 @@ class Board {
     fullmoveclock = Integer.parseInt(fenString[5]);
   }
   //print the board
+  public Piece[][] deepCopy(Piece[][] board){
+    Piece[][] out = new Piece[board.length][board[0].length];
+    for(int i = 0; i < out.length; i++){
+      out[i] = Arrays.copyOf(board[i], board[i].length);
+    }
+    return out;
+  }
   public String toString() {
     String out = "";
     for (int i = 0; i < 8; i++) {
