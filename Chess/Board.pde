@@ -48,6 +48,7 @@ class Board {
   public Piece[][] getBoard() {
     return board;
   }
+  //passantSquare accessor method
   public int[] getPassant(){
     return passantSquare;
   }
@@ -62,8 +63,19 @@ class Board {
   //display game over screen
   private void GameOver() {
   }
-  private void makeMove(Move move){
+  //make a move requested by the main if it is legal
+  public void makeLegalMove(Move move){
     if(isValid(move)){
+      makeMove(move);
+      //println(passantSquare);
+    } else{
+      print("move: " + move + " is invalid!");
+    }
+  }
+  //make move that is determined to be legal.
+  private void makeMove(Move move){
+      println(this);
+      println(move);
       int[] target = move.getTarget();
       int[] start = move.getStart();
       Piece piece = board[start[0]][start[1]];
@@ -74,40 +86,64 @@ class Board {
       }
       if(piece.getType() == 'p' && abs(target[0] - start[0]) == 2){
         passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-      }  else{
+      }else{
         passantSquare = null;
       }
       activePlayer = -activePlayer;
-    } else{
-      //print("move: " + move + " is invalid!");
     }
-  }
+  
+  /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
+  is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
+  move would lead to the capture of the king next turn */
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
     int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
+    int[] oldPassantSquare = null;
+    if(passantSquare != null){
+      oldPassantSquare = passantSquare.clone();
+    }
+    boolean[] oldCastlingRights = castlingRights.clone();
+    int oldActivePlayer = activePlayer;
+    Piece[][] oldBoard = deepCopy(board);
     for(Move move: moves){
-      boolean isValid = true;
+      boolean IsValid = true;
       makeMove(move);
       ArrayList<Move> possibleKingCaptures = generateAllMoves(-col);
       for(Move newMove: possibleKingCaptures){
         int[] target = newMove.getTarget();
         Piece piece = board[target[0]][target[1]];
-        if(piece.getType() == 'k'){
-          isValid = false;
+        if(piece != null && piece.getType() == 'k'){
+          IsValid = false;
           break;
         }
       }
-      makeMove(new Move(move.getTarget(), move.getStart()));
-      if(isValid){
-        newMoves.add(move);
+      if(IsValid){
+        try{
+          newMoves.add((Move)move.clone());
+        }catch(CloneNotSupportedException e){
+          e.printStackTrace();
+        }
       }
+      board = deepCopy(oldBoard);
+      if(oldPassantSquare == null){
+        passantSquare = null;
+      } else{
+      passantSquare = oldPassantSquare.clone();
+      }
+      castlingRights = oldCastlingRights.clone();
     }
+    board = oldBoard;
+    passantSquare = oldPassantSquare;
+    castlingRights = oldCastlingRights;
+    activePlayer = oldActivePlayer;
     return newMoves;
   }
+  //generates all possible moves for one piece
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     return moves;
   }
+  //generatesAllMoves posssible for the board(every piece on board of correct color
   private ArrayList<Move> generateAllMoves(int col){
     ArrayList<Move> moves = new ArrayList<Move>();
     for(int r = 0; r < 8; r++){
@@ -121,30 +157,27 @@ class Board {
     }
     return moves;
   }
+  //get the color of the piece being moved
   private int getMoveColor(Move move){
     int[] start = move.getStart();
     int col = board[start[0]][start[1]].getColor();
     return col;
   }
+  //check if a move attempted by the player isValid
   private boolean isValid(Move move) {
     //println(activePlayer);
-    ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
-    for (Move possibleMove : possibleMoves) {
+    //ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
+    int[] start = move.getStart();
+    ArrayList<Move> possibleMoves = generateMoves(new int[]{start[0], start[1]});
+    possibleMoves = removeChecks(possibleMoves);
+    for (Move possibleMove : possibleMoves){
       if (move.equals(possibleMove)) {
         return true;
       }
     }
-  //  println(possibleMoves);
+   println(possibleMoves);
     return false;
   }
-  
-  private boolean Check(Move move){
-        ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
-           for (Move possibleMove : possibleMoves) {
-             if possibleMove
-           }
-  }
-  
   
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
@@ -152,6 +185,7 @@ class Board {
     int secondNum = Integer.parseInt("" + str.charAt(1));
     return new int[]{firstNum, secondNum};
   }
+  //import standardized chess FORMAT FEN into Board class
   public void importFEN(String fen) {
     board = new Piece[8][8];
     String[] fenString = fen.split(" ");
@@ -210,6 +244,14 @@ class Board {
     }
     halfmoveclock = Integer.parseInt(fenString[4]);
     fullmoveclock = Integer.parseInt(fenString[5]);
+  }
+  //print the board
+  public Piece[][] deepCopy(Piece[][] board){
+    Piece[][] out = new Piece[board.length][board[0].length];
+    for(int i = 0; i < out.length; i++){
+      out[i] = Arrays.copyOf(board[i], board[i].length);
+    }
+    return out;
   }
   public String toString() {
     String out = "";
