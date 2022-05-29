@@ -19,9 +19,10 @@ class King extends Piece{
     return moves;
   }
     public boolean inCheck(Board BOARD){
+          Piece[][] board = BOARD.getBoard();
     //looks at all the pieces and wether they are on the other side or not
-    for(Piece p: BOARD){
-      if(!p.equals(null) && !p.getPColor().equalsIgnoreCase(super.getPieceColor())){
+    for(Piece[] p: board){
+      if(!p.equals(null) && !p.getColor().equalsIgnoreCase(super.getColor())){
         //checks if the piece can move to where the king is 
         if(p.checkSpotValid(super.getXLocation(), super.getYLocation()))
         {
