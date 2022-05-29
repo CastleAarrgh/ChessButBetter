@@ -27,8 +27,8 @@ class Board {
   }
   // display the board background and the pieces
   public void displayBoard() {
-    final int BLOCKX = width / 8;
-    final int BLOCKY = height / 8;
+    final int BLOCKX = 100;
+    final int BLOCKY = 100;
     color Black  = color(118, 150, 86);
     color White = color(238, 238, 210);
     for (int i = 0; i < 8; i ++) {
@@ -39,7 +39,7 @@ class Board {
           fill(Black); // black
         }
         rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);  
-        if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8, squareSize, squareSize);
+        if (board[j][i] != null) image(board[j][i].getPieceImage(), i*800/8, j*height/8, squareSize, squareSize);
       }
     }
   }
@@ -69,17 +69,8 @@ class Board {
       Piece piece = board[start[0]][start[1]];
       board[target[0]][target[1]] = piece;
       board[start[0]][start[1]] = null;
-      if(piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)){
-        board[start[0]][target[1]] = null;
-      }
-      if(piece.getType() == 'p' && abs(target[0] - start[0]) == 2){
-        passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-      }  else{
-        passantSquare = null;
-      }
-      activePlayer = -activePlayer;
     } else{
-      //print("move: " + move + " is invalid!");
+      print("move is invalid!");
     }
   }
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
@@ -127,25 +118,16 @@ class Board {
     return col;
   }
   private boolean isValid(Move move) {
-    //println(activePlayer);
+    println(activePlayer);
     ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
+ println(possibleMoves);
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
       }
     }
-  //  println(possibleMoves);
     return false;
   }
-  
-  private boolean Check(Move move){
-        ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
-           for (Move possibleMove : possibleMoves) {
-             if possibleMove
-           }
-  }
-  
-  
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
     int firstNum = firstLetter - 'a';
