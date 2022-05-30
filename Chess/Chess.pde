@@ -10,7 +10,7 @@ void setup(){
   //Board board = new Chess960();
   //System.out.println(board);
   //board.displayBoard();
-  size(800, 800);
+  size(850, 850);
 }
 void draw(){
   //println(menu);
@@ -27,6 +27,21 @@ void draw(){
   }
   if(menu == CHESS){
     board.displayBoard();
+  }
+  strokeWeight(2);
+  line(0,800,850,800);
+  line(800,0,800,850);
+  for (int i = 0; i <8; i++){
+    fill(0);
+textSize(20);
+textAlign(CENTER);
+text((char)('a'+i), 50 + i*100, 825);
+  }
+  for (int i = 0; i <8; i++){
+    fill(0);
+textSize(20);
+textAlign(CENTER);
+text(""+(i+1), 825, 750 - i*100);
   }
 }
 void mouseClicked() {
