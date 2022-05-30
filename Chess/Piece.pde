@@ -47,15 +47,4 @@ abstract class Piece{
   public String toString(){
     return "" + type;
   }
-      public int getXLocation()
-    {
-      //return x location
-      return xLocation;
-    }
-
-    public int getYLocation()
-    {
-      //return y location
-      return yLocation;
-    }
 }

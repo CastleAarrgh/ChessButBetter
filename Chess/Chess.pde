@@ -39,24 +39,11 @@ void mouseClicked() {
   }
   if(menu == CHESS){
     Piece[][] pieces = board.getBoard();
-    if (board.firstClick) {
-      board.row1 = mouseY/100;
-      board.col1 = mouseX/100;
-      if(pieces[board.row1][board.col1] != null && pieces[board.row1][board.col1].getColor() == board.activePlayer){
-        board.firstClick = false;
-      }
-    } else {
-      board.row2 = mouseY/100;
-      board.col2 = mouseX/100;
-      if (!(board.row2 == board.row1 && board.col2 == board.col1)) {
-        board.makeLegalMove(new Move(new int[]{board.row1, board.col1},new int[]{board.row2, board.col2}));
-        board.firstClick = true;
-      }
-    }
+    board.registerClick(mouseX, mouseY);
   }
 }
 void mousePressed() {
-  if (board.gameOver) board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+  if (board.isEnded()) board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   if (board.promote) {
     int x = round(mouseX/ (width/4)-0.5);
     if (board.activePlayer!=Board.WHITE) {
