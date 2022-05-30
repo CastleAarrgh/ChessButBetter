@@ -14,6 +14,8 @@ class Board {
   final private int squareSize = size / 8;
   public boolean firstClick = true; 
   public int row1, row2, col1, col2;
+    boolean promote = false;
+  boolean gameOver = false;
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.

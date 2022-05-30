@@ -42,20 +42,20 @@ void mouseClicked() {
     board.registerClick(mouseX, mouseY);
   }
 }
-void mousePressed() {
-  if (board.isEnded()) board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-  if (board.promote) {
-    int x = round(mouseX/ (width/4)-0.5);
-    if (board.activePlayer!=Board.WHITE) {
-      if (x == 0) board.board[down1][right1] = new Queen(1);
-;
-      if (x == 1) board.board[down1][right1] = new Rook (1);
-      if (x == 2) board.board[down1][right1] = new Bishop(1);
-      if (x == 3) board.board[down1][right1] = new Knight (1);
-    } else {
-      if (x == 0) board.board[down1][right1] = new Queen(-1);
-      if (x == 1) board.board[down1][right1] = new Rook (-1);
-      if (x == 2) board.board[down1][right1] = new Bishop (-1);
-      if (x == 3) board.board[down1][right1] = new Knight (-1);
-    }
-  }}
+//void mousePressed() {
+//  if (board.isEnded()) board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+//  if (board.promote) {
+//    int x = round(mouseX/ (width/4)-0.5);
+//    if (board.activePlayer!=Board.WHITE) {
+//      if (x == 0) board.board[down1][right1] = new Queen(1);
+//;
+//      if (x == 1) board.board[down1][right1] = new Rook (1);
+//      if (x == 2) board.board[down1][right1] = new Bishop(1);
+//      if (x == 3) board.board[down1][right1] = new Knight (1);
+//    } else {
+//      if (x == 0) board.board[down1][right1] = new Queen(-1);
+//      if (x == 1) board.board[down1][right1] = new Rook (-1);
+//      if (x == 2) board.board[down1][right1] = new Bishop (-1);
+//      if (x == 3) board.board[down1][right1] = new Knight (-1);
+//    }
+//  }}
