@@ -269,6 +269,7 @@ class Board {
       if(board[row1][col1] != null && board[row1][col1].getColor() == activePlayer){
         firstClick = false;
         ArrayList<Move> possibleMoves = generateMoves(new int[]{row1, col1});
+        highlightedSquares.add(new int[]{row1, col1});
         for(Move move: possibleMoves){
           int[] target = move.getTarget();
           highlightedSquares.add(target);
