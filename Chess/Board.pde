@@ -9,7 +9,7 @@ class Board {
   private int activePlayer;
   private int halfmoveclock;
   private int fullmoveclock;
-  private ArrayList<int[]> highlightedSquares;
+  private ArrayList<int[]> highlightedSquares = new ArrayList<int[]>();
   final private int size = 800;
   final private int squareSize = size / 8;
   public boolean firstClick = true; 
@@ -39,12 +39,14 @@ class Board {
         } else {
           fill(Black); // black
         } 
-        int[] square = new int[]{i, j};
-        if(highlightedSquares.contains(square)){
-           fill(255, 93, 91);
-        }
-        else{
-           rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY); 
+        int[] square = new int[]{j, i};
+        rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY); 
+        for(int k = 0; k < highlightedSquares.size(); k++){
+         int[] highlightedSquare = highlightedSquares.get(k);
+         if(Arrays.equals(square, highlightedSquare)){
+           fill(255, 93, 98, 150);
+           rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);
+         }
         }
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8, squareSize, squareSize);
       }
@@ -81,8 +83,6 @@ class Board {
   }
   //make move that is determined to be legal.
   private void makeMove(Move move){
-      println(this);
-      println(move);
       int[] target = move.getTarget();
       int[] start = move.getStart();
       Piece piece = board[start[0]][start[1]];
@@ -97,8 +97,6 @@ class Board {
         passantSquare = null;
       }
       activePlayer = -activePlayer;
-      println(this);
-      println(move);
   }
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
   is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
@@ -149,6 +147,7 @@ class Board {
   //generates all possible moves for one piece
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
+    moves = removeChecks(moves);
     return moves;
   }
   //generatesAllMoves posssible for the board(every piece on board of correct color
@@ -177,7 +176,6 @@ class Board {
     //ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
     int[] start = move.getStart();
     ArrayList<Move> possibleMoves = generateMoves(new int[]{start[0], start[1]});
-    possibleMoves = removeChecks(possibleMoves);
     for (Move possibleMove : possibleMoves){
       if (move.equals(possibleMove)) {
         return true;
