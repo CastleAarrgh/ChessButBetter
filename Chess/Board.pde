@@ -19,12 +19,12 @@ class Board {
   Board constructor takes in no positions and generates 
    the default starting chess position.
    */
-  Board() {
+ public Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
   /* Generate Board based on provided FEN starting position
    */
-  Board(String startingFen) {
+  public Board(String startingFen) {
     importFEN(startingFen);
   }
   // display the board background and the pieces
@@ -51,16 +51,16 @@ class Board {
       rect(2*width/8, 0, 2*width/8, height);
       rect(4*width/8, 0, 2*width/8, height);
       rect(6*width/8, 0, 2*width/8, height);
-      if (!turn) {
-        image(wQueen, 0.5*width/8, 3.5*height/8);
-        image(wRook, 2.5*width/8, 3.5*height/8);
-        image(wBishop, 4.5*width/8, 3.5*height/8);
-        image(wKnight, 6.5*width/8, 3.5*height/8);
+      if (activePlayer!=White) {
+        image(loadImage("Pieces/WhiteQueen.png"), 0.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/WhiteRook.png"), 2.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/WhiteBishop.png"), 4.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/WhiteKnight.png"), 6.5*width/8, 3.5*height/8);
       } else {
-        image(bQueen, 0.5*width/8, 3.5*height/8);
-        image(bRook, 2.5*width/8, 3.5*height/8);
-        image(bBishop, 4.5*width/8, 3.5*height/8);
-        image(bKnight, 6.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/BlackQueen.png"), 0.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/BlackRook.png"), 2.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/BlackBishop.png"), 4.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/BlackKnight.png"), 6.5*width/8, 3.5*height/8);
       }
       noStroke();
     }
