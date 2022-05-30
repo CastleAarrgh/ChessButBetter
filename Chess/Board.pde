@@ -102,6 +102,9 @@ class Board {
   is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
   move would lead to the capture of the king next turn */
   public ArrayList<Move> removeChecks(ArrayList<Move> moves){
+    if(moves.size() == 0){
+      return moves;
+    }
     int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
     int[] oldPassantSquare = null;
