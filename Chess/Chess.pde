@@ -39,19 +39,6 @@ void mouseClicked() {
   }
   if(menu == CHESS){
     Piece[][] pieces = board.getBoard();
-    if (board.firstClick) {
-      board.row1 = mouseY/100;
-      board.col1 = mouseX/100;
-      if(pieces[board.row1][board.col1] != null && pieces[board.row1][board.col1].getColor() == board.activePlayer){
-        board.firstClick = false;
-      }
-    } else {
-      board.row2 = mouseY/100;
-      board.col2 = mouseX/100;
-      if (!(board.row2 == board.row1 && board.col2 == board.col1)) {
-        board.makeLegalMove(new Move(new int[]{board.row1, board.col1},new int[]{board.row2, board.col2}));
-        board.firstClick = true;
-      }
-    }
+    board.registerClick(mouseX, mouseY);
   }
 }

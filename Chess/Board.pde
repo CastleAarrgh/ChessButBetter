@@ -9,6 +9,7 @@ class Board {
   private int activePlayer;
   private int halfmoveclock;
   private int fullmoveclock;
+  private ArrayList<int[]> highlightedSquares;
   final private int size = 800;
   final private int squareSize = size / 8;
   public boolean firstClick = true; 
@@ -20,7 +21,7 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position
+  /* Generate Board based on provided FEN starting position //<>//
    */
   Board(String startingFen) {
     importFEN(startingFen);
@@ -37,8 +38,14 @@ class Board {
           fill(White); // white
         } else {
           fill(Black); // black
+        } 
+        int[] square = new int[]{i, j};
+        if(highlightedSquares.contains(square)){
+           fill(255, 93, 91);
         }
-        rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);  
+        else{
+           rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY); 
+        }
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8, squareSize, squareSize);
       }
     }
@@ -253,6 +260,31 @@ class Board {
       out[i] = Arrays.copyOf(board[i], board[i].length);
     }
     return out;
+  }
+  void registerClick(int x, int y){
+      if (firstClick) {
+      row1 = y/100;
+      col1 = x/100;
+      if(board[row1][col1] != null && board[row1][col1].getColor() == activePlayer){
+        firstClick = false;
+        ArrayList<Move> possibleMoves = generateMoves(new int[]{row1, col1});
+        for(Move move: possibleMoves){
+          int[] target = move.getTarget();
+          highlightedSquares.add(target);
+        }
+      }
+    } else {
+      row2 = y/100;
+      col2 = x/100;
+      highlightedSquares = new ArrayList<int[]>();
+      if(row2 == row1 && col2 == col1){
+        firstClick = true;
+      }
+      else {
+        makeLegalMove(new Move(new int[]{row1, col1},new int[]{row2, col2}));
+        firstClick = true;
+      }
+    }
   }
   public String toString() {
     String out = "";
