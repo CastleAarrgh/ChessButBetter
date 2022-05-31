@@ -28,6 +28,19 @@ void draw(){
   if(menu == CHESS){
     board.displayBoard();
   }
+  strokeWeight(2);
+  for (int i = 0; i <8; i++){
+    fill(0);
+    textSize(20);
+    textAlign(CENTER);
+    text((char)('a'+i), 10 + i*100, 795);
+  }
+  for (int i = 0; i <8; i++){
+    fill(0);
+    textSize(20);
+    textAlign(CENTER);
+    text(""+(i+1), 790, 720 - i*100);
+  }
 }
 void mouseClicked() {
   if(menu == GAMESELECT){
@@ -42,3 +55,20 @@ void mouseClicked() {
     board.registerClick(mouseX, mouseY);
   }
 }
+void mousePressed() {
+  if (board.isEnded()) board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+  /*if (board.promote) {
+    int x = round(mouseX/ (width/4)-0.5);
+    if (board.activePlayer!=Board.WHITE) {
+      if (x == 0) board.board[down1][right1] = new Queen(1);
+      if (x == 1) board.board[down1][right1] = new Rook (1);
+      if (x == 2) board.board[down1][right1] = new Bishop(1);
+      if (x == 3) board.board[down1][right1] = new Knight (1);
+    } else {
+      if (x == 0) board.board[down1][right1] = new Queen(-1);
+      if (x == 1) board.board[down1][right1] = new Rook (-1);
+      if (x == 2) board.board[down1][right1] = new Bishop (-1);
+      if (x == 3) board.board[down1][right1] = new Knight (-1);
+    }
+  }*/
+  }
