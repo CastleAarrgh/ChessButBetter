@@ -274,7 +274,7 @@ class Board {
     }
     return out;
   }
-  void registerClick(int x, int y){
+  boolean registerClick(int x, int y){
       if (firstClick) {
       row1 = y/100;
       col1 = x/100;
@@ -297,8 +297,10 @@ class Board {
       else {
         makeLegalMove(new Move(new int[]{row1, col1},new int[]{row2, col2}));
         firstClick = true;
+        return true;
       }
     }
+    return false;
   }
   public String toString() {
     String out = "";

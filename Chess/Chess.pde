@@ -2,6 +2,9 @@ int GAMESELECT = 0;
 int INPUTSELECT = 1;
 int FENINPUT = 2;
 int CHESS = 3;
+int CHESS960 = 4;
+int ANTICHESS = 5;
+int CHESSKERS = 6;
 int menu;
 Board board;
 void setup(){
@@ -11,6 +14,7 @@ void setup(){
   //System.out.println(board);
   //board.displayBoard();
   size(1000, 800);
+  Timer timer = new Timer();
 }
 void draw(){
   if (board.isEnded()) board = new Board();
@@ -28,6 +32,8 @@ void draw(){
   }
   if(menu == CHESS){
     board.displayBoard(800,800);
+    timer.tick();
+    timer.displayTimer();
   }
 }
 void mouseClicked() {
@@ -40,7 +46,9 @@ void mouseClicked() {
   }
   if(menu == CHESS){
     Piece[][] pieces = board.getBoard();
-    board.registerClick(mouseX, mouseY);
+    if(board.registerClick(mouseX, mouseY)){
+      timer.swap();
+    };
   }
 }
 void mousePressed() {
