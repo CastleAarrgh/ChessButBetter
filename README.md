@@ -25,4 +25,7 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
     5/25 - started work on piece dragging, fixed git problems
     5/27 - finished piece draggging mechanics, tested, resolved merge conflict
+    5/28 - started work on promotion, check logic
+    5/29 - started work on castling
+    5/30 - working on promoting, checkmate, finished notation, demo branch
     
