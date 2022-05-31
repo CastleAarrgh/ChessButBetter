@@ -62,15 +62,15 @@ void mouseClicked() {
 //  if (board.promote) {
 //    int x = round(mouseX/ (width/4)-0.5);
 //    if (board.activePlayer!=Board.WHITE) {
-//      if (x == 0) board.board[down1][right1] = new Queen(1);
+//      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(1);
 //;
-//      if (x == 1) board.board[down1][right1] = new Rook (1);
-//      if (x == 2) board.board[down1][right1] = new Bishop(1);
-//      if (x == 3) board.board[down1][right1] = new Knight (1);
+//      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (1);
+//      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop(1);
+//      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (1);
 //    } else {
-//      if (x == 0) board.board[down1][right1] = new Queen(-1);
-//      if (x == 1) board.board[down1][right1] = new Rook (-1);
-//      if (x == 2) board.board[down1][right1] = new Bishop (-1);
-//      if (x == 3) board.board[down1][right1] = new Knight (-1);
+//      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(-1);
+//      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (-1);
+//      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
+//      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (-1);
 //    }
 //  }}

@@ -16,6 +16,7 @@ class Board {
   public int row1, row2, col1, col2;
   boolean promote = false;
   boolean gameOver = false;
+  int promoteX, promoteY;
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
@@ -28,6 +29,29 @@ class Board {
   Board(String startingFen) {
     importFEN(startingFen);
   }
+  
+  public void ispromoted(){
+      for ( int j=0; j<8; j++){
+            Piece piece = board[7][j];
+            Piece piece2 = board[0][j];
+           //checking to see if the pawn is promoted works, getting the pawn to promote doesn't
+                if (piece.getType() == 'p'||piece2.getType() == 'p') {
+                  print("promoted");
+                  promote = true;
+                  promoteY = j;
+    }
+  }
+  }
+  
+    //  Piece piece = board[start[0]][start[1]];
+    //board[target[0]][target[1]] = piece;
+    //board[start[0]][start[1]] = null;
+    //if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
+    //  board[start[0]][target[1]] = null;
+    //}
+
+  
+  
   // display the board background and the pieces
   public void displayBoard() {
     final int BLOCKX = 800 / 8;
@@ -51,6 +75,7 @@ class Board {
           }
         }
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i*800/8, j*800/8, squareSize, squareSize);
+        ispromoted();
       }
     }
   }
