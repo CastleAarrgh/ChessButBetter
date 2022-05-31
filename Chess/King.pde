@@ -18,41 +18,6 @@ class King extends Piece {
     }
     return moves;
   }
-  public boolean inCheck(Board BOARD) {
-    Piece[][] board = BOARD.getBoard();
-    //looks at all the pieces and wether they are on the other side or not
-    for (Piece[] i : board) {
-      for (Piece p : i) {
-        if (!p.equals(null) && !(p.getColor()==(super.getColor()))) {
-          //checks if the piece can move to where the king is 
-          if (p.isValid(super.getXLocation(), super.getYLocation())) {
-            return true;
-          }
-        }
-      }
-    }   
-    //if nothing puts the king in check return false
-    return false;
-  }  
-
-  public boolean inCheck(int otherX, int otherY, Board BOARD) {
-    //looks at all the pieces and wether they are on the other side or not
-    Piece[][] board = BOARD.getBoard();
-    for (Piece[] i : board) {
-      for (Piece p : i) {
-        if (!p.equals(null) && !(p.getColor()==(super.getColor()))) {
-          //checks if the piece can move to where the king is 
-          if (p.checkSpotValid(otherX, otherY)) {
-            return true;
-          }
-        }
-      }
-    }
-
-    //if nothing puts the king in check return false
-    return false;
-  }
-
   public PImage getPieceImage() {
     if (getColor()== WHITE) {
       return loadImage("Pieces/WhiteKing.png");

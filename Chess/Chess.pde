@@ -10,7 +10,7 @@ void setup(){
   //Board board = new Chess960();
   //System.out.println(board);
   //board.displayBoard();
-  size(850, 850);
+  size(800, 800);
 }
 void draw(){
   //println(menu);
@@ -29,19 +29,17 @@ void draw(){
     board.displayBoard();
   }
   strokeWeight(2);
-  line(0,800,850,800);
-  line(800,0,800,850);
   for (int i = 0; i <8; i++){
     fill(0);
-textSize(20);
-textAlign(CENTER);
-text((char)('a'+i), 50 + i*100, 825);
+    textSize(20);
+    textAlign(CENTER);
+    text((char)('a'+i), 10 + i*100, 795);
   }
   for (int i = 0; i <8; i++){
     fill(0);
-textSize(20);
-textAlign(CENTER);
-text(""+(i+1), 825, 750 - i*100);
+    textSize(20);
+    textAlign(CENTER);
+    text(""+(i+1), 790, 720 - i*100);
   }
 }
 void mouseClicked() {
@@ -59,11 +57,10 @@ void mouseClicked() {
 }
 void mousePressed() {
   if (board.isEnded()) board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-  if (board.promote) {
+  /*if (board.promote) {
     int x = round(mouseX/ (width/4)-0.5);
     if (board.activePlayer!=Board.WHITE) {
       if (x == 0) board.board[down1][right1] = new Queen(1);
-;
       if (x == 1) board.board[down1][right1] = new Rook (1);
       if (x == 2) board.board[down1][right1] = new Bishop(1);
       if (x == 3) board.board[down1][right1] = new Knight (1);
@@ -73,4 +70,5 @@ void mousePressed() {
       if (x == 2) board.board[down1][right1] = new Bishop (-1);
       if (x == 3) board.board[down1][right1] = new Knight (-1);
     }
-  }}
+  }*/
+  }

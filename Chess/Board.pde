@@ -137,7 +137,7 @@ class Board {
       if(oldPassantSquare == null){
         passantSquare = null;
       } else{
-      passantSquare = oldPassantSquare.clone();
+        passantSquare = oldPassantSquare.clone();
       }
       castlingRights = oldCastlingRights.clone();
     }
@@ -302,6 +302,4 @@ class Board {
     }
     return out;
   }
-  public void castlingRights(){
-      }
 }
