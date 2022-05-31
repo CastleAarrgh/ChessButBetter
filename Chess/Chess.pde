@@ -6,7 +6,9 @@ int CHESS960 = 4;
 int ANTICHESS = 5;
 int CHESSKERS = 6;
 int menu;
+int secondTimer = millis();
 Board board;
+Timer timer;
 void setup(){
   menu = CHESS;
   board = new Board();
@@ -14,12 +16,12 @@ void setup(){
   //System.out.println(board);
   //board.displayBoard();
   size(1000, 800);
-  Timer timer = new Timer();
+  timer = new Timer(300, 300);
 }
 void draw(){
   if (board.isEnded()) board = new Board();
   //println(menu);
-  background(111);
+  background(255);
   //menu controlling
   if(menu == GAMESELECT){
     rect(20, 20, 760, 200);
@@ -32,8 +34,15 @@ void draw(){
   }
   if(menu == CHESS){
     board.displayBoard(800,800);
-    timer.tick();
-    timer.displayTimer();
+    if(millis() - secondTimer >= 1000){
+      timer.tick();
+      secondTimer = millis();
+    }
+    fill(111);
+    rect(800, 200, 200, 400); 
+    fill(255);
+    text((int)timer.getBlackTime(), 850, 300);
+    text((int)timer.getWhiteTime(), 850, 500);
   }
 }
 void mouseClicked() {
