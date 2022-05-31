@@ -13,6 +13,7 @@ void setup(){
   size(800, 800);
 }
 void draw(){
+  if (board.isEnded()) board = new Board();
   //println(menu);
   background(111);
   //menu controlling
@@ -56,7 +57,6 @@ void mouseClicked() {
   }
 }
 void mousePressed() {
-  if (board.isEnded()) board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   /*if (board.promote) {
     int x = round(mouseX/ (width/4)-0.5);
     if (board.activePlayer!=Board.WHITE) {
