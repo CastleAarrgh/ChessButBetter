@@ -27,32 +27,44 @@ class Board {
     importFEN(startingFen);
   }
   // display the board background and the pieces
-  public void displayBoard() {
-    final int BLOCKX = width / 8;
-    final int BLOCKY = height / 8;
-    color Black  = color(118, 150, 86);
-    color White = color(238, 238, 210);
+  public void displayBoard(int x, int y) {
+    color Dark  = color(118, 150, 86);
+    color Light = color(238, 238, 210);
     for (int i = 0; i < 8; i ++) {
       for (int j = 0; j < 8; j ++) {
         if ((i + j + 1) % 2 == 0) {
-          fill(White); // white
+          fill(Dark); // white
         } else {
-          fill(Black); // black
+          fill(Light); // black
         } 
         int[] square = new int[]{j, i};
-        rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY); 
+        rect(i * squareSize, j * squareSize, squareSize, squareSize); 
         for(int k = 0; k < highlightedSquares.size(); k++){
          int[] highlightedSquare = highlightedSquares.get(k);
          if(Arrays.equals(square, highlightedSquare)){
            fill(255, 93, 98, 150);
-           rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);
+           rect(i * squareSize, j * squareSize, squareSize, squareSize);
          }
         }
-        if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8, squareSize, squareSize);
+        if (board[j][i] != null) image(board[j][i].getPieceImage(), i* squareSize, j* squareSize, squareSize, squareSize);
       }
     }
+    displayNotation();
   }
-
+  private void displayNotation(){
+    for (int i = 0; i <8; i++){
+      fill(0);
+      textSize(20);
+      textAlign(CENTER);
+      text((char)('a'+i), 10 + i*100, 795);
+    }
+    for (int i = 0; i <8; i++){
+      fill(0);
+      textSize(20);
+      textAlign(CENTER);
+      text(""+(i+1), 790, 720 - i*100);
+    }
+  }
   //board accessor method
   public Piece[][] getBoard() {
     return board;
