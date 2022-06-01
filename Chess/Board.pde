@@ -14,6 +14,9 @@ class Board {
   final private int squareSize = size / 8;
   public boolean firstClick = true; 
   public int row1, row2, col1, col2;
+  boolean promote = false;
+  boolean gameOver = false;
+  int promoteX, promoteY;
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
@@ -26,10 +29,33 @@ class Board {
   Board(String startingFen) {
     importFEN(startingFen);
   }
+  
+  public void ispromoted(){
+      for ( int j=0; j<8; j++){
+            Piece piece = board[7][j];
+            Piece piece2 = board[0][j];
+           //checking to see if the pawn is promoted works, getting the pawn to promote doesn't
+                if (piece.getType() == 'p'||piece2.getType() == 'p') {
+                  print("promoted");
+                  promote = true;
+                  promoteY = j;
+    }
+  }
+  }
+  
+    //  Piece piece = board[start[0]][start[1]];
+    //board[target[0]][target[1]] = piece;
+    //board[start[0]][start[1]] = null;
+    //if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
+    //  board[start[0]][target[1]] = null;
+    //}
+
+  
+  
   // display the board background and the pieces
   public void displayBoard() {
-    final int BLOCKX = width / 8;
-    final int BLOCKY = height / 8;
+    final int BLOCKX = 800 / 8;
+    final int BLOCKY = 800 / 8;
     color Black  = color(118, 150, 86);
     color White = color(238, 238, 210);
     for (int i = 0; i < 8; i ++) {
@@ -41,14 +67,15 @@ class Board {
         } 
         int[] square = new int[]{j, i};
         rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY); 
-        for(int k = 0; k < highlightedSquares.size(); k++){
-         int[] highlightedSquare = highlightedSquares.get(k);
-         if(Arrays.equals(square, highlightedSquare)){
-           fill(255, 93, 98, 150);
-           rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);
-         }
+        for (int k = 0; k < highlightedSquares.size(); k++) {
+          int[] highlightedSquare = highlightedSquares.get(k);
+          if (Arrays.equals(square, highlightedSquare)) {
+            fill(255, 93, 98, 150);
+            rect(i * BLOCKX, j * BLOCKY, (i + 1) * BLOCKX, (j + 1) * BLOCKY);
+          }
         }
-        if (board[j][i] != null) image(board[j][i].getPieceImage(), i*width/8, j*height/8, squareSize, squareSize);
+        if (board[j][i] != null) image(board[j][i].getPieceImage(), i*800/8, j*800/8, squareSize, squareSize);
+        ispromoted();
       }
     }
   }
@@ -58,7 +85,7 @@ class Board {
     return board;
   }
   //passantSquare accessor method
-  public int[] getPassant(){
+  public int[] getPassant() {
     return passantSquare;
   }
   //export board state as fen
@@ -71,73 +98,75 @@ class Board {
   }
   //display game over screen
   private void GameOver() {
+    text("Game Over", 48, 240);
   }
   //make a move requested by the main if it is legal
-  public void makeLegalMove(Move move){
-    if(isValid(move)){
+  public void makeLegalMove(Move move) {
+    if (isValid(move)) {
       makeMove(move);
       //println(passantSquare);
-    } else{
+    } else {
       print("move: " + move + " is invalid!");
     }
   }
   //make move that is determined to be legal.
-  private void makeMove(Move move){
-      int[] target = move.getTarget();
-      int[] start = move.getStart();
-      Piece piece = board[start[0]][start[1]];
-      board[target[0]][target[1]] = piece;
-      board[start[0]][start[1]] = null;
-      if(piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)){
-        board[start[0]][target[1]] = null;
-      }
-      if(piece.getType() == 'p' && abs(target[0] - start[0]) == 2){
-        passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-      }else{
-        passantSquare = null;
-      }
-      activePlayer = -activePlayer;
+  private void makeMove(Move move) {
+    int[] target = move.getTarget();
+    int[] start = move.getStart();
+    Piece piece = board[start[0]][start[1]];
+    board[target[0]][target[1]] = piece;
+    board[start[0]][start[1]] = null;
+    if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
+      board[start[0]][target[1]] = null;
+    }
+    if (piece.getType() == 'p' && abs(target[0] - start[0]) == 2) {
+      passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
+    } else {
+      passantSquare = null;
+    }
+    activePlayer = -activePlayer;
   }
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
-  is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
-  move would lead to the capture of the king next turn */
-  public ArrayList<Move> removeChecks(ArrayList<Move> moves){
-    if(moves.size() == 0){
+   is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
+   move would lead to the capture of the king next turn */
+  public ArrayList<Move> removeChecks(ArrayList<Move> moves) {
+    if (moves.size() == 0) {
       return moves;
     }
     int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
     int[] oldPassantSquare = null;
-    if(passantSquare != null){
+    if (passantSquare != null) {
       oldPassantSquare = passantSquare.clone();
     }
     boolean[] oldCastlingRights = castlingRights.clone();
     int oldActivePlayer = activePlayer;
     Piece[][] oldBoard = deepCopy(board);
-    for(Move move: moves){
+    for (Move move : moves) {
       boolean IsValid = true;
       makeMove(move);
       ArrayList<Move> possibleKingCaptures = generateAllMoves(-col);
-      for(Move newMove: possibleKingCaptures){
+      for (Move newMove : possibleKingCaptures) {
         int[] target = newMove.getTarget();
         Piece piece = board[target[0]][target[1]];
-        if(piece != null && piece.getType() == 'k'){
+        if (piece != null && piece.getType() == 'k') {
           IsValid = false;
           break;
         }
       }
-      if(IsValid){
-        try{
+      if (IsValid) {
+        try {
           newMoves.add((Move)move.clone());
-        }catch(CloneNotSupportedException e){
+        }
+        catch(CloneNotSupportedException e) {
           e.printStackTrace();
         }
       }
       board = deepCopy(oldBoard);
-      if(oldPassantSquare == null){
+      if (oldPassantSquare == null) {
         passantSquare = null;
-      } else{
-      passantSquare = oldPassantSquare.clone();
+      } else {
+        passantSquare = oldPassantSquare.clone();
       }
       castlingRights = oldCastlingRights.clone();
     }
@@ -154,13 +183,13 @@ class Board {
     return moves;
   }
   //generatesAllMoves posssible for the board(every piece on board of correct color
-  private ArrayList<Move> generateAllMoves(int col){
+  private ArrayList<Move> generateAllMoves(int col) {
     ArrayList<Move> moves = new ArrayList<Move>();
-    for(int r = 0; r < 8; r++){
-      for(int c = 0; c < 8; c++){
-        int[] square = {r,c};
+    for (int r = 0; r < 8; r++) {
+      for (int c = 0; c < 8; c++) {
+        int[] square = {r, c};
         Piece piece = board[r][c];
-        if(piece != null && piece.getColor() == col){
+        if (piece != null && piece.getColor() == col) {
           moves.addAll(piece.generateMoves(this, square));
         }
       }
@@ -168,7 +197,7 @@ class Board {
     return moves;
   }
   //get the color of the piece being moved
-  private int getMoveColor(Move move){
+  private int getMoveColor(Move move) {
     int[] start = move.getStart();
     int col = board[start[0]][start[1]].getColor();
     return col;
@@ -179,7 +208,7 @@ class Board {
     //ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
     int[] start = move.getStart();
     ArrayList<Move> possibleMoves = generateMoves(new int[]{start[0], start[1]});
-    for (Move possibleMove : possibleMoves){
+    for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
       }
@@ -255,22 +284,22 @@ class Board {
     fullmoveclock = Integer.parseInt(fenString[5]);
   }
   //print the board
-  public Piece[][] deepCopy(Piece[][] board){
+  public Piece[][] deepCopy(Piece[][] board) {
     Piece[][] out = new Piece[board.length][board[0].length];
-    for(int i = 0; i < out.length; i++){
+    for (int i = 0; i < out.length; i++) {
       out[i] = Arrays.copyOf(board[i], board[i].length);
     }
     return out;
   }
-  void registerClick(int x, int y){
-      if (firstClick) {
+  void registerClick(int x, int y) {
+    if (firstClick) {
       row1 = y/100;
       col1 = x/100;
-      if(board[row1][col1] != null && board[row1][col1].getColor() == activePlayer){
+      if (board[row1][col1] != null && board[row1][col1].getColor() == activePlayer) {
         firstClick = false;
         ArrayList<Move> possibleMoves = generateMoves(new int[]{row1, col1});
         highlightedSquares.add(new int[]{row1, col1});
-        for(Move move: possibleMoves){
+        for (Move move : possibleMoves) {
           int[] target = move.getTarget();
           highlightedSquares.add(target);
         }
@@ -279,11 +308,10 @@ class Board {
       row2 = y/100;
       col2 = x/100;
       highlightedSquares = new ArrayList<int[]>();
-      if(row2 == row1 && col2 == col1){
+      if (row2 == row1 && col2 == col1) {
         firstClick = true;
-      }
-      else {
-        makeLegalMove(new Move(new int[]{row1, col1},new int[]{row2, col2}));
+      } else {
+        makeLegalMove(new Move(new int[]{row1, col1}, new int[]{row2, col2}));
         firstClick = true;
       }
     }
@@ -292,9 +320,9 @@ class Board {
     String out = "";
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        if(board[i][j] != null){
+        if (board[i][j] != null) {
           out += board[i][j] + " ";
-        } else{
+        } else {
           out += "- ";
         }
       }
@@ -302,6 +330,6 @@ class Board {
     }
     return out;
   }
-  public void castlingRights(){
-      }
+  public void castlingRights() {
+  }
 }
