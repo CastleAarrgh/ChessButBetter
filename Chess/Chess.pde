@@ -108,11 +108,11 @@ void mouseClicked() {
   }
 }
 void mousePressed() {
-  if (board.promote) {
+  if (menu == GAME){
+  if (board.promote==true) {
     int x = round(mouseX/ (width/4)-0.5);
     if (board.activePlayer!=Board.WHITE) {
       if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(1);
-      ;
       if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (1);
       if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop(1);
       if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (1);
@@ -122,5 +122,6 @@ void mousePressed() {
       if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
       if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (-1);
     }
+  }
   }
 }

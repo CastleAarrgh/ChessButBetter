@@ -226,8 +226,8 @@ class Board {
     return newMoves;
   }
   //generates all possible moves for one piece
-  private ArrayList<Move> generateMoves(int[] start) {
-    ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
+ private ArrayList<Move> generateMoves(int[] start) {                                 //PROBLEM PART
+    ArrayList<Move> moves = board[start[0]][start[1]].generateAllMoves(start);   //PROBLEM SECTION
     moves = removeChecks(moves);
     return moves;
   }
