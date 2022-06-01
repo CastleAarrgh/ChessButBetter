@@ -17,7 +17,7 @@ int secondTimer = millis();
 Board board;
 Timer timer;
 ArrayList<Button> buttons = new ArrayList<Button>();
-void setup(){
+void setup() {
   menu = GAMESELECT;
   //Board board = new Chess960();
   //System.out.println(board);
@@ -28,25 +28,25 @@ void setup(){
   buttons.add(new Button("Antichess", 20, 460, COMPUTERSELECT, ANTICHESS, OFF));
   timer = new Timer(300, 300);
 }
-void draw(){
+void draw() {
   //println(menu);
   background(255);
   //menu controlling
-  for(Button button: buttons){
+  for (Button button : buttons) {
     button.displayButton();
   }
   //println(gamemode);
-  if(menu == GAME){
-    if(board == null){
-      if(gamemode == CHESS){
+  if (menu == GAME) {
+    if (board == null) {
+      if (gamemode == CHESS) {
         board = new Board();
       }
-      if(gamemode == CHESS960){
+      if (gamemode == CHESS960) {
         board = new Chess960();
       }
     }
-    board.displayBoard(800,800);
-    if(millis() - secondTimer >= 1000){
+    board.displayBoard(800, 800);
+    if (millis() - secondTimer >= 1000) {
       timer.tick();
       secondTimer = millis();
     }
@@ -60,26 +60,26 @@ void draw(){
 }
 void mouseClicked() {
   /*if(menu == GAMESELECT){
-    println("going");
-    if(mouseX > 20 && mouseX < 780 && mouseY > 20 && mouseY < 220){
-      menu = INPUTSELECT;
-      mode = CHESS;
-    }
-  }
-  if(menu == INPUTSELECT){
-    if(mouseX > 20 && mouseX < 780 && mouseY > 240 && mouseY < 440) menu = CHESS;
-  }*/
-  if(menu == GAME && computer == OFF){
+   println("going");
+   if(mouseX > 20 && mouseX < 780 && mouseY > 20 && mouseY < 220){
+   menu = INPUTSELECT;
+   mode = CHESS;
+   }
+   }
+   if(menu == INPUTSELECT){
+   if(mouseX > 20 && mouseX < 780 && mouseY > 240 && mouseY < 440) menu = CHESS;
+   }*/
+  if (menu == GAME && computer == OFF) {
     Piece[][] pieces = board.getBoard();
-    if(board.registerClick(mouseX, mouseY)){
+    if (board.registerClick(mouseX, mouseY)) {
       timer.swap();
     }
   }
-  if(menu == GAME && computer == ON){
-    if(board.registerClick(mouseX, mouseY)){
-      if(board.isEnded()){
-        board.gameOver();
-      } else{
+  if (menu == GAME && computer == ON) {
+    if (board.registerClick(mouseX, mouseY)) {
+      if (board.isEnded()) {
+        board.GameOver();
+      } else {
         ArrayList<Move> possibleMoves = board.generateLegalMoves(board.activePlayer);
         int randNum = (int)random(possibleMoves.size());
         Move randomMove = possibleMoves.get(randNum);
@@ -87,8 +87,8 @@ void mouseClicked() {
       }
     }
   }
-  for(Button button: buttons){
-    if(button.inBounds(mouseX, mouseY)){
+  for (Button button : buttons) {
+    if (button.inBounds(mouseX, mouseY)) {
       int[] newScreen = button.click();
       menu = newScreen[0];
       gamemode = newScreen[1];
@@ -96,15 +96,15 @@ void mouseClicked() {
       buttons = new ArrayList<Button>();
     }
   }
-  if(menu == COMPUTERSELECT){
+  if (menu == COMPUTERSELECT) {
     buttons.add(new Button("Play With Friend", 20, 20, GAME, gamemode, OFF));
     buttons.add(new Button("Play With Computer", 20, 240, GAME, gamemode, ON));
   }
-  if(menu == INPUTSELECT){
+  if (menu == INPUTSELECT) {
     buttons.add(new Button("Play From Start", 20, 20, GAME, gamemode, computer));
     buttons.add(new Button("Play From Position", 20, 240, FENINPUT, gamemode, computer));
   }
-  if(menu == FENINPUT){
+  if (menu == FENINPUT) {
   }
 }
 void mousePressed() {
@@ -112,11 +112,10 @@ void mousePressed() {
     int x = round(mouseX/ (width/4)-0.5);
     if (board.activePlayer!=Board.WHITE) {
       if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(1);
-;
+      ;
       if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (1);
       if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop(1);
       if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (1);
-
     } else {
       if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(-1);
       if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (-1);
@@ -124,4 +123,4 @@ void mousePressed() {
       if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (-1);
     }
   }
-  }
+}
