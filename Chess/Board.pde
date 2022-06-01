@@ -51,7 +51,7 @@ class Board {
     rect(4*width/8, 0, 2*width/8, height);
     rect(6*width/8, 0, 2*width/8, height);
     if (activePlayer!=Board.WHITE) {
-      image(Piece.getPieceImage(), 0.5*width/8, 3.5*height/8);
+      image(wQueen, 0.5*width/8, 3.5*height/8);
       image(wRook, 2.5*width/8, 3.5*height/8);
       image(wBishop, 4.5*width/8, 3.5*height/8);
       image(wKnight, 6.5*width/8, 3.5*height/8);
