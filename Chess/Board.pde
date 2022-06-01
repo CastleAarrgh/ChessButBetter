@@ -36,7 +36,7 @@ class Board {
       Piece piece2 = board[0][j];
       //checking to see if the pawn is promoted works, getting the pawn to promote doesn't
       if (piece.getType() == 'p'||piece2.getType() == 'p') {
-        print("promoted");
+      //  print("promoted");
         promote = true;
         promoteY = j;
       }
@@ -46,20 +46,20 @@ class Board {
     if (promote && !gameOver) {
       stroke(2);
       fill(200, 100);
-      rect(0, 0, 2*width/8, height);
-      rect(2*width/8, 0, 2*width/8, height);
-      rect(4*width/8, 0, 2*width/8, height);
-      rect(6*width/8, 0, 2*width/8, height);
+      rect(0, 0, 2*800/8, 800);
+      rect(2*800/8, 0, 2*800/8, 800);
+      rect(4*800/8, 0, 2*800/8, 800);
+      rect(6*800/8, 0, 2*800/8, 800);
       if (activePlayer!=Board.WHITE) {
-        image(wQueen, 0.5*width/8, 3.5*height/8);
-        image(wRook, 2.5*width/8, 3.5*height/8);
-        image(wBishop, 4.5*width/8, 3.5*height/8);
-        image(wKnight, 6.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/WhiteQueen.png"), 0.5*800/8, 3.5*800/8);
+        image(loadImage("Pieces/WhiteRook.png"), 2.5*800/8, 3.5*800/8);
+        image(loadImage("Pieces/WhiteBishop.png"), 4.5*800/8, 3.5*800/8);
+        image(loadImage("Pieces/WhiteKnight.png"), 6.5*800/8, 3.5*800/8);
       } else {
-        image(bQueen, 0.5*width/8, 3.5*height/8);
-        image(bRook, 2.5*width/8, 3.5*height/8);
-        image(bBishop, 4.5*width/8, 3.5*height/8);
-        image(bKnight, 6.5*width/8, 3.5*height/8);
+        image(loadImage("Pieces/BlackQueen.png"), 0.5*800/8, 3.5*800/8);
+        image(loadImage("Pieces/BlackRook.png"), 2.5*800/8, 3.5*800/8);
+        image(loadImage("Pieces/BlackBishop.png"), 4.5*800/8, 3.5*800/8);
+        image(loadImage("Pieces/BlackKnight.png"), 6.5*800/8, 3.5*800/8);
       }
       noStroke();
     }
@@ -109,6 +109,7 @@ class Board {
           }
         }
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i*800/8, j*800/8, squareSize, squareSize);
+        promoteselect();
         ispromoted();
       }
     }
