@@ -57,7 +57,7 @@ void draw(){
     fill(255);
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
-    if (true || board.isEnded()){
+    if (board.isEnded()){
       board.gameOver();
       if(buttons.size() == 0){
         buttons.add(new Button("Main Menu", 250, 400, 300, 100, 50, color(111,111,111, 220), GAMESELECT, gamemode, COMPUTER));
