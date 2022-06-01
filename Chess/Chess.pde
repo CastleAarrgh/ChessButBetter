@@ -24,11 +24,11 @@ void setup(){
   //System.out.println(board);
   //board.displayBoard();
   size(1000, 800);
+  timer = new Timer(300, 300);
   buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
   buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
   buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
   buttons.add(new Button("Chess 2.0", 20, 590, COMPUTERSELECT, CHESS20, OFF));
-  timer = new Timer(300, 300);
 }
 void draw(){
   //println(menu);
@@ -57,10 +57,10 @@ void draw(){
     fill(255);
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
-    if (board.isEnded()){
+    if (true || board.isEnded()){
       board.gameOver();
       if(buttons.size() == 0){
-        buttons.add(new Button("Main Menu", 400, 500, 200, 100, 50, GAMESELECT, gamemode, COMPUTER));
+        buttons.add(new Button("Main Menu", 250, 400, 300, 100, 50, color(111,111,111, 220), GAMESELECT, gamemode, COMPUTER));
       }
     }
   }
@@ -75,16 +75,6 @@ void draw(){
   }
 }
 void mouseClicked() {
-  /*if(menu == GAMESELECT){
-    println("going");
-    if(mouseX > 20 && mouseX < 780 && mouseY > 20 && mouseY < 220){
-      menu = INPUTSELECT;
-      mode = CHESS;
-    }
-  }
-  if(menu == INPUTSELECT){
-    if(mouseX > 20 && mouseX < 780 && mouseY > 240 && mouseY < 440) menu = CHESS;
-  }*/
   if(menu == GAME && computer == OFF){
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
@@ -103,8 +93,11 @@ void mouseClicked() {
       }
     }
   }
-  for(Button button: buttons){
+   for(Button button: buttons){
     if(button.inBounds(mouseX, mouseY)){
+      if(menu == GAME && board != null){
+        menu = GAMESELECT;
+      }
       int[] newScreen = button.click();
       menu = newScreen[0];
       gamemode = newScreen[1];
@@ -119,6 +112,12 @@ void mouseClicked() {
   if(menu == INPUTSELECT){
     buttons.add(new Button("Play From Start", 20, 20, GAME, gamemode, computer));
     buttons.add(new Button("Play From Position", 20, 240, FENINPUT, gamemode, computer));
+  }
+  if(menu == GAMESELECT){
+    buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
+    buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
+    buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
+    buttons.add(new Button("Chess 2.0", 20, 590, COMPUTERSELECT, CHESS20, OFF));
   }
   if(menu == FENINPUT){
   }

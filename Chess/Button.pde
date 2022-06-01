@@ -8,6 +8,7 @@ class Button{
    int mode;
    int computerOn;
    int fontSize = 90;
+   int col = color(111);
    Button(String text, int x, int y, int menu, int mode, int computerOn){
      this.text = text;
      this.x = x;
@@ -16,7 +17,7 @@ class Button{
      this.mode = mode;
      this.computerOn = computerOn;
    }
-    Button(String text, int x, int y, int buttonWidth, int buttonHeight, int fontSize,  int menu, int mode, int computerOn){
+    Button(String text, int x, int y, int buttonWidth, int buttonHeight, int fontSize, color c,  int menu, int mode, int computerOn){
      this.text = text;
      this.x = x;
      this.y = y;
@@ -25,10 +26,11 @@ class Button{
      this.buttonWidth = buttonWidth;
      this.buttonHeight = buttonHeight;
      this.fontSize = fontSize;
+     this.col = c;
      this.computerOn = computerOn;
    }
    public void displayButton(){
-     fill(111);
+     fill(col);
      textSize(fontSize);
      rect(x, y, buttonWidth, buttonHeight);
      fill(0);
