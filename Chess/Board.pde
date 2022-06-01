@@ -24,7 +24,7 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>//
    */
   Board(String startingFen) {
     importFEN(startingFen);
@@ -42,6 +42,40 @@ class Board {
     }
   }
   }
+  public void promoteselect(){
+   if (promote && !gameOver) {
+    stroke(2);
+    fill(200, 100);
+    rect(0, 0, 2*width/8, height);
+    rect(2*width/8, 0, 2*width/8, height);
+    rect(4*width/8, 0, 2*width/8, height);
+    rect(6*width/8, 0, 2*width/8, height);
+    if (activePlayer!=Board.WHITE) {
+      image(Piece.getPieceImage(), 0.5*width/8, 3.5*height/8);
+      image(wRook, 2.5*width/8, 3.5*height/8);
+      image(wBishop, 4.5*width/8, 3.5*height/8);
+      image(wKnight, 6.5*width/8, 3.5*height/8);
+    } else {
+      image(bQueen, 0.5*width/8, 3.5*height/8);
+      image(bRook, 2.5*width/8, 3.5*height/8);
+      image(bBishop, 4.5*width/8, 3.5*height/8);
+      image(bKnight, 6.5*width/8, 3.5*height/8);
+    }
+    noStroke();
+  }
+  }
+//  f (board.activePlayer!=Board.WHITE) {
+//      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(1);
+//;
+//      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (1);
+//      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop(1);
+//      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (1);
+//    } else {
+//      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(-1);
+//      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (-1);
+//      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
+//      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (-1);
+//    }
   
     //  Piece piece = board[start[0]][start[1]];
     //board[target[0]][target[1]] = piece;
