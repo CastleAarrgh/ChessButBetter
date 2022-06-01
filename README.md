@@ -30,4 +30,5 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     5/28 - started work on promotion, check logic
     5/29 - started work on castling
     5/30 - working on promoting, checkmate, finished notation, demo branch
+    5/31 - added promotion menu to choose which piece the pawn is going to promote to, fixing nullpointerexceptions in board
     
