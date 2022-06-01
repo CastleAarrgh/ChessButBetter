@@ -19,7 +19,6 @@ void draw(){
   //menu controlling
   if(menu == GAMESELECT){
     rect(20, 20, 760, 200);
-    text("Regular Chess.", 
     rect(20, 240, 760, 200);
     rect(20, 460, 760, 200);
   }
@@ -71,5 +70,5 @@ void mousePressed() {
       if (x == 2) board.board[down1][right1] = new Bishop (-1);
       if (x == 3) board.board[down1][right1] = new Knight (-1);
     }
-  }*/
+  }*/  
   }
