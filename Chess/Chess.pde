@@ -34,9 +34,6 @@ void draw(){
   //println(menu);
   background(255);
   //menu controlling
-  for(Button button: buttons){
-    button.displayButton();
-  }
   //println(gamemode);
   if(menu == GAME && gamemode != CHESSKERS){
     if(board == null){
@@ -60,13 +57,21 @@ void draw(){
     fill(255);
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
-    if (board.isEnded()) board.gameOver();
+    if (board.isEnded()){
+      board.gameOver();
+      if(buttons.size() == 0){
+        buttons.add(new Button("Main Menu", 400, 500, 200, 100, 50, GAMESELECT, gamemode, COMPUTER));
+      }
+    }
   }
   if(menu == GAME && gamemode == CHESSKERS){
     if(checkers == null){
       checkers = new Checkers(0, 0, 500);
     }
      checkers.displayBoard();
+  }
+  for(Button button: buttons){
+    button.displayButton();
   }
 }
 void mouseClicked() {
