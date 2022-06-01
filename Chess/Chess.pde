@@ -1,27 +1,33 @@
 int GAMESELECT = 0;
 int INPUTSELECT = 1;
 int FENINPUT = 2;
-int CHESS = 0;
-int COMPUTER = 1;
-int CHESS960 = 2;
-int ANTICHESS = 3;
-int CHESSKERS = 4;
-int mode = CHESS;
+int GAME = 3;
+int CHESS = 1;
+int COMPUTER = 2;
+int CHESS960 = 3;
+int ANTICHESS = 4;
+int CHESSKERS = 5;
+int gamemode = 0;
+int OFF = 0;
+int ON = 1;
+int computerOn = OFF;
 int menu;
 int secondTimer = millis();
 Board board;
+Chess960 chess960;
 Timer timer;
 ArrayList<Button> buttons = new ArrayList<Button>();
 void setup(){
   menu = GAMESELECT;
   board = new Board();
+  chess960 = new Chess960();
   //Board board = new Chess960();
   //System.out.println(board);
   //board.displayBoard();
   size(1000, 800);
-  buttons.add(new Button("Regular Chess", 20, 20, INPUTSELECT, CHESS));
-  buttons.add(new Button("Chess 960", 20, 20, INPUTSELECT, CHESS960));
-  buttons.add(new Button("Antichess", 20, 20, INPUTSELECT, ANTICHESS));
+  buttons.add(new Button("Regular Chess", 20, 20, INPUTSELECT, CHESS, OFF));
+  buttons.add(new Button("Chess 960", 20, 240, INPUTSELECT, CHESS960, OFF));
+  buttons.add(new Button("Antichess", 20, 460, INPUTSELECT, ANTICHESS, OFF));
   timer = new Timer(300, 300);
 }
 void draw(){
@@ -49,7 +55,7 @@ void draw(){
     rect(20, 420, 960, 200);
   }
   */
-  if(menu == CHESS){
+  if(gamemode == CHESS){
     board.displayBoard(800,800);
     if(millis() - secondTimer >= 1000){
       timer.tick();
@@ -61,13 +67,34 @@ void draw(){
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
   }
-  if(menu == COMPUTER){
+  if(gamemode == CHESS960){
+    chess960.displayBoard(800,800);
+    if(millis() - secondTimer >= 1000){
+      timer.tick();
+      secondTimer = millis();
+    }
+    fill(111);
+    rect(800, 200, 200, 400); 
+    fill(255);
+    text((int)timer.getBlackTime(), 850, 300);
+    text((int)timer.getWhiteTime(), 850, 500);
+  }
+  if(gamemode == COMPUTER){
+    println("hello");
     board.displayBoard(800, 800);
     fill(111);
     rect(800, 200, 200, 400); 
-  } */
+  }
 }
 void mouseClicked() {
+  for(Button button: buttons){
+    if(button.inBounds(mouseX, mouseY)){
+      int[] newScreen = button.click();
+      menu = newScreen[0];
+      gamemode = newScreen[1];
+      computerOn = newScreen[2];
+    }
+  }
   /*if(menu == GAMESELECT){
     println("going");
     if(mouseX > 20 && mouseX < 780 && mouseY > 20 && mouseY < 220){

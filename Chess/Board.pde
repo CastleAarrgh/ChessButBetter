@@ -56,7 +56,7 @@ class Board {
       fill(0);
       textSize(20);
       textAlign(CENTER);
-      text((char)('a'+i), 10 + i*100, 795);
+      text((char)('a'+i), 8 + i*100, 795);
     }
     for (int i = 0; i <8; i++) {
       fill(0);
