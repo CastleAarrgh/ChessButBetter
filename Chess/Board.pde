@@ -83,7 +83,38 @@ class Board {
   }
   //display game over screen
   public void gameOver() {
-    importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    textSize(50);
+    fill(255, 93, 98, 200);
+    if(isTie()){
+      text("It's a tie.", 400, 400);
+    } else if(activePlayer == WHITE){
+      text("Black Wins!", 400, 400);
+    } else{
+      text("White Wins!", 400, 400);
+    }
+    //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+  }
+  public int[] findPiece(char type, int col){
+    for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        Piece piece = board[i][j];
+        if(piece != null && piece.getType() == type && piece.getColor() == col){
+          return new int[]{i, j};
+        }
+      }
+    }
+    return new int[]{-1, -1};
+  }
+  private boolean isTie(){
+    ArrayList<Move> possibleResponses = generateLegalMoves(-activePlayer);
+    int[] kingPos = findPiece('k', activePlayer);
+    for(Move move: possibleResponses){
+      int[] target = move.getTarget();
+      if(Arrays.equals(target, kingPos)){
+        return false;
+      }
+    }
+    return true;
   }
   //make a move requested by the main if it is legal
   //if it's legal return true, else return false.

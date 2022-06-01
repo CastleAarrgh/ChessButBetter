@@ -60,7 +60,7 @@ void draw(){
     fill(255);
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
-    if (board.isEnded()) board = new Board();
+    if (board.isEnded()) board.gameOver();
   }
   if(menu == GAME && gamemode == CHESSKERS){
     if(checkers == null){
