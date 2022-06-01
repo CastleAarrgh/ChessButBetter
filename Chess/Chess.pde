@@ -70,7 +70,6 @@ void mouseClicked() {
    if(mouseX > 20 && mouseX < 780 && mouseY > 240 && mouseY < 440) menu = CHESS;
    }*/
   if (menu == GAME && computer == OFF) {
-    Piece[][] pieces = board.getBoard();
     if (board.registerClick(mouseX, mouseY)) {
       timer.swap();
     }
