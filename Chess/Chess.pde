@@ -6,7 +6,7 @@ int GAME = 4;
 int CHESS = 1;
 int COMPUTER = 2;
 int CHESS960 = 3;
-int ANTICHESS = 4;
+int CHESS20 = 4;
 int CHESSKERS = 5;
 int gamemode = 0;
 int OFF = 0;
@@ -27,7 +27,7 @@ void setup(){
   buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
   buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
   buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
-  buttons.add(new Button("Antichess", 20, 590, COMPUTERSELECT, ANTICHESS, OFF));
+  buttons.add(new Button("Chess 2.0", 20, 590, COMPUTERSELECT, CHESS20, OFF));
   timer = new Timer(300, 300);
 }
 void draw(){
@@ -45,6 +45,9 @@ void draw(){
       }
       if(gamemode == CHESS960){
         board = new Chess960();
+      }
+      if(gamemode == CHESS20){
+        board = new Chess2();
       }
     }
     board.displayBoard(800,800);

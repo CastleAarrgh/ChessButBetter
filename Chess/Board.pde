@@ -2,7 +2,7 @@ import java.util.*;
 class Board {
   final static int BLACK = -1;
   final static int WHITE = 1;
-  private Piece[][] board;
+  public Piece[][] board;
   private int[] passantSquare;
   //castlingRights[0]: White Kingside, castlingRights[1]: White Queenside, [2]: Black Kingside, [3]: Black Queenside
   private boolean[] castlingRights;
@@ -305,7 +305,6 @@ class Board {
         firstClick = true;
       } else {
         Move attemptedMove = new Move(new int[]{row1, col1}, new int[]{row2, col2});
-        println(attemptedMove);
         firstClick = true;
         if (makeLegalMove(attemptedMove)) {
           return true;
