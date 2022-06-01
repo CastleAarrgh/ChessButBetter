@@ -30,6 +30,7 @@ class Button{
      this.computerOn = computerOn;
    }
    public void displayButton(){
+     textAlign(LEFT);
      fill(col);
      textSize(fontSize);
      rect(x, y, buttonWidth, buttonHeight);

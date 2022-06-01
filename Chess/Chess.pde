@@ -96,6 +96,7 @@ void mouseClicked() {
    for(Button button: buttons){
     if(button.inBounds(mouseX, mouseY)){
       if(menu == GAME && board != null){
+        board = null;
         menu = GAMESELECT;
       }
       int[] newScreen = button.click();

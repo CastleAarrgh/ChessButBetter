@@ -83,15 +83,15 @@ class Board {
   }
   //display game over screen
   public void gameOver() {
-    textAlign(LEFT);
+    textAlign(CENTER);
     textSize(50);
     fill(255, 93, 98, 200);
     if(isTie()){
-      text("It's a tie.", 300, 400);
+      text("It's a tie.", 400, 400);
     } else if(activePlayer == WHITE){
-      text("Black Wins!", 300, 400);
+      text("Black Wins!", 400, 400);
     } else{
-      text("White Wins!", 300, 400);
+      text("White Wins!", 400, 400);
     }
     //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
