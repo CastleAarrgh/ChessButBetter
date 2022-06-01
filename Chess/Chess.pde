@@ -36,7 +36,7 @@ void draw(){
     button.displayButton();
   }
   //println(gamemode);
-  if(menu == GAME){
+  if(menu == GAME && gamemode != CHESSKERS){
     if(board == null){
       if(gamemode == CHESS){
         board = new Board();
