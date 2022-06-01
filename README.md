@@ -20,6 +20,8 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     5/27 - Started fixing bugs with Piece move logic. Knight moves are working and pawn moves are mostly working.
     5/28 - Fixed logic for all regular pieces(castling and checking are still not done)
     5/29 - implemented check
+    5/30 - refactored some code, added in piece highlighting, and fixed various bugs
+    5/31 - added a timer and added a simple UI.
   ### Jason
     5/23 - figured out git branching, finished method displaying board background in board class
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
@@ -28,4 +30,5 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     5/28 - started work on promotion, check logic
     5/29 - started work on castling
     5/30 - working on promoting, checkmate, finished notation, demo branch
+    5/31 - added promotion menu to choose which piece the pawn is going to promote to, fixing nullpointerexceptions in board
     
