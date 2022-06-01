@@ -1,16 +1,17 @@
 int GAMESELECT = 0;
 int INPUTSELECT = 1;
 int FENINPUT = 2;
-int CHESS = 3;
-int COMPUTER = 4;
-int CHESS960 = 5;
-int ANTICHESS = 6;
-int CHESSKERS = 7;
-int gamemode = CHESS;
+int CHESS = 0;
+int COMPUTER = 1;
+int CHESS960 = 2;
+int ANTICHESS = 3;
+int CHESSKERS = 4;
+int mode = CHESS;
 int menu;
 int secondTimer = millis();
 Board board;
 Timer timer;
+ArrayList<Button> buttons = new ArrayList<Button>();
 void setup(){
   menu = GAMESELECT;
   board = new Board();
@@ -18,6 +19,9 @@ void setup(){
   //System.out.println(board);
   //board.displayBoard();
   size(1000, 800);
+  buttons.add(new Button("Regular Chess", 20, 20, INPUTSELECT, CHESS));
+  buttons.add(new Button("Chess 960", 20, 20, INPUTSELECT, CHESS960));
+  buttons.add(new Button("Antichess", 20, 20, INPUTSELECT, ANTICHESS));
   timer = new Timer(300, 300);
 }
 void draw(){
@@ -25,18 +29,26 @@ void draw(){
   //println(menu);
   background(255);
   //menu controlling
-  if(menu == GAMESELECT){
+  for(Button button: buttons){
+    button.displayButton();
+  }
+  /*if(menu == GAMESELECT){
     fill(238, 238, 210);
     rect(20, 20, 760, 200);
-    text("Regular Chess", 0, 0);
     rect(20, 240, 760, 200);
     rect(20, 460, 760, 200);
+    textSize(100);
+    fill(0);
+    text("Regular Chess", 50, 180);
+    text("Chess 960", 50, 400);
+    text("Antichess", 50, 620);
   }
   if(menu == INPUTSELECT){
     fill(238, 238, 210);
     rect(20, 180, 960, 200);
     rect(20, 420, 960, 200);
   }
+  */
   if(menu == CHESS){
     board.displayBoard(800,800);
     if(millis() - secondTimer >= 1000){
@@ -53,16 +65,19 @@ void draw(){
     board.displayBoard(800, 800);
     fill(111);
     rect(800, 200, 200, 400); 
-  }  
+  } */
 }
 void mouseClicked() {
-  if(menu == GAMESELECT){
+  /*if(menu == GAMESELECT){
     println("going");
-    if(mouseX > 20 && mouseX < 780 && mouseY > 20 && mouseY < 220) menu = INPUTSELECT;
+    if(mouseX > 20 && mouseX < 780 && mouseY > 20 && mouseY < 220){
+      menu = INPUTSELECT;
+      mode = CHESS;
+    }
   }
   if(menu == INPUTSELECT){
     if(mouseX > 20 && mouseX < 780 && mouseY > 240 && mouseY < 440) menu = CHESS;
-  }
+  }*/
   if(menu == CHESS){
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
