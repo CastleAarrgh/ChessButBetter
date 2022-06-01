@@ -2,15 +2,17 @@ int GAMESELECT = 0;
 int INPUTSELECT = 1;
 int FENINPUT = 2;
 int CHESS = 3;
-int CHESS960 = 4;
-int ANTICHESS = 5;
-int CHESSKERS = 6;
+int COMPUTER = 4;
+int CHESS960 = 5;
+int ANTICHESS = 6;
+int CHESSKERS = 7;
+int gamemode = CHESS;
 int menu;
 int secondTimer = millis();
 Board board;
 Timer timer;
 void setup(){
-  menu = CHESS;
+  menu = GAMESELECT;
   board = new Board();
   //Board board = new Chess960();
   //System.out.println(board);
@@ -24,13 +26,16 @@ void draw(){
   background(255);
   //menu controlling
   if(menu == GAMESELECT){
+    fill(238, 238, 210);
     rect(20, 20, 760, 200);
+    text("Regular Chess", 0, 0);
     rect(20, 240, 760, 200);
     rect(20, 460, 760, 200);
   }
   if(menu == INPUTSELECT){
-    rect(20, 20, 760, 200);
-    rect(20, 240, 760, 200);
+    fill(238, 238, 210);
+    rect(20, 180, 960, 200);
+    rect(20, 420, 960, 200);
   }
   if(menu == CHESS){
     board.displayBoard(800,800);
@@ -44,6 +49,11 @@ void draw(){
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
   }
+  if(menu == COMPUTER){
+    board.displayBoard(800, 800);
+    fill(111);
+    rect(800, 200, 200, 400); 
+  }  
 }
 void mouseClicked() {
   if(menu == GAMESELECT){
@@ -57,7 +67,19 @@ void mouseClicked() {
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
       timer.swap();
-    };
+    }
+  }
+  if(menu == COMPUTER){
+    if(board.registerClick(mouseX, mouseY)){
+      if(board.isEnded()){
+        board.gameOver();
+      } else{
+        ArrayList<Move> possibleMoves = board.generateLegalMoves(board.activePlayer);
+        int randNum = (int)random(possibleMoves.size());
+        Move randomMove = possibleMoves.get(randNum);
+        board.makeLegalMove(randomMove);
+      }
+    }
   }
 }
 void mousePressed() {
