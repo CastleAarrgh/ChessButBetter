@@ -1,4 +1,4 @@
-public class Bishop extends Piece{
+  public class Bishop extends Piece{
   public Bishop(int col){
     super(col, 'b');
   }
