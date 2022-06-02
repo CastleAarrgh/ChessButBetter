@@ -2,7 +2,7 @@ import java.util.*;
 class Board {
   final static int BLACK = -1;
   final static int WHITE = 1;
-  private Piece[][] board;
+  public Piece[][] board;
   private int[] passantSquare;
   //castlingRights[0]: White Kingside, castlingRights[1]: White Queenside, [2]: Black Kingside, [3]: Black Queenside
   private boolean[] castlingRights;
@@ -14,7 +14,7 @@ class Board {
   final private int squareSize = size / 8;
   public boolean firstClick = true; 
   public int row1, row2, col1, col2;
-  boolean promote = false;
+    boolean promote = false;
   boolean gameOver = false;
   int promoteX, promoteY;
   /*
@@ -23,13 +23,10 @@ class Board {
    */
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-  } 
- //<>//
-  Board(String startingFen) {
-    importFEN(startingFen);
   }
-
-  public void ispromoted() {
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>//
+   */
+    public void ispromoted() {
     for ( int j=0; j<8; j++) {
       Piece piece = board[7][j];
       Piece piece2 = board[0][j];
@@ -63,28 +60,9 @@ class Board {
       noStroke();
     }
   }
-  //  f (board.activePlayer!=Board.WHITE) {
-  //      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(1);
-  //;
-  //      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (1);
-  //      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop(1);
-  //      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (1);
-  //    } else {
-  //      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(-1);
-  //      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (-1);
-  //      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
-  //      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (-1);
-  //    }
-
-  //  Piece piece = board[start[0]][start[1]];
-  //board[target[0]][target[1]] = piece;
-  //board[start[0]][start[1]] = null;
-  //if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
-  //  board[start[0]][target[1]] = null;
-  //}
-
-
-
+  Board(String startingFen) {
+    importFEN(startingFen);
+  }
   // display the board background and the pieces
   public void displayBoard(int x, int y) {
     color Dark  = color(118, 150, 86);
@@ -106,8 +84,6 @@ class Board {
           }
         }
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i* squareSize, j* squareSize, squareSize, squareSize);
-        promoteselect();
-        ispromoted();
       }
     }
     displayNotation();
@@ -143,8 +119,40 @@ class Board {
     return generateLegalMoves(activePlayer).size() == 0;
   }
   //display game over screen
-  private void GameOver() {
-    text("Game Over", 48, 240);
+  public void gameOver() {
+    textAlign(CENTER);
+    textSize(50);
+    fill(255, 93, 98, 200);
+    if(isTie()){
+      text("It's a tie.", 400, 400);
+    } else if(activePlayer == WHITE){
+      text("Black Wins!", 400, 400);
+    } else{
+      text("White Wins!", 400, 400);
+    }
+    //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+  }
+  public int[] findPiece(char type, int col){
+    for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        Piece piece = board[i][j];
+        if(piece != null && piece.getType() == type && piece.getColor() == col){
+          return new int[]{i, j};
+        }
+      }
+    }
+    return new int[]{-1, -1};
+  }
+  private boolean isTie(){
+    ArrayList<Move> possibleResponses = generateLegalMoves(-activePlayer);
+    int[] kingPos = findPiece('k', activePlayer);
+    for(Move move: possibleResponses){
+      int[] target = move.getTarget();
+      if(Arrays.equals(target, kingPos)){
+        return false;
+      }
+    }
+    return true;
   }
   //make a move requested by the main if it is legal
   //if it's legal return true, else return false.
@@ -226,11 +234,13 @@ class Board {
     return newMoves;
   }
   //generates all possible moves for one piece
- private ArrayList<Move> generateMoves(int[] start) {                                 //PROBLEM PART
-    ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);   //PROBLEM SECTION
+  private ArrayList<Move> generateMoves(int[] start) {
+    ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     moves = removeChecks(moves);
     return moves;
   }
+  //generatesAllMoves posssible for the board(every piece on board of correct color)
+  //does not take check into account
   private ArrayList<Move> generateAllMoves(int col) {
     ArrayList<Move> moves = new ArrayList<Move>();
     for (int r = 0; r < 8; r++) {
@@ -363,9 +373,7 @@ class Board {
       if (row2 == row1 && col2 == col1) {
         firstClick = true;
       } else {
-        makeLegalMove(new Move(new int[]{row1, col1}, new int[]{row2, col2}));
         Move attemptedMove = new Move(new int[]{row1, col1}, new int[]{row2, col2});
-        println(attemptedMove);
         firstClick = true;
         if (makeLegalMove(attemptedMove)) {
           return true;
@@ -387,7 +395,5 @@ class Board {
       out += "\n";
     }
     return out;
-  }
-  public void castlingRights() {
   }
 }

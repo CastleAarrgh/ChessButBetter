@@ -3,7 +3,7 @@ class Button{
    int x;
    int y;
    int buttonWidth = 960;
-   int buttonHeight = 200;
+   int buttonHeight = 175;
    int menu;
    int mode;
    int computerOn;
@@ -17,10 +17,10 @@ class Button{
    }
    public void displayButton(){
      fill(111);
-     textSize(100);
+     textSize(90);
      rect(x, y, buttonWidth, buttonHeight);
      fill(0);
-     text(text, x + 30, y + 160);
+     text(text, x + 30, y + 150);
    }
    public boolean inBounds(int mousex, int mousey){
      return mousex > x && mousey > y && mousex < x + buttonWidth && mousey < y + buttonHeight;

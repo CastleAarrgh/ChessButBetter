@@ -15,6 +15,7 @@ int computer = OFF;
 int menu;
 int secondTimer = millis();
 Board board;
+Checkers checkers;
 Timer timer;
 ArrayList<Button> buttons = new ArrayList<Button>();
 void setup() {
@@ -24,8 +25,9 @@ void setup() {
   //board.displayBoard();
   size(1000, 800);
   buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
-  buttons.add(new Button("Chess 960", 20, 240, COMPUTERSELECT, CHESS960, OFF));
-  buttons.add(new Button("Antichess", 20, 460, COMPUTERSELECT, ANTICHESS, OFF));
+  buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
+  buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
+  buttons.add(new Button("Antichess", 20, 590, COMPUTERSELECT, ANTICHESS, OFF));
   timer = new Timer(300, 300);
 }
 void draw() {
@@ -36,9 +38,9 @@ void draw() {
     button.displayButton();
   }
   //println(gamemode);
-  if (menu == GAME) {
-    if (board == null) {
-      if (gamemode == CHESS) {
+  if(menu == GAME && gamemode != CHESSKERS){
+    if(board == null){
+      if(gamemode == CHESS){
         board = new Board();
       }
       if (gamemode == CHESS960) {
@@ -56,6 +58,12 @@ void draw() {
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
     if (board.isEnded()) board = new Board();
+  }
+  if(menu == GAME && gamemode == CHESSKERS){
+    if(checkers == null){
+      checkers = new Checkers(0, 0, 500);
+    }
+     checkers.displayBoard();
   }
 }
 void mouseClicked() {
@@ -77,7 +85,7 @@ void mouseClicked() {
   if (menu == GAME && computer == ON) {
     if (board.registerClick(mouseX, mouseY)) {
       if (board.isEnded()) {
-        board.GameOver();
+        board.gameOver();
       } else {
         ArrayList<Move> possibleMoves = board.generateLegalMoves(board.activePlayer);
         int randNum = (int)random(possibleMoves.size());
