@@ -129,6 +129,12 @@ class Board {
       return false;
     }
   }
+  public minimaxReturn minimax(int depth){
+    return new minimaxReturn(0, new Move(new int[]{0, 0}, new int[]{0,0}));
+  }
+  public void makeComputerMove(){
+    minimaxReturn res = minimax(3);
+  }
   //make move that is determined to be legal.
   private void makeMove(Move move) {
     int[] target = move.getTarget();
