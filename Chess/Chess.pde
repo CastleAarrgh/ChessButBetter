@@ -58,6 +58,13 @@ void draw() {
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
     if (board.isEnded()) board = new Board();
+    if(board.promote){
+          rectMode(CORNER);
+    rect(800, 0, 100,100);
+    rect(900, 0, 100, 100);
+    rect(800, 100,  100, 100);
+    rect( 900, 100, 100, 100);
+    }
   }
   if(menu == GAME && gamemode == CHESSKERS){
     if(checkers == null){
@@ -116,7 +123,8 @@ void mouseClicked() {
 }
 void mousePressed() {
   if (menu == GAME){
-  if (board.promote==true) {
+  if (board.promote) {
+  
     int x = round(mouseX/ (width/4)-0.5);
     if (board.activePlayer!=Board.WHITE) {
       if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(1);

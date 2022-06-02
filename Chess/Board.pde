@@ -85,6 +85,7 @@ class Board {
         }
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i* squareSize, j* squareSize, squareSize, squareSize);
       }
+      ispromoted();
     }
     displayNotation();
   }
