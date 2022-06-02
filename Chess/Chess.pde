@@ -38,9 +38,9 @@ void draw() {
     button.displayButton();
   }
   //println(gamemode);
-  if(menu == GAME && gamemode != CHESSKERS){
-    if(board == null){
-      if(gamemode == CHESS){
+  if (menu == GAME && gamemode != CHESSKERS) {
+    if (board == null) {
+      if (gamemode == CHESS) {
         board = new Board();
       }
       if (gamemode == CHESS960) {
@@ -58,19 +58,19 @@ void draw() {
     text((int)timer.getBlackTime(), 850, 300);
     text((int)timer.getWhiteTime(), 850, 500);
     if (board.isEnded()) board = new Board();
-    if(board.promote){
-          rectMode(CORNER);
-    rect(800, 0, 100,100);
-    rect(900, 0, 100, 100);
-    rect(800, 100,  100, 100);
-    rect( 900, 100, 100, 100);
+    if (board.promote) {
+      rectMode(CORNER);
+      rect(800, 0, 100, 100);
+      rect(900, 0, 100, 100);
+      rect(800, 100, 100, 100);
+      rect( 900, 100, 100, 100);
     }
   }
-  if(menu == GAME && gamemode == CHESSKERS){
-    if(checkers == null){
+  if (menu == GAME && gamemode == CHESSKERS) {
+    if (checkers == null) {
       checkers = new Checkers(0, 0, 500);
     }
-     checkers.displayBoard();
+    checkers.displayBoard();
   }
 }
 void mouseClicked() {
@@ -122,24 +122,24 @@ void mouseClicked() {
   }
 }
 public static boolean between(int variable, int minValueInclusive, int maxValueInclusive) {
-    return variable >= minValueInclusive && variable <= maxValueInclusive;
+  return variable >= minValueInclusive && variable <= maxValueInclusive;
 }
 
 void mousePressed() {
-  if (menu == GAME){
-  if (board.promote) {
- 
-    if (board.activePlayer!=Board.WHITE) {
-      if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Queen(1);
-      if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Rook (1);
-      if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Bishop(1);
-      if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Knight (1);
-    } else {
-            if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Queen(-1);
-     if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  board.board[board.promoteX][board.promoteY] = new Rook (-1);
-    if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
-      if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Knight (-1);
+  if (menu == GAME) {
+    if (board.promote) {
+
+      if (board.activePlayer!=Board.WHITE) {
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Queen(1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Rook (1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Bishop(1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Knight (1);
+      } else {
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Queen(-1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  board.board[board.promoteX][board.promoteY] = new Rook (-1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Knight (-1);
+      }
     }
-  }
   }
 }
