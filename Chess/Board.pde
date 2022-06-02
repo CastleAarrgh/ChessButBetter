@@ -21,7 +21,7 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>//
    */
   Board(String startingFen) {
     importFEN(startingFen);
@@ -87,11 +87,11 @@ class Board {
     textSize(50);
     fill(255, 93, 98, 200);
     if(isTie()){
-      text("It's a tie.", 400, 400);
+      text("It's a tie.", 400, 380);
     } else if(activePlayer == WHITE){
-      text("Black Wins!", 400, 400);
+      text("Black Wins!", 400, 380);
     } else{
-      text("White Wins!", 400, 400);
+      text("White Wins!", 400, 380);
     }
     //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
