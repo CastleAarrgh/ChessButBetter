@@ -121,21 +121,24 @@ void mouseClicked() {
   if (menu == FENINPUT) {
   }
 }
+public static boolean between(int variable, int minValueInclusive, int maxValueInclusive) {
+    return variable >= minValueInclusive && variable <= maxValueInclusive;
+}
+
 void mousePressed() {
   if (menu == GAME){
   if (board.promote) {
-  
-    int x = round(mouseX/ (width/4)-0.5);
+ 
     if (board.activePlayer!=Board.WHITE) {
-      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(1);
-      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (1);
-      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop(1);
-      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (1);
+      if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Queen(1);
+      if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Rook (1);
+      if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Bishop(1);
+      if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Knight (1);
     } else {
-      if (x == 0) board.board[board.promoteX][board.promoteY] = new Queen(-1);
-      if (x == 1) board.board[board.promoteX][board.promoteY] = new Rook (-1);
-      if (x == 2) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
-      if (x == 3) board.board[board.promoteX][board.promoteY] = new Knight (-1);
+            if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) board.board[board.promoteX][board.promoteY] = new Queen(-1);
+     if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  board.board[board.promoteX][board.promoteY] = new Rook (-1);
+    if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Bishop (-1);
+      if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) board.board[board.promoteX][board.promoteY] = new Knight (-1);
     }
   }
   }
