@@ -16,7 +16,7 @@ class Chess2 extends Board{
               newPiece = new FairyPawn(colour);
               break;
             case 'n':
-              newPiece = new Knight(colour);
+              newPiece = new SuperKnight(colour);
               break;
             case 'b':
               newPiece = new Bishop(colour);
@@ -37,13 +37,10 @@ class Chess2 extends Board{
     }
   }
   private void makeMove(Move move){
-    println("making move");
     super.makeMove(move);
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
-    println(piece.getType());
-    println(getPassant());
     if(getPassant() != null){
       println(Arrays.equals(target, getPassant()));
     }
