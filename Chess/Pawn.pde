@@ -21,7 +21,7 @@ class Pawn extends Piece{
       target = new int[]{square[0] - col * 2, square[1]};
       if(inBounds(target)){
         Piece piece = pieceOn(board, target);
-        if(piece == null){
+        if(piece == null && board[(square[0] + target[0]) / 2][square[1]] == null){
           moves.add(new Move(square, target));
         }
       }

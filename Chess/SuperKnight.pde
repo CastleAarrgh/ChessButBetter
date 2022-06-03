@@ -18,9 +18,4 @@ class SuperKnight extends Knight{
     }
     return moves;
     }
-    for(Move move: newMoves){
-      moves.add(new Move(start, move.getTarget()));
-    }
-    return moves;
-  }
 }

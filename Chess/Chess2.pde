@@ -25,7 +25,7 @@ class Chess2 extends Board{
               newPiece = new UltraQueen(colour);
               break;
             case 'k':
-              newPiece = new King(colour);
+              newPiece = new MegaKing(colour);
               break;
             default:
               newPiece = new Rook(colour);
@@ -42,11 +42,15 @@ class Chess2 extends Board{
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
     if(getPassant() != null){
-      println(Arrays.equals(target, getPassant()));
+      //println(Arrays.equals(target, getPassant()));
     }
     if (piece.getType() == 'q' && getPassant() != null && Arrays.equals(target, getPassant())) {
-      println("passant found");
       board[start[0]][target[1]] = null;
+    }
+    if(piece.getType() == 'k'){
+      MegaKing king = (MegaKing)piece;
+      println(king.hasEscape);
+      king.setEscaped();
     }
   }
 }
