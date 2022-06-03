@@ -136,7 +136,7 @@ class Board {
     minimaxReturn res = minimax(3);
   }
   //make move that is determined to be legal.
-  private void makeMove(Move move) {
+  public void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];

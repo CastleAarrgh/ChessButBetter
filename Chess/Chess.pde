@@ -75,7 +75,7 @@ void mouseClicked() {
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
       timer.swap();
-      println(board instanceof Chess2);
+      //println(board instanceof Chess2);
     }
   }
   if(menu == GAME && computer == ON){

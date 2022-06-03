@@ -1,5 +1,5 @@
 class MegaKing extends King{
-  boolean hasEscape;
+  public boolean hasEscape;
   public MegaKing(int col){
     super(col);
     hasEscape = true;
@@ -17,8 +17,5 @@ class MegaKing extends King{
       }
     }
   return moves;
-  }
-  public void setEscaped(){
-    hasEscape = false;
   }
 }
