@@ -69,7 +69,6 @@ class Board {
         }
         if (board[j][i] != null) image(board[j][i].getPieceImage(), i* squareSize, j* squareSize, squareSize, squareSize);
       }
-      ispromoted();
     }
     displayNotation();
   }
@@ -158,6 +157,9 @@ class Board {
     Piece piece = board[start[0]][start[1]];
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
+    if(piece.getType() == 'p'){
+      ispromoted();
+    }
     if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
       board[start[0]][target[1]] = null;
     }
