@@ -16,13 +16,13 @@ class Chess2 extends Board{
               newPiece = new FairyPawn(colour);
               break;
             case 'n':
-              newPiece = new Knight(colour);
+              newPiece = new SuperKnight(colour);
               break;
             case 'b':
               newPiece = new Bishop(colour);
               break;
             case 'q':
-              newPiece = new Queen(colour);
+              newPiece = new UltraQueen(colour);
               break;
             case 'k':
               newPiece = new King(colour);
@@ -34,6 +34,19 @@ class Chess2 extends Board{
            board[i][j] = newPiece;
         }
       }
+    }
+  }
+  private void makeMove(Move move){
+    super.makeMove(move);
+    int[] target = move.getTarget();
+    int[] start = move.getStart();
+    Piece piece = board[start[0]][start[1]];
+    if(getPassant() != null){
+      println(Arrays.equals(target, getPassant()));
+    }
+    if (piece.getType() == 'q' && getPassant() != null && Arrays.equals(target, getPassant())) {
+      println("passant found");
+      board[start[0]][target[1]] = null;
     }
   }
 }

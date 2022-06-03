@@ -52,11 +52,7 @@ void draw(){
       timer.tick();
       secondTimer = millis();
     }
-    fill(111);
-    rect(800, 200, 200, 400); 
-    fill(255);
-    text((int)timer.getBlackTime(), 850, 300);
-    text((int)timer.getWhiteTime(), 850, 500);
+    timer.displayTimer();
     if (board.isEnded()){
       board.gameOver();
       if(buttons.size() == 0){
@@ -79,6 +75,7 @@ void mouseClicked() {
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
       timer.swap();
+      println(board instanceof Chess2);
     }
   }
   if(menu == GAME && computer == ON){
