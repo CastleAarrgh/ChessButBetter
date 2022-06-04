@@ -86,7 +86,7 @@ void mouseClicked() {
         ArrayList<Move> possibleMoves = board.generateLegalMoves(board.activePlayer);
         int randNum = (int)random(possibleMoves.size());
         Move randomMove = possibleMoves.get(randNum);
-        board.makeLegalMove(randomMove);
+        //board.makeLegalMove(randomMove);
         board.makeComputerMove();
       }
     }

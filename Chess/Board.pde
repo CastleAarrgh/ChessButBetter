@@ -130,6 +130,12 @@ class Board {
     }
   }
   private int evaluate(){
+    if(isTie()){
+      return 0;
+    }
+    if(isEnded()){
+      return activePlayer * Integer.MAX_VALUE;
+    }
     HashMap<Character, Integer> pieceValues = new HashMap<Character, Integer>();
     pieceValues.put('p', 1);
     pieceValues.put('b', 3);
@@ -152,9 +158,11 @@ class Board {
     if(depth == 0){
       return new minimaxReturn(evaluate(), new Move(new int[]{-1, -1}, new int[]{-1, -1}));
     }
+    //
     //return new minimaxReturn(0, new Move(new int[]{0, 0}, new int[]{0,0}));
+    //println(this);
     ArrayList<Move> possibleMoves = generateLegalMoves(activePlayer);
-    ArrayList<Move> newMoves = new ArrayList<Move>();
+    //println(this);
     int[] oldPassantSquare = null;
     if (passantSquare != null) {
       oldPassantSquare = passantSquare.clone();
@@ -165,18 +173,22 @@ class Board {
     int bestEval = Integer.MAX_VALUE * -activePlayer;
     Move bestMove = new Move(new int[]{-1, -1}, new int[]{-1, -1});
     for (Move move : possibleMoves) {
+      //println(this);
+      //println(move);
       makeMove(move);
       minimaxReturn res = minimax(depth - 1);
       int eval = res.val;
-      if(activePlayer == WHITE){
+      //println(this);
+      //println("bestEval: " + bestEval + " eval: " + eval);
+      if(activePlayer == BLACK){
         if(eval > bestEval){
           bestEval = eval;
-          bestMove = res.move.clone();
+          bestMove = move.clone();
         }
       } else{
         if(eval < bestEval){
            bestEval = eval;
-           bestMove = res.move.clone();
+           bestMove = move.clone();
         }
       }
       board = deepCopy(oldBoard);
@@ -186,16 +198,14 @@ class Board {
         passantSquare = oldPassantSquare.clone();
       }
       castlingRights = oldCastlingRights.clone();
-      board = oldBoard;
-      passantSquare = oldPassantSquare;
-      castlingRights = oldCastlingRights;
       activePlayer = oldActivePlayer;
     }
     return new minimaxReturn(bestEval, bestMove);
    }
   public void makeComputerMove(){
-    minimaxReturn res = minimax(3);
+    minimaxReturn res = minimax(4);
     println(res.move);
+    makeLegalMove(res.move);
   }
   //make move that is determined to be legal.
   public void makeMove(Move move) {
