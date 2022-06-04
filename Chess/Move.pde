@@ -18,7 +18,7 @@ class Move implements Cloneable{
  public String toString(){
    return "(start: (" + start[0] + ", " + start[1] + "), target: (" + target[0] + ", " + target[1] + "))";
  }  
-  public Object clone() throws CloneNotSupportedException{
+  public Move clone(){
     int[] newStart = start.clone();
     int[] newEnd = target.clone();
     return new Move(newStart, newEnd);
