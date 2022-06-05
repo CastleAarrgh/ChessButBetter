@@ -28,7 +28,7 @@ class Chess2 extends Board{
               newPiece = new MegaKing(colour);
               break;
             default:
-              newPiece = new Rook(colour);
+              newPiece = new JumpyRook(colour);
               break;
            } 
            board[i][j] = newPiece;
@@ -51,9 +51,6 @@ class Chess2 extends Board{
     }
     if(piece.getType() == 'k'){
       MegaKing king = (MegaKing)piece;
-      if(!king.hasEscape){
-        println(getActivePlayer() + ": " + king.hasEscape);
-      }
     }
   }
   public boolean inRange(int[] start, int[] target){
