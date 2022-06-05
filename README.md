@@ -23,6 +23,8 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     5/30 - refactored some code, added in piece highlighting, and fixed various bugs
     5/31 - added a timer, added a simple UI, and an AI opponent that plays random moves.
     6/1 - many minor changes to the UI and Button class.  Created a game over screen and way to go back to main menu.  Implemented the class for Chess2.0 and put in one new piece(pawn).  Started on Chesskers but I think I'm abondoning that.
+    6/2 - changed UI further added modified Queen and modified Knight to Chess2.0
+    6/3 - started work on escape king and minimax
   ### Jason
     5/23 - figured out git branching, finished method displaying board background in board class
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
