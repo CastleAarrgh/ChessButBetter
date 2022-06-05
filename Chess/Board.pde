@@ -21,7 +21,7 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
    */
   Board(String startingFen) {
     importFEN(startingFen);
@@ -207,9 +207,18 @@ class Board {
    }
   public void makeComputerMove(){
     minimaxReturn res = minimax(3);
-    println(res.move);
-    println(res.val);
-    makeLegalMove(res.move);
+    //println(res.move);
+    //println(res.val);
+    Move move = res.move;
+    if(isValid(move)){
+      makeLegalMove(move);
+    }
+    else{
+      ArrayList<Move> possibleMoves = generateLegalMoves(activePlayer);
+      int randNum = (int)random(possibleMoves.size());
+      Move randomMove = possibleMoves.get(randNum);
+      makeLegalMove(randomMove);
+    }
   }
   //make move that is determined to be legal.
   public void makeMove(Move move) {

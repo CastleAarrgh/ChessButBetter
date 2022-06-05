@@ -58,8 +58,10 @@ void draw(){
       int timeBefore = millis();
       board.makeComputerMove();
       int timeElapsed = millis() - timeBefore;
+      timer.swap();
       timer.tick(timeElapsed / 1000.0);
-      computerTurn = false;
+      timer.swap();
+      //computerTurn = false;
     }
     timer.displayTimer();
     if (board.isEnded()){
