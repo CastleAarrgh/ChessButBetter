@@ -19,7 +19,7 @@ class Chess2 extends Board{
               newPiece = new SuperKnight(colour);
               break;
             case 'b':
-              newPiece = new Bishop(colour);
+              newPiece = new SwitcherBishop(colour);
               break;
             case 'q':
               newPiece = new UltraQueen(colour);
