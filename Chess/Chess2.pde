@@ -25,7 +25,7 @@ class Chess2 extends Board{
               newPiece = new UltraQueen(colour);
               break;
             case 'k':
-              newPiece = new King(colour);
+              newPiece = new MegaKing(colour);
               break;
             default:
               newPiece = new Rook(colour);
@@ -36,17 +36,44 @@ class Chess2 extends Board{
       }
     }
   }
-  private void makeMove(Move move){
+  public void makeMove(Move move){
+    //println("making move");
     super.makeMove(move);
     int[] target = move.getTarget();
     int[] start = move.getStart();
-    Piece piece = board[start[0]][start[1]];
-    if(getPassant() != null){
-      println(Arrays.equals(target, getPassant()));
-    }
+    Piece piece = board[target[0]][target[1]];
+    //println(this);
+    //println(start);
+    //println(target);
+    //println(piece);
     if (piece.getType() == 'q' && getPassant() != null && Arrays.equals(target, getPassant())) {
-      println("passant found");
-      board[start[0]][target[1]] = null;
+      board[target[0] + piece.getColor()][target[1]] = null;
     }
+    if(piece.getType() == 'k'){
+      MegaKing king = (MegaKing)piece;
+      if(!king.hasEscape){
+        println(king.hasEscape);
+      }
+    }
+  }
+  public int distance(int[] start, int[] target){
+    return (target[1] - start[1]) + (target[0] - start[0]);
+  }
+  public boolean makeLegalMove(Move move){
+    boolean res = super.makeLegalMove(move);
+    if(res == false){
+      return false;
+    }
+    int[] target = move.getTarget();
+    int[] start = move.getStart();
+    Piece piece = board[target[0]][target[1]];
+    if(piece.getType() == 'k'){
+      if(distance(start, target) > 1){
+        MegaKing king = (MegaKing)piece;
+        king.hasEscape = false;
+        piece = king;
+      }
+    }
+    return true;
   }
 }

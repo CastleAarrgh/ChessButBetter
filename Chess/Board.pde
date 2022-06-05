@@ -129,14 +129,86 @@ class Board {
       return false;
     }
   }
-  public minimaxReturn minimax(int depth){
-    return new minimaxReturn(0, new Move(new int[]{0, 0}, new int[]{0,0}));
+  private int evaluate(){
+    if(isTie()){
+      return 0;
+    }
+    if(isEnded()){
+      return activePlayer * Integer.MAX_VALUE;
+    }
+    HashMap<Character, Integer> pieceValues = new HashMap<Character, Integer>();
+    pieceValues.put('p', 1);
+    pieceValues.put('b', 3);
+    pieceValues.put('n', 3);
+    pieceValues.put('k', 0);
+    pieceValues.put('r', 5);
+    pieceValues.put('q', 9);
+    int sum = 0;
+    for(int r = 0; r < 8; r++){
+      for(int c = 0; c < 8; c++){
+        Piece piece = board[r][c];
+        if(piece != null){
+          sum += pieceValues.get(piece.getType()) * piece.getColor();
+        }
+      }
+    }
+    return sum;
   }
+  public minimaxReturn minimax(int depth){
+    if(depth == 0){
+      return new minimaxReturn(evaluate(), new Move(new int[]{-1, -1}, new int[]{-1, -1}));
+    }
+    //
+    //return new minimaxReturn(0, new Move(new int[]{0, 0}, new int[]{0,0}));
+    //println(this);
+    ArrayList<Move> possibleMoves = generateLegalMoves(activePlayer);
+    //println(this);
+    int[] oldPassantSquare = null;
+    if (passantSquare != null) {
+      oldPassantSquare = passantSquare.clone();
+    }
+    boolean[] oldCastlingRights = castlingRights.clone();
+    int oldActivePlayer = activePlayer;
+    Piece[][] oldBoard = deepCopy(board);
+    int bestEval = Integer.MAX_VALUE * -activePlayer;
+    Move bestMove = new Move(new int[]{-1, -1}, new int[]{-1, -1});
+    for (Move move : possibleMoves) {
+      //println(this);
+      //println(move);
+      makeMove(move);
+      minimaxReturn res = minimax(depth - 1);
+      int eval = res.val;
+      //println(this);
+      //println("bestEval: " + bestEval + " eval: " + eval);
+      if(activePlayer == BLACK){
+        if(eval > bestEval){
+          bestEval = eval;
+          bestMove = move.clone();
+        }
+      } else{
+        if(eval < bestEval){
+           bestEval = eval;
+           bestMove = move.clone();
+        }
+      }
+      board = deepCopy(oldBoard);
+      if (oldPassantSquare == null) {
+        passantSquare = null;
+      } else {
+        passantSquare = oldPassantSquare.clone();
+      }
+      castlingRights = oldCastlingRights.clone();
+      activePlayer = oldActivePlayer;
+    }
+    return new minimaxReturn(bestEval, bestMove);
+   }
   public void makeComputerMove(){
     minimaxReturn res = minimax(3);
+    println(res.move);
+    makeLegalMove(res.move);
   }
   //make move that is determined to be legal.
-  private void makeMove(Move move) {
+  public void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
@@ -159,7 +231,7 @@ class Board {
     if (moves.size() == 0) {
       return moves;
     }
-    int col = getMoveColor(moves.get(0));
+    int col = activePlayer;
     ArrayList<Move> newMoves = new ArrayList<Move>();
     int[] oldPassantSquare = null;
     if (passantSquare != null) {
@@ -181,12 +253,7 @@ class Board {
         }
       }
       if (IsValid) {
-        try {
-          newMoves.add((Move)move.clone());
-        }
-        catch(CloneNotSupportedException e) {
-          e.printStackTrace();
-        }
+          newMoves.add(move.clone());
       }
       board = deepCopy(oldBoard);
       if (oldPassantSquare == null) {
