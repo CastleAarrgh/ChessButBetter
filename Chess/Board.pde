@@ -21,7 +21,7 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
    */
   Board(String startingFen) {
     importFEN(startingFen);
@@ -130,10 +130,10 @@ class Board {
     }
   }
   private int evaluate(){
-    if(isTie()){
-      return 0;
-    }
     if(isEnded()){
+      if(isTie()){
+        return 0;
+      }
       return activePlayer * Integer.MAX_VALUE;
     }
     HashMap<Character, Integer> pieceValues = new HashMap<Character, Integer>();
@@ -156,6 +156,9 @@ class Board {
   }
   public minimaxReturn minimax(int depth){
     if(depth == 0){
+      if(evaluate() != 0){
+        //println(evaluate());
+      }
       return new minimaxReturn(evaluate(), new Move(new int[]{-1, -1}, new int[]{-1, -1}));
     }
     //
@@ -180,7 +183,7 @@ class Board {
       int eval = res.val;
       //println(this);
       //println("bestEval: " + bestEval + " eval: " + eval);
-      if(activePlayer == BLACK){
+      if(oldActivePlayer == WHITE){
         if(eval > bestEval){
           bestEval = eval;
           bestMove = move.clone();
@@ -205,6 +208,7 @@ class Board {
   public void makeComputerMove(){
     minimaxReturn res = minimax(3);
     println(res.move);
+    println(res.val);
     makeLegalMove(res.move);
   }
   //make move that is determined to be legal.
