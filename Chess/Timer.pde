@@ -20,7 +20,6 @@ class Timer{
       blackTime -= seconds;
     }
   }
-  }
   float getWhiteTime(){
     return whiteTime;
   }

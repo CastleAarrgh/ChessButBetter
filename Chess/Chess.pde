@@ -11,6 +11,7 @@ int CHESSKERS = 5;
 int gamemode = 0;
 int OFF = 0;
 int ON = 1;
+int BOTH = 2;
 int computer = OFF;
 int menu;
 int secondTimer = millis();
@@ -48,6 +49,9 @@ void draw(){
       if(gamemode == CHESS20){
         board = new Chess2();
       }
+      if(computer == BOTH){
+        computerTurn = true;
+      }
     }
     board.displayBoard(800,800);
     if(millis() - secondTimer >= 1000){
@@ -58,8 +62,12 @@ void draw(){
       int timeBefore = millis();
       board.makeComputerMove();
       int timeElapsed = millis() - timeBefore;
+      timer.swap();
       timer.tick(timeElapsed / 1000.0);
-      computerTurn = false;
+      timer.swap();
+      if(computer == ON){
+        computerTurn = false;
+      }
     }
     timer.displayTimer();
     if (board.isEnded()){
@@ -116,6 +124,7 @@ void mouseClicked() {
   if(menu == COMPUTERSELECT){
     buttons.add(new Button("Play With Friend", 20, 20, GAME, gamemode, OFF));
     buttons.add(new Button("Play With Computer", 20, 240, GAME, gamemode, ON));
+    buttons.add(new Button("Computer Showdown", 20, 460, GAME, gamemode, BOTH));
   }
   if(menu == INPUTSELECT){
     buttons.add(new Button("Play From Start", 20, 20, GAME, gamemode, computer));
