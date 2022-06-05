@@ -13,6 +13,14 @@ class Timer{
       blackTime--;
     }
   }
+  void tick(float seconds){
+    if(activePlayer == Board.WHITE){
+      whiteTime -= seconds;
+    } else{
+      blackTime -= seconds;
+    }
+  }
+  }
   float getWhiteTime(){
     return whiteTime;
   }

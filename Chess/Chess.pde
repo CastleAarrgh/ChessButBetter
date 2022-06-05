@@ -54,8 +54,11 @@ void draw(){
       timer.tick();
       secondTimer = millis();
     }
-    if(computerTurn && millis() - computerTimer > 10){
+    if(computerTurn && millis() - computerTimer > 200){
+      int timeBefore = millis();
       board.makeComputerMove();
+      int timeElapsed = millis() - timeBefore;
+      timer.tick(timeElapsed / 1000.0);
       computerTurn = false;
     }
     timer.displayTimer();
