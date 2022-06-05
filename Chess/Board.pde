@@ -203,7 +203,7 @@ class Board {
     return new minimaxReturn(bestEval, bestMove);
    }
   public void makeComputerMove(){
-    minimaxReturn res = minimax(4);
+    minimaxReturn res = minimax(3);
     println(res.move);
     makeLegalMove(res.move);
   }

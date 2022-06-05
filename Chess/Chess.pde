@@ -14,6 +14,8 @@ int ON = 1;
 int computer = OFF;
 int menu;
 int secondTimer = millis();
+boolean computerTurn = false;
+int computerTimer;
 Board board;
 Checkers checkers;
 Timer timer;
@@ -52,6 +54,10 @@ void draw(){
       timer.tick();
       secondTimer = millis();
     }
+    if(computerTurn && millis() - computerTimer > 10){
+      board.makeComputerMove();
+      computerTurn = false;
+    }
     timer.displayTimer();
     if (board.isEnded()){
       board.gameOver();
@@ -75,19 +81,19 @@ void mouseClicked() {
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
       timer.swap();
+      secondTimer = millis();
       //println(board instanceof Chess2);
     }
   }
   if(menu == GAME && computer == ON){
-    if(board.registerClick(mouseX, mouseY)){
+    if(!computerTurn && board.registerClick(mouseX, mouseY)){
       if(board.isEnded()){
         board.gameOver();
       } else{
-        ArrayList<Move> possibleMoves = board.generateLegalMoves(board.activePlayer);
-        int randNum = (int)random(possibleMoves.size());
-        Move randomMove = possibleMoves.get(randNum);
         //board.makeLegalMove(randomMove);
-        board.makeComputerMove();
+        computerTurn = true;
+        computerTimer = millis();
+        //board.makeComputerMove();
       }
     }
   }
