@@ -52,12 +52,12 @@ class Chess2 extends Board{
     if(piece.getType() == 'k'){
       MegaKing king = (MegaKing)piece;
       if(!king.hasEscape){
-        println(getActivePlayer() + ": " + king.hasEscape);
+        println(getActivePlayer + ": "king.hasEscape);
       }
     }
   }
-  public boolean inRange(int[] start, int[] target){
-    return (target[1] - start[1]) <= 1 && (target[0] - start[0]) <= 1;
+  public int distance(int[] start, int[] target){
+    return (target[1] - start[1]) + (target[0] - start[0]);
   }
   public boolean makeLegalMove(Move move){
     boolean res = super.makeLegalMove(move);
@@ -68,7 +68,7 @@ class Chess2 extends Board{
     int[] start = move.getStart();
     Piece piece = board[target[0]][target[1]];
     if(piece.getType() == 'k'){
-      if(inRange(start, target)){
+      if(distance(start, target) > 1){
         MegaKing king = (MegaKing)piece;
         king.hasEscape = false;
         piece = king;
