@@ -170,6 +170,22 @@ class Board {
     }
     activePlayer = -activePlayer;
   }
+  
+  
+  
+  
+  else if (Board[i0][j0] == wKing) {
+    if (wKingMoved == false && j1 == 2) {//castle
+      Board[7][0] = null;
+      Board[7][3] = wRook;
+    }
+    if (wKingMoved == false && j1 == 6) {//castle
+      Board[7][7] = null;
+      Board[7][5] = wRook;
+    }
+  
+  
+  
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
    move would lead to the capture of the king next turn */

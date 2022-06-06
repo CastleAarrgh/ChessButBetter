@@ -136,25 +136,25 @@ public static boolean between(int variable, int minValueInclusive, int maxValueI
   return variable >= minValueInclusive && variable <= maxValueInclusive;
 }
 
-//void mousePressed() {
-//  if (menu == GAME) {
-//    if (board.promote) {
-//      if (board.activePlayer!=Board.WHITE) {
-//              Piece piece = new Pawn(1);
-//        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(1);
-//        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) piece = new Rook (1);
-//        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop(1);
-//        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (1);
-//              board.board[board.promoteX][board.promoteY] = piece;
-//      } else {
-//              Piece piece = new Pawn(-1);
-//        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(-1);
-//        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  piece = new Rook (-1);
-//        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop (-1);
-//        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (-1);
-//              board.board[board.promoteX][board.promoteY] = piece;
+void mousePressed() {
+  if (menu == GAME) {
+    if (board.promote) {
+      if (board.activePlayer!=Board.WHITE) {
+              Piece piece = new Pawn(0);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) piece = new Rook (1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop(1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (1);
+              board.board[board.promoteX][board.promoteY] = piece;
+      } else {
+              Piece piece = new Pawn(-1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(-1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  piece = new Rook (-1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop (-1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (-1);
+              board.board[board.promoteX][board.promoteY] = piece;
 
-//      }
-//    }
-//  }
-//}
+      }
+    }
+  }
+}
