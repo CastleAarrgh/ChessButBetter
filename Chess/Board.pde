@@ -194,6 +194,13 @@ class Board {
       Board[0][7] = null;
       Board[0][5] = bRook;
     }
+     if (update)bKingMoved = true;
+  } else if (Board[i0][j0] == wRook) {
+    if (update) {
+      if (!wRookMoved1 && j0 == 0) wRookMoved1 = true;
+      if (!wRookMoved2 && j0 == 7) wRookMoved2 = true;
+    }
+  }
   
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
