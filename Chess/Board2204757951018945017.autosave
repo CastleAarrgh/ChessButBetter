@@ -17,17 +17,14 @@ class Board {
     boolean promote = false;
   boolean gameOver = false;
   int promoteX, promoteY;
-  boolean wKingMoved = false;
-    boolean bKingMoved = false;
-
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
    */
-  Board() { //<>//
+  Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>//
    */
     public void ispromoted() {
     for ( int j=0; j<8; j++) {
@@ -163,12 +160,6 @@ class Board {
     if(piece.getType() == 'p'){
       ispromoted();
     }
-     if(piece.getType() == 'k'){
-       if(activePlayer == WHITE){
-         wKingMoved = true;
-       }
-       bKingMoved = false;
-     }
     if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
       board[start[0]][target[1]] = null;
     }
@@ -181,7 +172,7 @@ class Board {
   }
   
   
-
+  
   
   else if (Board[i0][j0] == wKing) {
     if (wKingMoved == false && j1 == 2) {//castle
