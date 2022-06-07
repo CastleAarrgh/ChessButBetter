@@ -6,7 +6,7 @@ class Knight extends Piece{
     Piece[][] board = BOARD.getBoard();
     int[][] knightOffsets = new int[][]{{-2, 1}, {-2, -1}, {2, 1}, {2, -1}, {1, -2},{1, 2}, {-1, -2}, {-1, 2}};
     ArrayList<Move> moves = new ArrayList<Move>();
-    int col = BOARD.activePlayer;
+    int col = board[start[0]][start[1]].getColor();
     for(int[] offset: knightOffsets){
       int[] target = {start[0] + offset[0], start[1] + offset[1]};
       if(inBounds(target)){
