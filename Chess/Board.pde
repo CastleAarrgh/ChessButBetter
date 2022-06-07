@@ -264,6 +264,7 @@ class Board {
         int[] target = newMove.getTarget();
         Piece piece = board[target[0]][target[1]];
         if (piece != null && piece.getType() == 'k') {
+          println("newMove: " + newMove);
           IsValid = false;
           break;
         }
@@ -288,7 +289,10 @@ class Board {
   //generates all possible moves for one piece
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
+    println(moves);
     moves = removeChecks(moves);
+    println(moves);
+    println();
     return moves;
   }
   //generatesAllMoves posssible for the board(every piece on board of correct color)
@@ -323,6 +327,7 @@ class Board {
     //ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
     int[] start = move.getStart();
     ArrayList<Move> possibleMoves = generateMoves(new int[]{start[0], start[1]});
+    //println(possibleMoves);
     for (Move possibleMove : possibleMoves) {
       if (move.equals(possibleMove)) {
         return true;
