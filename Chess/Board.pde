@@ -186,10 +186,16 @@ class Board {
 
   private void castling() {
     if (activePlayer ==WHITE) {
-      if (wKingMoved ==false) {
+      if (wKingMoved ==false && wRookMoved1 ==false && wRookMoved2 == false) {
+        board[4][0]=null;
+        board[5][0]= ;
+        this.wKingMoved = true;
+       
       }
     } else {
     }
+    
+    
   } else if (Board[i0][j0] == wKing) {
   if (wKingMoved == false && j1 == 2) {//castle
     Board[7][0] = null;
