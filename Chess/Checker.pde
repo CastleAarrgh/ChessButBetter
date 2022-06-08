@@ -4,14 +4,46 @@ public class Checker extends Piece{
   }
   public ArrayList<Move> generateMoves(Board BOARD,int[] start){
     Piece[][] board = BOARD.getBoard();
-    
+    ArrayList<Move> moves = new ArrayList<Move>();
+    //support checkers jumping - checkers pieces can jump any number of times in the same direction as long as it is going over pieces and landing on empty squares
+    int col = board[start[0]][start[1]].getColor();
+    int[][] checkersOffsets = new int[][]{{-col, 1},{col, -1}};
+    boolean go = true;
+    ArrayList<Move> currentMoves = new ArrayList<Move>();
+    ArrayList<Move> oldMoves = new ArrayList<Move>();
+    int[][] targets = new int[][]{{start[0], start[1]}};
+    while(go){
+       oldMoves = new ArrayList<Move>(currentMoves);
+       currentMoves = new ArrayList<Move>();
+       for(int[] offset: checkersOffsets){
+        for(int[] oldTarget: targets){
+          int[] target = new int[]{oldTarget[0] + 2 * offset[0], oldTarget[1] + 2 * offset[1]};
+          int[] middle = new int[]{oldTarget[0] + offset[0], oldTarget[1] + offset[1]};
+           //move works
+          if(inBounds(target) && board[middle[0]][middle[1]] == null){
+            currentMoves.add(new Move(start, target));
+          }
+        }
+        targets = new int[currentMoves.size()][2];
+        int i = 0;
+        for(Move move: currentMoves){
+          targets[i] = move.getTarget().clone();
+          i++;
+        }
+        if(currentMoves.size() == 0){
+          go = false;
+        }
+      }
+      println(currentMoves);
+    }
+    ArrayList<Move> captureMoves = new ArrayList<Move>(oldMoves);
     return moves;
   }
   public PImage getPieceImage(){
    if(getColor() == WHITE){
-    return loadImage("Pieces/WhiteChecker.jpg");
+    return loadImage("Pieces/WhiteChecker.png");
    } else{
-    return loadImage("Pieces/BlackChecker.jpg");
+    return loadImage("Pieces/BlackChecker.png");
    }
   }
 }

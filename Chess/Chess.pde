@@ -18,7 +18,6 @@ int secondTimer = millis();
 boolean computerTurn = false;
 int computerTimer;
 Board board;
-Checkers checkers;
 Timer timer;
 ArrayList<Button> buttons = new ArrayList<Button>();
 void setup(){
