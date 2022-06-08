@@ -20,9 +20,9 @@ class Board {
   boolean wKingMoved = false;
   boolean bKingMoved = false;
   boolean wRookMoved1 = false;
-    boolean wRookMoved2 = false;
+  boolean wRookMoved2 = false;
   boolean bRookMoved1 = false;
-    boolean bRookMoved2 = false;
+  boolean bRookMoved2 = false;
 
   /* //<>//
   Board constructor takes in no positions and generates 
@@ -185,18 +185,27 @@ class Board {
   }
 
   private void castling() {
-    if (activePlayer ==WHITE) {
+    if (activePlayer == WHITE) {
       if (wKingMoved ==false && wRookMoved1 ==false && wRookMoved2 == false) {
-        board[4][0]=null;
-        board[5][0]= ;
+        board[7][4]=null;
+        board[7][5]= new Rook(1);
+        board[7][6] = new King (1);
+        board [7][7] = null;
         this.wKingMoved = true;
-       
       }
     } else {
+      if (activePlayer == BLACK) {
+        if (bKingMoved == false && bRookMoved1 == false && bRookMoved2 == false) {
+          board[0][4] = null;
+          board[0][5] = new Rook (-1);
+          board [0][6]= new King (-1);
+          board [0][7] = null;
+        }
+      }
     }
-    
-    
-  } else if (Board[i0][j0] == wKing) {
+  }
+  
+} else if (Board[i0][j0] == wKing) {
   if (wKingMoved == false && j1 == 2) {//castle
     Board[7][0] = null;
     Board[7][3] = wRook;
