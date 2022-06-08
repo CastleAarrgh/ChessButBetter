@@ -15,10 +15,6 @@ public class Checker extends Piece{
     while(go){
        oldMoves = new ArrayList<Move>(currentMoves);
        currentMoves = new ArrayList<Move>();
-       print(Arrays.deepToString(targets));
-       println();
-       println(oldMoves);
-       println();
        for(int[] offset: checkersOffsets){
         for(int[] oldTarget: targets){
           int[] target = new int[]{oldTarget[0] + 2 * offset[0], oldTarget[1] + 2 * offset[1]};

@@ -37,6 +37,10 @@ public class Chesskers extends Board{
     }
   }
   public void makeMove(Move move){
-    
+    if(move instanceof CheckersMove){
+      
+    } else{
+      super.makeMove(move);
+    }
   }
 }

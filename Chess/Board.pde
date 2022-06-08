@@ -21,7 +21,7 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
    */
   Board(String startingFen) {
     importFEN(startingFen);
@@ -398,8 +398,8 @@ class Board {
     fullmoveclock = Integer.parseInt(fenString[5]);
   }
   //print the board
-  public Piece[][] deepCopy(Piece[][] board) {
-    Piece[][] out = new Piece[board.length][board[0].length];
+  public <T> T[][] deepCopy(T[][] board) {
+    T[][] out = (T[][])new Object[board.length][board[0].length];
     for (int i = 0; i < out.length; i++) {
       out[i] = Arrays.copyOf(board[i], board[i].length);
     }
