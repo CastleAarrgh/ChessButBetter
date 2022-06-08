@@ -36,4 +36,7 @@ public class Chesskers extends Board{
       }
     }
   }
+  public void makeMove(Move move){
+    
+  }
 }

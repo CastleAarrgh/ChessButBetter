@@ -26,8 +26,9 @@ public class Checker extends Piece{
            //move works
           if(inBounds(target)){
             Piece middlePiece = board[middle[0]][middle[1]];
-            if(board[target[0]][target[1]] == null && middlePiece != null && middlePiece.getColor() != col)
-            currentMoves.add(new Move(start, target));
+            if(board[target[0]][target[1]] == null && middlePiece != null && middlePiece.getColor() != col){
+              currentMoves.add(new Move(start, target));
+            }
           }
         }
       }
@@ -40,11 +41,17 @@ public class Checker extends Piece{
       if(currentMoves.size() == 0){
         go = false;
       }
-      if(currentMoves.size() > 10){
-        System.exit(1);
+    }
+    moves = new ArrayList<Move>(oldMoves);
+    //add regular moves
+    if(moves.size() == 0){
+      for(int[] offset: checkersOffsets){
+        int[] target = new int[]{start[0] + offset[0], start[1] + offset[1]};
+        if(inBounds(target) && board[target[0]][target[1]] == null){
+          moves.add(new Move(start, target));
+        }
       }
     }
-    ArrayList<Move> captureMoves = new ArrayList<Move>(oldMoves);
     return moves;
   }
   public PImage getPieceImage(){
