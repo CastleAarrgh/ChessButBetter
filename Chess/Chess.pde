@@ -18,7 +18,6 @@ int secondTimer = millis();
 boolean computerTurn = false;
 int computerTimer;
 Board board;
-Checkers checkers;
 Timer timer;
 ArrayList<Button> buttons = new ArrayList<Button>();
 void setup(){
@@ -38,7 +37,7 @@ void draw(){
   background(255);
   //menu controlling
   //println(gamemode);
-  if(menu == GAME && gamemode != CHESSKERS){
+  if(menu == GAME){
     if(board == null){
       if(gamemode == CHESS){
         board = new Board();
@@ -48,6 +47,9 @@ void draw(){
       }
       if(gamemode == CHESS20){
         board = new Chess2();
+      }
+      if(gamemode == CHESSKERS){
+        board = new Chesskers();
       }
       if(computer == BOTH){
         computerTurn = true;
@@ -76,12 +78,6 @@ void draw(){
         buttons.add(new Button("Main Menu", 250, 400, 300, 100, 50, color(111,111,111, 220), GAMESELECT, gamemode, COMPUTER));
       }
     }
-  }
-  if(menu == GAME && gamemode == CHESSKERS){
-    if(checkers == null){
-      checkers = new Checkers(0, 0, 500);
-    }
-     checkers.displayBoard();
   }
   for(Button button: buttons){
     button.displayButton();
