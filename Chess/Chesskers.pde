@@ -37,6 +37,10 @@ public class Chesskers extends Board{
     }
   }
   public void makeMove(Move move){
-    
+    super.makeMove(move);
+    int[] start = move.getStart();
+    Piece piece = board[start[0]][start[1]];
+    /*if(piece.getType() == 'c'){
+    }*/
   }
 }
