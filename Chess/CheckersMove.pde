@@ -17,7 +17,14 @@ class CheckersMove extends Move{
   public CheckersMove clone(){
     int[] newStart = start.clone();
     int[] newEnd = target.clone();
-    //int[][] newHopped = Board.deepCopy(getHopped());
+    int[][] newHopped = Board.deepCopy(getHopped());
     return new CheckersMove(newStart, newEnd, getHopped());
+  }
+  public int[][] deepCopy(int[][] board) {
+    int[][] out = new int[board.length][board[0].length];
+    for (int i = 0; i < out.length; i++) {
+      out[i] = Arrays.copyOf(board[i], board[i].length);
+    }
+    return out;
   }
 }

@@ -17,10 +17,11 @@ public class Checker extends Piece{
        int i = 0;
        for(int[] offset: checkersOffsets){
         for(CheckersMove oldMove: oldMoves){
-          int[] oldStart = oldMove.getStart();
-          int[] oldTarget = oldMove.getTarget();
+          int[] oldStart = oldMove.getStart().clone();
+          int[] oldTarget = oldMove.getTarget().clone();
           int[] target = new int[]{oldTarget[0] + 2 * offset[0], oldTarget[1] + 2 * offset[1]};
           int[] middle = new int[]{oldTarget[0] + offset[0], oldTarget[1] + offset[1]};
+          println(oldMove);
            //move works
           if(inBounds(target)){
             Piece middlePiece = board[middle[0]][middle[1]];
@@ -35,7 +36,7 @@ public class Checker extends Piece{
                   i++;
                 }
                 newHops[i] = middle.clone();
-                currentMoves.add(new CheckersMove(start, target, newHops));
+                currentMoves.add(new CheckersMove(start, target, newHops).clone());
               }
             }
           }
@@ -45,6 +46,7 @@ public class Checker extends Piece{
         go = false;
       }
     }
+    //println(oldMoves);
     moves = new ArrayList<CheckersMove>(oldMoves);
     //add regular moves
     if(moves.size() == 0){
