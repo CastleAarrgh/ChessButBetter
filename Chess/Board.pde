@@ -398,8 +398,8 @@ class Board {
     fullmoveclock = Integer.parseInt(fenString[5]);
   }
   //print the board
-  public <T> T[][] deepCopy(T[][] board) {
-    T[][] out = (T[][])new Object[board.length][board[0].length];
+  public Piece[][] deepCopy(Piece[][] board) {
+    Piece[][] out = new Piece[board.length][board[0].length];
     for (int i = 0; i < out.length; i++) {
       out[i] = Arrays.copyOf(board[i], board[i].length);
     }

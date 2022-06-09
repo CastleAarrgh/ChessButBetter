@@ -2,53 +2,71 @@ public class Checker extends Piece{
   public Checker(int col){
     super(col, 'q');
   }
-  public ArrayList<Move> generateMoves(Board BOARD,int[] start){
+  public ArrayList<Move> generateMoves(Board BOARD, int[] start){
     Piece[][] board = BOARD.getBoard();
-    ArrayList<Move> moves = new ArrayList<Move>();
+    ArrayList<CheckersMove> moves = new ArrayList<CheckersMove>();
     //support checkers jumping - checkers pieces can jump any number of times in the same direction as long as it is going over pieces and landing on empty squares
     int col = board[start[0]][start[1]].getColor();
     int[][] checkersOffsets = new int[][]{{-col, 1},{-col, -1}};
     boolean go = true;
-    ArrayList<Move> currentMoves = new ArrayList<Move>();
-    ArrayList<Move> oldMoves = new ArrayList<Move>();
-    int[][] targets = new int[][]{{start[0], start[1]}};
+    ArrayList<CheckersMove> currentMoves = new ArrayList<CheckersMove>(Arrays.asList(new CheckersMove(start, start, new int[][]{})));
+    ArrayList<CheckersMove> oldMoves = new ArrayList<CheckersMove>();
     while(go){
-       oldMoves = new ArrayList<Move>(currentMoves);
-       currentMoves = new ArrayList<Move>();
+       oldMoves = new ArrayList<CheckersMove>(currentMoves);
+       currentMoves = new ArrayList<CheckersMove>();
+       int i = 0;
        for(int[] offset: checkersOffsets){
-        for(int[] oldTarget: targets){
+        for(CheckersMove oldMove: oldMoves){
+          int[] oldStart = oldMove.getStart();
+          int[] oldTarget = oldMove.getTarget();
           int[] target = new int[]{oldTarget[0] + 2 * offset[0], oldTarget[1] + 2 * offset[1]};
           int[] middle = new int[]{oldTarget[0] + offset[0], oldTarget[1] + offset[1]};
            //move works
           if(inBounds(target)){
             Piece middlePiece = board[middle[0]][middle[1]];
             if(board[target[0]][target[1]] == null && middlePiece != null && middlePiece.getColor() != col){
-              currentMoves.add(new Move(start, target));
+              if(Arrays.equals(oldStart, oldTarget)){
+                currentMoves.add(new CheckersMove(start, target, new int[][]{}));
+              } else{
+                int[][] newHops = new int[oldMove.getHopped().length + 1][2];
+                i = 0;
+                for(int[] oldHop: oldMove.getHopped()){
+                  newHops[i] = oldHop.clone();
+                  i++;
+                }
+                newHops[i] = middle.clone();
+                currentMoves.add(new CheckersMove(start, target, newHops));
+              }
             }
           }
         }
-      }
-      targets = new int[currentMoves.size()][2];
-      int i = 0;
-      for(Move move: currentMoves){
-        targets[i] = move.getTarget().clone();
-        i++;
       }
       if(currentMoves.size() == 0){
         go = false;
       }
     }
-    moves = new ArrayList<Move>(oldMoves);
+    moves = new ArrayList<CheckersMove>(oldMoves);
     //add regular moves
     if(moves.size() == 0){
       for(int[] offset: checkersOffsets){
         int[] target = new int[]{start[0] + offset[0], start[1] + offset[1]};
         if(inBounds(target) && board[target[0]][target[1]] == null){
-          moves.add(new Move(start, target));
+          moves.add(new CheckersMove(start, target, new int[][]{}));
         }
       }
     }
-    return moves;
+    ArrayList<Move> finalMoves = new ArrayList<Move>();
+    for(int i = 0; i < moves.size(); i++){
+      finalMoves.add((Move)(moves.get(i)));
+    }
+    return finalMoves;
+  }
+   public <T> T[][] deepCopy(T[][] board) {
+    T[][] out = (T[][])new Object[board.length][board[0].length];
+    for (int i = 0; i < out.length; i++) {
+      out[i] = Arrays.copyOf(board[i], board[i].length);
+    }
+    return out;
   }
   public PImage getPieceImage(){
    if(getColor() == WHITE){

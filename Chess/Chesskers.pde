@@ -38,8 +38,14 @@ public class Chesskers extends Board{
   }
   public void makeMove(Move move){
     if(move instanceof CheckersMove){
-      
-    } else{
+      super.makeMove(move);
+      CheckersMove checkersMove = (CheckersMove) move;
+      int[][] hoppedSquares = checkersMove.getHopped();
+      for(int[] square: hoppedSquares){
+        board[square[0]][square[1]] = null;
+      }
+    }
+    else{
       super.makeMove(move);
     }
   }
