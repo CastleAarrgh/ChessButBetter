@@ -2,9 +2,9 @@ public class Checker extends Piece{
   public Checker(int col){
     super(col, 'c');
   }
-  public ArrayList<Move> generateMoves(Board BOARD,int[] start){
+  public ArrayList<Move> generateMoves(Board BOARD, int[] start){
     Piece[][] board = BOARD.getBoard();
-    ArrayList<Move> moves = new ArrayList<Move>();
+    ArrayList<CheckersMove> moves = new ArrayList<CheckersMove>();
     //support checkers jumping - checkers pieces can jump any number of times in the same direction as long as it is going over pieces and landing on empty squares
     int col = board[start[0]][start[1]].getColor();
     int[][] checkersOffsets = new int[][]{{-col, 1},{-col, -1}};
@@ -31,6 +31,13 @@ public class Checker extends Piece{
       }
     }
     return moves;
+  }
+   public <T> T[][] deepCopy(T[][] board) {
+    T[][] out = (T[][])new Object[board.length][board[0].length];
+    for (int i = 0; i < out.length; i++) {
+      out[i] = Arrays.copyOf(board[i], board[i].length);
+    }
+    return out;
   }
   public PImage getPieceImage(){
    if(getColor() == WHITE){

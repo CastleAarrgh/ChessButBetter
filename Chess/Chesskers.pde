@@ -37,6 +37,7 @@ public class Chesskers extends Board{
     }
   }
   public void makeMove(Move move){
+<<<<<<< HEAD
     int[] start = move.getStart();
     int[] target = move.getTarget();
     Piece piece = board[start[0]][start[1]];
@@ -46,5 +47,18 @@ public class Chesskers extends Board{
       }
     }
     super.makeMove(move);
+=======
+    if(move instanceof CheckersMove){
+      super.makeMove(move);
+      CheckersMove checkersMove = (CheckersMove) move;
+      int[][] hoppedSquares = checkersMove.getHopped();
+      for(int[] square: hoppedSquares){
+        board[square[0]][square[1]] = null;
+      }
+    }
+    else{
+      super.makeMove(move);
+    }
+>>>>>>> a1ff8a269fde5ab17294091397132170fa39263b
   }
 }
