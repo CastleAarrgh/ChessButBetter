@@ -37,28 +37,14 @@ public class Chesskers extends Board{
     }
   }
   public void makeMove(Move move){
-<<<<<<< HEAD
     int[] start = move.getStart();
     int[] target = move.getTarget();
     Piece piece = board[start[0]][start[1]];
     if(piece.getType() == 'c'){
-      if(target[1] - start[1] == 2 && target[0] - start[0] == 2){
+      if(abs(target[1] - start[1]) == 2 && abs(target[0] - start[0]) == 2){
         board[(target[0] + start[0]) / 2][(target[1] + start[1]) / 2] = null;
       }
     }
     super.makeMove(move);
-=======
-    if(move instanceof CheckersMove){
-      super.makeMove(move);
-      CheckersMove checkersMove = (CheckersMove) move;
-      int[][] hoppedSquares = checkersMove.getHopped();
-      for(int[] square: hoppedSquares){
-        board[square[0]][square[1]] = null;
-      }
-    }
-    else{
-      super.makeMove(move);
-    }
->>>>>>> a1ff8a269fde5ab17294091397132170fa39263b
   }
 }

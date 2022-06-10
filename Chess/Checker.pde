@@ -4,7 +4,7 @@ public class Checker extends Piece{
   }
   public ArrayList<Move> generateMoves(Board BOARD, int[] start){
     Piece[][] board = BOARD.getBoard();
-    ArrayList<CheckersMove> moves = new ArrayList<CheckersMove>();
+    ArrayList<Move> moves = new ArrayList<Move>();
     //support checkers jumping - checkers pieces can jump any number of times in the same direction as long as it is going over pieces and landing on empty squares
     int col = board[start[0]][start[1]].getColor();
     int[][] checkersOffsets = new int[][]{{-col, 1},{-col, -1}};
