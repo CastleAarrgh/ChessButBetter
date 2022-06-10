@@ -21,7 +21,7 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
    */
   Board(String startingFen) {
     importFEN(startingFen);

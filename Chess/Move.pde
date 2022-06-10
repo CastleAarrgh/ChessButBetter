@@ -1,5 +1,5 @@
 import java.util.*;
-class Move implements Cloneable{
+class Move{
  public int[] start;
  public int[] target;
  Move(int[] start, int[] target){
