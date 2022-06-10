@@ -29,6 +29,8 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     6/5 - Fixed a lot of bugs related to Chess and Chess2.  Fixed minimax computer algorithm.
     6/7 - Started work on Chesskers.  Made chesskers class and checkers piece
     6/8 - More work on Chesskers, had to rewrite a lot of the code.  Checkers piece almost done i think
+    6/9 - Completely redid Checkers Piece move generation and it's interaction with the Chesskers class due to technical difficulties involving use of CheckersMove class.  Simplified it substantially and scaled back scope but should work now.
+    6/10 - Chesskers is complete besides promotion to ChesskersKing if I ever get around to that.
   ### Jason
     5/23 - figured out git branching, finished method displaying board background in board class
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
