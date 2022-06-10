@@ -8,7 +8,14 @@ public class Checker extends Piece{
     //support checkers jumping - checkers pieces can jump any number of times in the same direction as long as it is going over pieces and landing on empty squares
     int col = board[start[0]][start[1]].getColor();
     int[][] checkersOffsets = new int[][]{{-col, 1},{-col, -1}};
-    for(int[] offset: checkersOffsets){
+    return generateCheckerMoves(BOARD, start, checkersOffsets);
+  }
+      public ArrayList<Move> generateCheckerMoves(Board BOARD, int[] start, int[][] offsets){
+    Piece[][] board = BOARD.getBoard();
+    ArrayList<Move> moves = new ArrayList<Move>();
+    //support checkers jumping - checkers pieces can jump any number of times in the same direction as long as it is going over pieces and landing on empty squares
+    int col = board[start[0]][start[1]].getColor();
+    for(int[] offset: offsets){
       int[] target = new int[]{start[0] + 2 * offset[0], start[1] + 2 * offset[1]};
       int[] middle = new int[]{start[0] + offset[0], start[1] + offset[1]};
       if(inBounds(target)){
@@ -20,7 +27,7 @@ public class Checker extends Piece{
       }
     }
     if(moves.size() == 0){
-      for(int[] offset: checkersOffsets){
+      for(int[] offset: offsets){
         int[] target = new int[]{start[0] + offset[0], start[1] + offset[1]};
         if(inBounds(target)){
           Piece targetPiece = pieceOn(board, target);
@@ -31,13 +38,6 @@ public class Checker extends Piece{
       }
     }
     return moves;
-  }
-   public <T> T[][] deepCopy(T[][] board) {
-    T[][] out = (T[][])new Object[board.length][board[0].length];
-    for (int i = 0; i < out.length; i++) {
-      out[i] = Arrays.copyOf(board[i], board[i].length);
-    }
-    return out;
   }
   public PImage getPieceImage(){
    if(getColor() == WHITE){
