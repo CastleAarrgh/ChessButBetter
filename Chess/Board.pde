@@ -242,24 +242,34 @@ Board[0][7] = null;
     }
   }
 
+void moveSelectedPiece(String position)
+{
+  System.out.println(position);
+  boolean castling = false;
+  // If you have already selected a piece (ie: there is a red cell on the chess set)
+  if (pieceSelected==true)
+  {
+    
+
+
     // Castling Conditions
     if (selectedPiece.getName() == "King" && selectedPiece.inDefaultPosition() && selectedPiece!=chessPiecesAlive[indexOfPieceToDie]) // Prevent castling by undoing selection of kind
     {
       // Each quadrant for castling
       if (checkEmpty(position) && position.equals("1c") && checkEmpty("1b") && checkEmpty("1d"))
-         {
+      {
         chessPiecesAlive[0].updatePosition("1d");
       }
       if (checkEmpty(position) && position.equals("1g") && checkEmpty("1f"))
       {
         chessPiecesAlive[7].updatePosition("1f");
       }
-       if (checkEmpty(position) && position.equals("8g") && checkEmpty("8f"))
+      if (checkEmpty(position) && position.equals("8g") && checkEmpty("8f"))
       {
         chessPiecesAlive[31].updatePosition("8f");
       }
       if (checkEmpty(position) && position.equals("8c") && checkEmpty("8b") && checkEmpty("8d"))
-          {
+      {
         chessPiecesAlive[24].updatePosition("8d");
       }
     }
