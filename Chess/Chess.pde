@@ -143,7 +143,6 @@ void keyPressed(){
     gamemode = CHESS;
     computer = OFF;
     buttons = new ArrayList<Button>();
-    println(board.getPassant());
   }
   if(key == 'w'){
     board = new Board("1nbqkbnr/Pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR w KQk - 0 1");
