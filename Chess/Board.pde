@@ -1,4 +1,5 @@
 import java.util.*;
+import processing.sound.*;
 class Board {
   final static int BLACK = -1;
   final static int WHITE = 1;
