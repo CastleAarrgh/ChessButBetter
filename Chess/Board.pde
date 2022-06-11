@@ -219,6 +219,13 @@ class Board {
       Board[7][7] = null;
       Board[7][5] = wRook;
     }
+      if (update)wKingMoved = true;
+  } else if (Board[i0][j0] == bKing) {
+    if (bKingMoved == false && j1 == 2) {
+      Board[0][0] = null;
+      Board[0][3] = bRook;
+    }
+    if (bKingMoved == false && j1 == 6) {
 
 
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
