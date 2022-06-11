@@ -13,14 +13,15 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
   * run the program: there is a basic UI which will allow you to select each mode and who your opponent will be
   * cheat keys exist to show off the various features of the program that are not o easy to find: the purpose of each cheat key is outlined below.
     * q: en-passant example
-    * w: castling example
-    * e: check example
-    * r: checkmate example
-    * t: tie example
-    * y: timer loss example
-    * u: Chess960 castling
-    * i: Chesskers capturing
-    * o:
+    * w: promotion example
+    * e: castling example
+    * r: check example
+    * t: checkmate example
+    * y: tie example
+    * u: timer loss example
+    * i: Chess960 castling
+    * o: Chesskers capturing
+    * p:
 
 ## Development Log
   ### Sam
