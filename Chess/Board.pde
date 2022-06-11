@@ -259,7 +259,10 @@ Board[0][7] = null;
         chessPiecesAlive[31].updatePosition("8f");
       }
       if (checkEmpty(position) && position.equals("8c") && checkEmpty("8b") && checkEmpty("8d"))
-      {
+          {
+        chessPiecesAlive[24].updatePosition("8d");
+      }
+    }
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
    move would lead to the capture of the king next turn */
