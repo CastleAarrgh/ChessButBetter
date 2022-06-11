@@ -22,7 +22,7 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     * i: timer loss
     * o: Chess960 castling
     * p: Chesskers capturing
-    * q: 
+    * m: back to main menu
 
 ## Development Log
   ### Sam
