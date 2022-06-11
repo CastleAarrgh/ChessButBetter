@@ -205,6 +205,20 @@ void keyPressed(){
     computer = OFF;
     buttons = new ArrayList<Button>();
   }
+  if(key == 'o'){
+    board = new Chess960("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1R1K2R1 w kq - 0 1");
+    menu = GAME;
+    gamemode = CHESS960;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 'p'){
+    board = new Chesskers("rnbqkbnr/pppp1ppp/8/4p3/3P1P2/4P3/PPP3PP/RNBQKBNR w KQkq - 0 1");
+    menu = GAME;
+    gamemode = CHESSKERS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
   
 }
 void mousePressed() {

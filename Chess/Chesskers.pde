@@ -3,6 +3,10 @@ public class Chesskers extends Board{
     super();
     convertToChesskersBoard();
   }
+  Chesskers(String fenString){
+    super(fenString);
+    convertToChesskersBoard();
+  }
   private void convertToChesskersBoard(){
     for(int i = 0; i < 8; i++){
       for(int j = 0; j < 8; j++){
