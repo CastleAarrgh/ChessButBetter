@@ -26,105 +26,7 @@ class Board {
   boolean KingsideCastle = false;
   boolean QueensideCastle = false; //<>//
 
-  /*
-  Board constructor takes in no positions and generates 
-   the default starting chess position.
-   */
-  Board() {
-    importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-  }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>//
-   */
-  public void ispromoted() {
-    for ( int j=0; j<8; j++) {
-      Piece piece = board[0][j];//scan first row for black pieces
-      Piece piece2 = board[7][j];//scan eighth row for white pieces
-      //checking to see if the pawn is promoted works, getting the pawn to promote doesn't
-      if (piece.getType() == 'p') {
-        //  print("promoted");
-        promote = true;
-        promoteY = j;
-        promoteX = 7;
-      }
-      if (piece2.getType() == 'p') {
-        promote = true;
-        promoteY = j;
-        promoteX = 0;
-      }
-    }
-  }
-  Board(String startingFen) {
-    importFEN(startingFen);
-  }
-  // display the board background and the pieces
-  public void displayBoard(int x, int y) {
-    color Dark  = color(118, 150, 86);
-    color Light = color(238, 238, 210);
-    for (int i = 0; i < 8; i ++) {
-      for (int j = 0; j < 8; j ++) {
-        if ((i + j + 1) % 2 == 0) {
-          fill(Dark); // white
-        } else {
-          fill(Light); // black
-        } 
-        int[] square = new int[]{j, i};
-        rect(i * squareSize, j * squareSize, squareSize, squareSize); 
-        for (int k = 0; k < highlightedSquares.size(); k++) {
-          int[] highlightedSquare = highlightedSquares.get(k);
-          if (Arrays.equals(square, highlightedSquare)) {
-            fill(255, 93, 98, 150);
-            rect(i * squareSize, j * squareSize, squareSize, squareSize);
-          }
-        }
-        if (board[j][i] != null) image(board[j][i].getPieceImage(), i* squareSize, j* squareSize, squareSize, squareSize);
-      }
-    }
-    displayNotation();
-  }
-  private void displayNotation() {
-    for (int i = 0; i <8; i++) {
-      fill(0);
-      textSize(20);
-      textAlign(CENTER);
-      text((char)('a'+i), 8 + i*100, 795);
-    }
-    for (int i = 0; i <8; i++) {
-      fill(0);
-      textSize(20);
-      textAlign(CENTER);
-      text(""+(i+1), 790, 720 - i*100);
-    }
-  }
-  //board accessor method
-  public Piece[][] getBoard() {
-    return board;
-  }
-  //passantSquare accessor method
-  public int[] getPassant() {
-    return passantSquare;
-  }
-  //export board state as fen
-  public String exportFen() {
-    return "";
-  }
-  //-1: black wins, 1: white wins, 0: tie
-  public boolean isEnded() {
-    return generateLegalMoves(activePlayer).size() == 0;
-  }
-  //display game over screen
-  public void gameOver() {
-    textAlign(CENTER);
-    textSize(50);
-    fill(255, 93, 98, 200);
-    if (isTie()) {
-      text("It's a tie.", 400, 400);
-    } else if (activePlayer == WHITE) {
-      text("Black Wins!", 400, 400);
-    } else {
-      text("White Wins!", 400, 400);
-    }
-    //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-  }
+
   public int[] findPiece(char type, int col) {
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
@@ -136,17 +38,7 @@ class Board {
     }
     return new int[]{-1, -1};
   }
-  private boolean isTie() {
-    ArrayList<Move> possibleResponses = generateLegalMoves(-activePlayer);
-    int[] kingPos = findPiece('k', activePlayer);
-    for (Move move : possibleResponses) {
-      int[] target = move.getTarget();
-      if (Arrays.equals(target, kingPos)) {
-        return false;
-      }
-    }
-    return true;
-  }
+
   //make a move requested by the main if it is legal
   //if it's legal return true, else return false.
   public boolean makeLegalMove(Move move) {
@@ -166,9 +58,11 @@ class Board {
     Piece piece = board[start[0]][start[1]];
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
+    //in charge of moving the pieces
+    
     if (piece.getType() == 'p') {
       ispromoted();
-    }
+    } //check to see if piece is promoted or not, send info to mousepressed
     if (piece.getType() == 'k') {
       if (activePlayer == WHITE) {
         wKingMoved = true;
@@ -182,7 +76,8 @@ class Board {
       passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
     } else {
       passantSquare = null;
-    }
+    }//en passant stuff
+   
     activePlayer = -activePlayer;
   }
 
@@ -242,14 +137,6 @@ Board[0][7] = null;
     }
   }
 
-void moveSelectedPiece(String position)
-{
-  System.out.println(position);
-  boolean castling = false;
-  // If you have already selected a piece (ie: there is a red cell on the chess set)
-  if (pieceSelected==true)
-  {
-    
 
 
     // Castling Conditions
@@ -301,7 +188,7 @@ void moveSelectedPiece(String position)
           break;
         }
       }
-      if (IsValid) {
+      if (IsValid) {//if move is valid, add to newMoves
         try {
           newMoves.add((Move)move.clone());
         }
@@ -485,5 +372,116 @@ void moveSelectedPiece(String position)
       out += "\n";
     }
     return out;
+  }
+    // display the board background and the pieces
+  public void displayBoard(int x, int y) {
+    color Dark  = color(118, 150, 86);
+    color Light = color(238, 238, 210);
+    for (int i = 0; i < 8; i ++) {
+      for (int j = 0; j < 8; j ++) {
+        if ((i + j + 1) % 2 == 0) {
+          fill(Dark); // white
+        } else {
+          fill(Light); // black
+        } 
+        int[] square = new int[]{j, i};
+        rect(i * squareSize, j * squareSize, squareSize, squareSize); 
+        for (int k = 0; k < highlightedSquares.size(); k++) {
+          int[] highlightedSquare = highlightedSquares.get(k);
+          if (Arrays.equals(square, highlightedSquare)) {
+            fill(255, 93, 98, 150);
+            rect(i * squareSize, j * squareSize, squareSize, squareSize);
+          }
+        }
+        if (board[j][i] != null) image(board[j][i].getPieceImage(), i* squareSize, j* squareSize, squareSize, squareSize);
+      }
+    }
+    displayNotation();
+  }
+  
+    /*
+  Board constructor takes in no positions and generates 
+   the default starting chess position.
+   */
+  Board() {
+    importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+  }
+    Board(String startingFen) {
+    importFEN(startingFen);
+  }
+
+  private void displayNotation() {
+    for (int i = 0; i <8; i++) {
+      fill(0);
+      textSize(20);
+      textAlign(CENTER);
+      text((char)('a'+i), 8 + i*100, 795);
+    }
+    for (int i = 0; i <8; i++) {
+      fill(0);
+      textSize(20);
+      textAlign(CENTER);
+      text(""+(i+1), 790, 720 - i*100);
+    }
+  }
+    public void ispromoted() {
+    for ( int j=0; j<8; j++) {
+      Piece piece = board[0][j];//scan first row for black pieces
+      Piece piece2 = board[7][j];//scan eighth row for white pieces
+      //checking to see if the pawn is promoted works, getting the pawn to promote doesn't
+      if (piece.getType() == 'p') {
+        //  print("promoted");
+        promote = true;
+        promoteY = j;
+        promoteX = 7;
+      }
+      if (piece2.getType() == 'p') {
+        promote = true;
+        promoteY = j;
+        promoteX = 0;
+      }
+    }
+  }
+
+  //board accessor method
+  public Piece[][] getBoard() {
+    return board;
+  }
+  //passantSquare accessor method
+  public int[] getPassant() {
+    return passantSquare;
+  }
+  //export board state as fen
+  public String exportFen() {
+    return "";
+  }
+  //-1: black wins, 1: white wins, 0: tie
+  public boolean isEnded() {
+    return generateLegalMoves(activePlayer).size() == 0;
+  }
+  //display game over screen
+  public void gameOver() {
+    textAlign(CENTER);
+    textSize(50);
+    fill(255, 93, 98, 200);
+    if (isTie()) {
+      text("It's a tie.", 400, 400);
+    } else if (activePlayer == WHITE) {
+      text("Black Wins!", 400, 400);
+    } else {
+      text("White Wins!", 400, 400);
+    }
+    //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+  }
+    private boolean isTie() {
+    ArrayList<Move> possibleResponses = generateLegalMoves(-activePlayer);
+    int[] kingPos = findPiece('k', activePlayer);
+    for (Move move : possibleResponses) {
+      int[] target = move.getTarget();
+      if (Arrays.equals(target, kingPos)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
