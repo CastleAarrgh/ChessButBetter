@@ -135,6 +135,75 @@ void mouseClicked() {
   if(menu == FENINPUT){
   }
 }
+void keyPressed(){
+  //cheat keys
+  if(key == 'q'){
+    board = new Board("rnbqkbnr/ppp1pp1p/6p1/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+    println(board.getPassant());
+  }
+  if(key == 'w'){
+    board = new Board("1nbqkbnr/Pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR w KQk - 0 1");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 'e'){
+    board = new Board("r1bqkbnr/pppp2pp/2n2p2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 'r'){
+    board = new Board("r1bq1rk1/pp2ppbp/2np1np1/8/3NP3/2N1BP2/PPPQ2PP/R3KB1R w KQ - 3 9");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 't'){
+    board = new Board("r1bqkbnr/ppp2ppp/2B5/3pp3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 4");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 'y'){
+    board = new Board("rnbqkbnr/2pp1ppp/1p6/p3p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 0 4");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 'u'){
+    board = new Board("5k2/8/3KQ3/6R1/8/8/8/8 b - - 0 1");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 'i'){
+    timer = new Timer(2, 300);
+    board = new Board("5k2/8/3KQ3/6R1/8/8/8/8 b - - 0 1");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  if(key == 'u'){
+    board = new Board("5k2/8/3KQ3/6R1/8/8/8/8 b - - 0 1");
+    menu = GAME;
+    gamemode = CHESS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
+  
+}
 void mousePressed() {
   /*if (board.promote) {
     int x = round(mouseX/ (width/4)-0.5);

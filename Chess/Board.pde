@@ -333,9 +333,9 @@ class Board {
   //convert chess Notation(e.g. e6) to something understandable by the program(int[])
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
-    int firstNum = firstLetter - 'a';
-    int secondNum = Integer.parseInt("" + str.charAt(1));
-    return new int[]{firstNum, secondNum};
+    int colNum = firstLetter - 'a';
+    int rowNum = 8 - Integer.parseInt("" + str.charAt(1));
+    return new int[]{rowNum, colNum};
   }
   //import standardized chess FORMAT FEN into Board class
   public void importFEN(String fen) {
