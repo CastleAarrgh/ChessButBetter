@@ -219,6 +219,11 @@ void keyPressed(){
     computer = OFF;
     buttons = new ArrayList<Button>();
   }
+  if(key == 'm'){
+    buttons = new ArrayList<Button>();
+    board = null;
+    menu = GAMESELECT;
+  }
   
 }
 void mousePressed() {
