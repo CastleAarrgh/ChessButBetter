@@ -247,8 +247,13 @@ Board[0][7] = null;
     {
       // Each quadrant for castling
       if (checkEmpty(position) && position.equals("1c") && checkEmpty("1b") && checkEmpty("1d"))
+         {
+        chessPiecesAlive[0].updatePosition("1d");
+      }
+      if (checkEmpty(position) && position.equals("1g") && checkEmpty("1f"))
       {
-        
+        chessPiecesAlive[7].updatePosition("1f");
+      }
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
    move would lead to the capture of the king next turn */
