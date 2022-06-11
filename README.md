@@ -11,7 +11,7 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
 ## How to Compile/Run:
   * git clone the repo
   * run the program: there is a basic UI which will allow you to select each mode and who your opponent will be
-  * cheat keys exist to show off the various features of the program that are not o easy to find: the purpose of each cheat key is outlined below.
+  * cheat keys exist to show off the various features of the program that are not o easy to find: the purpose of each cheat key is outlined below.  Pressing the key shown will take you to a position which allows you to easily demo the specified feature.
     * q: en-passant example
     * w: promotion example
     * e: castling example
