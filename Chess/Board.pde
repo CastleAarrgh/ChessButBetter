@@ -118,7 +118,7 @@ class Board {
     fill(255, 93, 98, 200);
     if(winner == 0){
       text("It's a tie.", 400, 380);
-    } else if(winner == BLACK){
+    } else if(winner == BLACK  ){
       text("Black Wins!", 400, 380);
     } else{
       text("White Wins!", 400, 380);
@@ -251,7 +251,7 @@ class Board {
     }
   }
   //make move that is determined to be legal.
- private void makeMove(Move move) {
+ public void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
@@ -436,7 +436,7 @@ public void ispromoted() {
         int[] target = newMove.getTarget();
         Piece piece = board[target[0]][target[1]];
         if (piece != null && piece.getType() == 'k') {
-          println("newMove: " + newMove);
+          //println("newMove: " + newMove);
           IsValid = false;
           break;
         }
@@ -461,10 +461,10 @@ public void ispromoted() {
   //generates all possible moves for one piece
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
-    println(moves);
+    //println(moves);
     moves = removeChecks(moves);
-    println(moves);
-    println();
+    //println(moves);
+    //println();
     return moves;
   }
   //generatesAllMoves posssible for the board(every piece on board of correct color)
@@ -606,6 +606,7 @@ public void ispromoted() {
         Move attemptedMove = new Move(new int[]{row1, col1}, new int[]{row2, col2});
         firstClick = true;
         if (makeLegalMove(attemptedMove)) {
+          println(attemptedMove);
           return true;
         }
       }

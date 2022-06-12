@@ -125,6 +125,7 @@ void mouseClicked() {
       if(menu == GAME && board != null){
         board = null;
         menu = GAMESELECT;
+        timer = new Timer(300, 300);
       }
       int[] newScreen = button.click();
       menu = newScreen[0];
@@ -218,13 +219,7 @@ void keyPressed(){
     buttons = new ArrayList<Button>();
   }
   if(key == 'o'){
-    board = new Chess960("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1R1K2R1 w kq - 0 1");
-    menu = GAME;
-    gamemode = CHESS960;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'p'){
+    timer = new Timer(300,300);
     board = new Chesskers("rnbqkbnr/pppp1ppp/8/4p3/3P1P2/4P3/PPP3PP/RNBQKBNR w KQkq - 0 1");
     menu = GAME;
     gamemode = CHESSKERS;
