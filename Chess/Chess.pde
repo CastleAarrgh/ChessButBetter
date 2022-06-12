@@ -230,8 +230,3 @@ void keyPressed(){
 private static boolean between(int variable, int minValueInclusive, int maxValueInclusive) {
   return variable >= minValueInclusive && variable <= maxValueInclusive;
 }
-void mousePressed() {
-  if (menu == GAME) {
-board.promotion();
-}
-}
