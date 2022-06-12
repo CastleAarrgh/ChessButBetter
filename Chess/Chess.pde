@@ -21,7 +21,7 @@ int computerTimer;
 Board board;
 Timer timer;
 ArrayList<Button> buttons = new ArrayList<Button>();
-SoundFile file;
+SoundFile moveSound;
 void setup(){
   menu = GAMESELECT;
   //Board board = new Chess960();
@@ -29,7 +29,7 @@ void setup(){
   //board.displayBoard();
   size(1000, 800);
   timer = new Timer(300, 300);
-  file = new SoundFile(this, "moveSound.mp3"); //<>//
+  moveSound = new SoundFile(this, "moveSound.mp3"); //<>//
   buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
   buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
   buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
@@ -98,7 +98,7 @@ void mouseClicked() {
   if(menu == GAME && computer == OFF){
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
-      file.play();
+      moveSound.play();
       timer.swap();
       secondTimer = millis();
       //println(board instanceof Chess2);

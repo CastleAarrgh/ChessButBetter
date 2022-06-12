@@ -155,7 +155,7 @@ class Board {
       return true;
       //println(passantSquare);
     } else {
-      print("move: " + move + " is invalid!");
+      //print("move: " + move + " is invalid!");
       return false;
     }
   }
@@ -606,7 +606,6 @@ public void ispromoted() {
         Move attemptedMove = new Move(new int[]{row1, col1}, new int[]{row2, col2});
         firstClick = true;
         if (makeLegalMove(attemptedMove)) {
-          println(attemptedMove);
           return true;
         }
       }
