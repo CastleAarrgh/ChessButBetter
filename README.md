@@ -67,5 +67,5 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     6/8 - 
     6/9 - 
     6/11 = finished promotion
-    6/12 - finished castling
+    6/12 - finished castling, moved promotion function to board class
     
