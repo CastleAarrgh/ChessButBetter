@@ -249,9 +249,40 @@ class Board {
     int col = piece.getColor();
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
-    //in charge of moving the pieces
-
-    if (piece.getType() == 'r') {
+    //if promoted, make into queen
+    if (piece.getType() == 'p') {
+      if(col == WHITE && target[0] == 0){
+        board[target[0]][target[1]] = new Queen(col);
+      }
+      if(col == BLACK && target[0] == 7){
+        board[target[0]][target[1]] = new Queen(col);
+      }
+    }
+    //do castle move
+    if(piece.getType() == 'k' && abs(target[1] - start[1]) == 2){
+      //place rook
+      board[start[0]][(start[1] + target[1]) / 2] = new Rook(col);
+      //remove old rook
+      if(target[1] == 6){
+        board[start[0]][7] = null;
+      } else{
+        board[start[0]][0] = null;
+      }
+    }
+    if(piece.getType() == 'r' || piece.getType() == 'k'){
+      updateCastling(move);
+    }
+    if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
+      board[start[0]][target[1]] = null;
+    }
+    if (piece.getType() == 'p' && abs(target[0] - start[0]) == 2) {
+      passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
+    } else {
+      passantSquare = null;
+    }//en passant stuff
+  
+  activePlayer = -activePlayer;
+   /*if (piece.getType() == 'r') {
       if (activePlayer == WHITE) {
         if (start[0] == 7 && start[1] == 0) {
           wRookMoved1 = true;
@@ -269,17 +300,9 @@ class Board {
         }
       }
     }
-    //if promoted, make into queen
     if (piece.getType() == 'p') {
-      if(col == WHITE && target[0] == 0){
-        board[target[0]][target[1]] = new Queen(col);
-      }
-      if(col == BLACK && target[0] == 7){
-        board[target[0]][target[1]] = new Queen(col);
-      }
-    }
-    
-    
+      ispromoted();
+    } check to see if piece is promoted or not, send info to mousepressed
     if (piece.getType() == 'k') {
       if (activePlayer == WHITE) {
         //see if white kingside castling happens
@@ -318,54 +341,23 @@ class Board {
         bKingMoved = true;
       }
     }
-  
-  if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
-    board[start[0]][target[1]] = null;
-  }
-  if (piece.getType() == 'p' && abs(target[0] - start[0]) == 2) {
-    passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-  } else {
-    passantSquare = null;
-  }//en passant stuff
-  
-  activePlayer = -activePlayer;
+    */
 }
-
-private void castling2() {
-  int xcor;
-  if (activePlayer == WHITE) {
-    xcor = 7;
-  } else {
-    xcor = 0;
-  }
-  if (KingsideCastle) {
-    board[xcor][4]=null;
-    board[xcor][5]= new Rook(1);
-    board[xcor][6] = new King(1);
-    board [xcor][7] = null;
-    if (activePlayer == WHITE) {
-      this.wKingMoved = true;
-      this.wRookMoved2 = true;
+//castlingRights[0]: White Kingside, castlingRights[1]: White Queenside, [2]: Black Kingside, [3]: Black Queenside
+private void updateCastling(Move move){
+    int[] target = move.getTarget();
+    int[] start = move.getStart();
+    Piece piece = board[target[0]][target[1]];
+    int col = piece.getColor();
+    if(piece.getType() == 'k'){
+      if(col == WHITE){
+        castlingRights[0] = false;
+        castlingRights[1] = false;
+      } else{
+        castlingRights[2] = false;
+        castlingRights[3] = false;
+      }
     }
-    if (activePlayer == BLACK) {
-      this.bKingMoved = true;
-      this.bRookMoved2 = true;
-    }
-  }
-  if (QueensideCastle) {
-    board[xcor][4]=null;
-    board[xcor][3]= new Rook(1);
-    board[xcor][2] = new King(1);
-    board [xcor][0] = null;
-    if (activePlayer == WHITE) {
-      this.wKingMoved = true;
-      this.wRookMoved1 = true;
-    }
-    if (activePlayer == BLACK) {
-      this.bKingMoved = true;
-      this.bRookMoved1 = true;
-    }
-  }
 }
 
 
