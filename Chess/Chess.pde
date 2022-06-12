@@ -227,18 +227,24 @@ void keyPressed(){
   
 }
 void mousePressed() {
-  /*if (board.promote) {
-    int x = round(mouseX/ (width/4)-0.5);
-    if (board.activePlayer!=Board.WHITE) {
-      if (x == 0) board.board[down1][right1] = new Queen(1);
-      if (x == 1) board.board[down1][right1] = new Rook (1);
-      if (x == 2) board.board[down1][right1] = new Bishop(1);
-      if (x == 3) board.board[down1][right1] = new Knight (1);
-    } else {
-      if (x == 0) board.board[down1][right1] = new Queen(-1);
-      if (x == 1) board.board[down1][right1] = new Rook (-1);
-      if (x == 2) board.board[down1][right1] = new Bishop (-1);
-      if (x == 3) board.board[down1][right1] = new Knight (-1);
+  if (menu == GAME) {
+    if (board.promote) {
+      if (board.activePlayer!=Board.WHITE) {
+              Piece piece = new Pawn(1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) piece = new Rook (1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop(1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (1);
+              board.board[board.promoteX][board.promoteY] = piece;
+      } else {
+              Piece piece = new Pawn(-1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(-1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  piece = new Rook (-1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop (-1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (-1);
+              board.board[board.promoteX][board.promoteY] = piece;
+
+      }
     }
-  }*/
   }
+}

@@ -15,6 +15,18 @@ class Board {
   final private int squareSize = size / 8;
   public boolean firstClick = true; 
   public int row1, row2, col1, col2;
+  boolean promote = false;
+  boolean gameOver = false;
+  int promoteX, promoteY;
+  boolean wKingMoved = false;
+  boolean bKingMoved = false;
+  boolean wRookMoved1 = false;
+  boolean wRookMoved2 = false;
+  boolean bRookMoved1 = false;
+  boolean bRookMoved2 = false;
+  boolean KingsideCastle = false; //<>//
+  boolean QueensideCastle = false;
+
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
@@ -24,7 +36,7 @@ class Board {
   }
   /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
    */
-  Board(String startingFen) { //<>//
+  Board(String startingFen) {
     importFEN(startingFen);
   }
   // display the board background and the pieces
