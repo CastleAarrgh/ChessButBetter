@@ -220,7 +220,7 @@ class Board {
       activePlayer = oldActivePlayer;
     }
     return new minimaxReturn(bestEval, bestMove);
-   }
+   } //<>//
   public void makeComputerMove(){
     minimaxReturn res = minimax(3);
     //println(res.move);
@@ -237,22 +237,122 @@ class Board {
     }
   }
   //make move that is determined to be legal.
-  public void makeMove(Move move) {
+ private void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
-    if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
-      board[start[0]][target[1]] = null;
+    //in charge of moving the pieces
+
+    if (piece.getType() == 'r') {
+      if (activePlayer == WHITE) {
+        if (start[0] == 7 && start[1] == 0) {
+          wRookMoved1 = true;
+        }
+        if (start[0] == 7 && start[1] == 7) {
+          wRookMoved2 =true;
+        }
+      }
+      if (activePlayer == BLACK) {
+        if (start[0] == 0 && start[1] == 0) {
+          bRookMoved1 = true;
+        }
+        if (start[0] == 0 && start[1] == 7) {
+          bRookMoved2 =true;
+        }
+      }
     }
-    if (piece.getType() == 'p' && abs(target[0] - start[0]) == 2) {
-      passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-    } else {
-      passantSquare = null;
+    if (piece.getType() == 'p') {
+      ispromoted();
+    } //check to see if piece is promoted or not, send info to mousepressed
+    if (piece.getType() == 'k') {
+      if (activePlayer == WHITE) {
+        //see if white kingside castling happens
+        if (wKingMoved == false && wRookMoved2 == false) {
+          if (target[0] == 7 && target[1] == 6) {
+            KingsideCastle = true;
+            castling2();
+          }
+        }
+
+        //white queenside castling
+        if (wKingMoved == false && wRookMoved1 == false) {
+          if (target[0] == 7 && target[1] == 2) {
+            QueensideCastle = true;
+            castling2();
+          }
+        }
+        wKingMoved = true;
+      } else {
+        //see if black kingside castling happens
+        if (bKingMoved == false && bRookMoved2 == false) {
+
+          if (target[0] == 0 && target[1] == 6) {
+            KingsideCastle = true;
+            castling2();
+          }
+        }
+        //see if black queenside castling happens
+                if (bKingMoved == false && bRookMoved1 == false) {
+
+          if (target[0] == 0 && target[1] == 2) {
+            QueensideCastle = true;
+            castling2();
+          }
+        }
+        bKingMoved = true;
+      }
     }
-    activePlayer = -activePlayer;
+  
+if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
+  board[start[0]][target[1]] = null;
+}
+if (piece.getType() == 'p' && abs(target[0] - start[0]) == 2) {
+  passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
+} else {
+  passantSquare = null;
+}//en passant stuff
+
+activePlayer = -activePlayer;
+}
+
+private void castling2() {
+  int xcor;
+  if (activePlayer == WHITE) {
+    xcor = 7;
+  } else {
+    xcor = 0;
   }
+  if (KingsideCastle) {
+    board[xcor][4]=null;
+    board[xcor][5]= new Rook(1);
+    board[xcor][6] = new King(1);
+    board [xcor][7] = null;
+    if (activePlayer == WHITE) {
+      this.wKingMoved = true;
+      this.wRookMoved2 = true;
+    }
+    if (activePlayer == BLACK) {
+      this.bKingMoved = true;
+      this.bRookMoved2 = true;
+    }
+  }
+  if (QueensideCastle) {
+    board[xcor][4]=null;
+    board[xcor][3]= new Rook(1);
+    board[xcor][2] = new King(1);
+    board [xcor][0] = null;
+    if (activePlayer == WHITE) {
+      this.wKingMoved = true;
+      this.wRookMoved1 = true;
+    }
+    if (activePlayer == BLACK) {
+      this.bKingMoved = true;
+      this.bRookMoved1 = true;
+    }
+  }
+}
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
    move would lead to the capture of the king next turn */
