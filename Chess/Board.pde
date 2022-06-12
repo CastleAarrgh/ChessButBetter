@@ -39,11 +39,21 @@ class Board {
     //in charge of moving the pieces
 
     if (piece.getType() == 'r') {
+      if(activePlayer == WHITE){
       if (start[0] == 7 && start[1] == 0) {
         wRookMoved1 = true;
       }
       if (start[0] == 7 && start[1] == 7) {
-        wRookMoved2 = true;
+        wRookMoved2 =true;
+      }
+      }
+            if(activePlayer == BLACK){
+      if (start[0] == 0 && start[1] == 0) {
+        bRookMoved1 = true;
+      }
+      if (start[0] == 0 && start[1] == 7) {
+        bRookMoved2 =true;
+      }
       }
     }
     if (piece.getType() == 'k') {
