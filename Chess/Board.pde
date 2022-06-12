@@ -31,6 +31,31 @@ class Board {
   Board constructor takes in no positions and generates 
    the default starting chess position.
    */
+   private boolean between(int variable, int minValueInclusive, int maxValueInclusive) {
+  return variable >= minValueInclusive && variable <= maxValueInclusive;
+}
+
+public void promotion(){
+    if (promote) {
+      if (activePlayer==Board.WHITE) {
+              Piece piece = new Pawn(1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) piece = new Rook (1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop(1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (1);
+              board[promoteX][promoteY] = piece;
+      } else {
+              Piece piece = new Pawn(-1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(-1);
+        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  piece = new Rook (-1);
+        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop (-1);
+        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (-1);
+              board[promoteX][promoteY] = piece;
+
+      }
+    }
+}
+   
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
@@ -266,6 +291,8 @@ class Board {
     if (piece.getType() == 'p') {
       ispromoted();
     } //check to see if piece is promoted or not, send info to mousepressed
+    
+    
     if (piece.getType() == 'k') {
       if (activePlayer == WHITE) {
         //see if white kingside castling happens
@@ -353,6 +380,26 @@ private void castling2() {
     }
   }
 }
+
+
+public void ispromoted() {
+  for ( int j=0; j<8; j++) {
+    Piece piece = board[0][j];//scan first row for white pieces
+    Piece piece2 = board[7][j];//scan eighth row for black pieces
+    //checking to see if the pawn is promoted works, getting the pawn to promote doesn't
+    if (piece!= null && piece.getType() == 'p') {
+      //  print("promoted");
+      promote = true;
+      promoteY = j;
+      promoteX = 0;
+    }
+    if (piece2 != null && piece2.getType() == 'p') {
+      promote = true;
+      promoteY = j;
+      promoteX = 7;
+    }
+  }
+}
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
    move would lead to the capture of the king next turn */
@@ -419,6 +466,7 @@ private void castling2() {
     }
     return moves;
   }
+  
   //generates all possible moves for the board, taking check into account
   private ArrayList<Move> generateLegalMoves(int col) {
     ArrayList<Move> moves = generateAllMoves(col);

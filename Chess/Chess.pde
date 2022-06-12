@@ -29,7 +29,7 @@ void setup(){
   //board.displayBoard();
   size(1000, 800);
   timer = new Timer(300, 300);
-  file = new SoundFile(this, "moveSound.mp3");
+  file = new SoundFile(this, "moveSound.mp3"); //<>//
   buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
   buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
   buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
@@ -226,25 +226,12 @@ void keyPressed(){
   }
   
 }
+
+private static boolean between(int variable, int minValueInclusive, int maxValueInclusive) {
+  return variable >= minValueInclusive && variable <= maxValueInclusive;
+}
 void mousePressed() {
   if (menu == GAME) {
-    if (board.promote) {
-      if (board.activePlayer!=Board.WHITE) {
-              Piece piece = new Pawn(1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(1);
-        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) piece = new Rook (1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop(1);
-        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (1);
-              board.board[board.promoteX][board.promoteY] = piece;
-      } else {
-              Piece piece = new Pawn(-1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(-1);
-        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  piece = new Rook (-1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop (-1);
-        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (-1);
-              board.board[board.promoteX][board.promoteY] = piece;
-
-      }
-    }
-  }
+board.promotion();
+}
 }
