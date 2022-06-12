@@ -10,6 +10,9 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
 ## Link To The Prototype: https://docs.google.com/document/d/1uOZb5EjacHRWJZKRKkogWzKWCsG52Fl7tPDo-tDyDxk/edit?usp=sharing
 ## How to Compile/Run:
   * git clone the repo
+  * install the inbuilt processing sound library if you don't already have it
+    * On the toolbar at the top: Sketch --> Import Library --> add Library
+    * input sound in the search bar, select Sound from the shown options and click install
   * run the program from processing: there is a basic UI which will allow you to select each mode and who your opponent will be.
   * cheat keys exist to show off the various features of the program that are maybe not as easy to find just moving pieces around: the purpose of each cheat key is outlined below.  Pressing the key shown will take you to a position which allows you to easily demo the specified feature.
     * q: en-passant
