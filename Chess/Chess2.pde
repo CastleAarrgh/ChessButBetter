@@ -1,4 +1,4 @@
-class Chess2 extends Board{
+public class Chess2 extends Board{
   Chess2(){
     super();
     convertToFairyBoard();

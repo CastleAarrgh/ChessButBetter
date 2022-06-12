@@ -18,6 +18,7 @@ class King extends Piece {
     }
     return moves;
   }
+ 
   public PImage getPieceImage() {
     if (getColor()== WHITE) {
       return loadImage("Pieces/WhiteKing.png");

@@ -1,3 +1,4 @@
+
 import java.util.*;
 import processing.sound.*;
 class Board {
@@ -15,47 +16,10 @@ class Board {
   final private int squareSize = size / 8;
   public boolean firstClick = true; 
   public int row1, row2, col1, col2;
-  boolean promote = false;
-  boolean gameOver = false;
-  int promoteX, promoteY;
-  boolean wKingMoved = false;
-  boolean bKingMoved = false;
-  boolean wRookMoved1 = false;
-  boolean wRookMoved2 = false;
-  boolean bRookMoved1 = false;
-  boolean bRookMoved2 = false;
-  boolean KingsideCastle = false; //<>//
-  boolean QueensideCastle = false;
-
   /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
    */
-   private boolean between(int variable, int minValueInclusive, int maxValueInclusive) {
-  return variable >= minValueInclusive && variable <= maxValueInclusive;
-}
-
-public void promotion(){
-    if (promote) {
-      if (activePlayer==Board.WHITE) {
-              Piece piece = new Pawn(1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(1);
-        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100)) piece = new Rook (1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop(1);
-        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (1);
-              board[promoteX][promoteY] = piece;
-      } else {
-              Piece piece = new Pawn(-1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 0, 100)) piece = new Queen(-1);
-        if (between(mouseX, 900, 1000 )&& between(mouseY, 0, 100))  piece = new Rook (-1);
-        if (between(mouseX, 800, 900 )&& between(mouseY, 100, 200)) piece = new Bishop (-1);
-        if (between(mouseX, 900, 1000  )&& between(mouseY, 100, 200)) piece = new Knight (-1);
-              board[promoteX][promoteY] = piece;
-
-      }
-    }
-}
-   
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
@@ -245,7 +209,7 @@ public void promotion(){
       activePlayer = oldActivePlayer;
     }
     return new minimaxReturn(bestEval, bestMove);
-   } //<>//
+   }
   public void makeComputerMove(){
     minimaxReturn res = minimax(3);
     //println(res.move);
@@ -262,144 +226,22 @@ public void promotion(){
     }
   }
   //make move that is determined to be legal.
- private void makeMove(Move move) {
+  public void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
-    //in charge of moving the pieces
-
-    if (piece.getType() == 'r') {
-      if (activePlayer == WHITE) {
-        if (start[0] == 7 && start[1] == 0) {
-          wRookMoved1 = true;
-        }
-        if (start[0] == 7 && start[1] == 7) {
-          wRookMoved2 =true;
-        }
-      }
-      if (activePlayer == BLACK) {
-        if (start[0] == 0 && start[1] == 0) {
-          bRookMoved1 = true;
-        }
-        if (start[0] == 0 && start[1] == 7) {
-          bRookMoved2 =true;
-        }
-      }
+    if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
+      board[start[0]][target[1]] = null;
     }
-    if (piece.getType() == 'p') {
-      ispromoted();
-    } //check to see if piece is promoted or not, send info to mousepressed
-    
-    
-    if (piece.getType() == 'k') {
-      if (activePlayer == WHITE) {
-        //see if white kingside castling happens
-        if (wKingMoved == false && wRookMoved2 == false) {
-          if (target[0] == 7 && target[1] == 6) {
-            KingsideCastle = true;
-            castling2();
-          }
-        }
-
-        //white queenside castling
-        if (wKingMoved == false && wRookMoved1 == false) {
-          if (target[0] == 7 && target[1] == 2) {
-            QueensideCastle = true;
-            castling2();
-          }
-        }
-        wKingMoved = true;
-      } else {
-        //see if black kingside castling happens
-        if (bKingMoved == false && bRookMoved2 == false) {
-
-          if (target[0] == 0 && target[1] == 6) {
-            KingsideCastle = true;
-            castling2();
-          }
-        }
-        //see if black queenside castling happens
-                if (bKingMoved == false && bRookMoved1 == false) {
-
-          if (target[0] == 0 && target[1] == 2) {
-            QueensideCastle = true;
-            castling2();
-          }
-        }
-        bKingMoved = true;
-      }
+    if (piece.getType() == 'p' && abs(target[0] - start[0]) == 2) {
+      passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
+    } else {
+      passantSquare = null;
     }
-  
-if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
-  board[start[0]][target[1]] = null;
-}
-if (piece.getType() == 'p' && abs(target[0] - start[0]) == 2) {
-  passantSquare = new int[]{start[0] - piece.getColor(), start[1]};
-} else {
-  passantSquare = null;
-}//en passant stuff
-
-activePlayer = -activePlayer;
-}
-
-private void castling2() {
-  int xcor;
-  if (activePlayer == WHITE) {
-    xcor = 7;
-  } else {
-    xcor = 0;
+    activePlayer = -activePlayer;
   }
-  if (KingsideCastle) {
-    board[xcor][4]=null;
-    board[xcor][5]= new Rook(1);
-    board[xcor][6] = new King(1);
-    board [xcor][7] = null;
-    if (activePlayer == WHITE) {
-      this.wKingMoved = true;
-      this.wRookMoved2 = true;
-    }
-    if (activePlayer == BLACK) {
-      this.bKingMoved = true;
-      this.bRookMoved2 = true;
-    }
-  }
-  if (QueensideCastle) {
-    board[xcor][4]=null;
-    board[xcor][3]= new Rook(1);
-    board[xcor][2] = new King(1);
-    board [xcor][0] = null;
-    if (activePlayer == WHITE) {
-      this.wKingMoved = true;
-      this.wRookMoved1 = true;
-    }
-    if (activePlayer == BLACK) {
-      this.bKingMoved = true;
-      this.bRookMoved1 = true;
-    }
-  }
-}
-
-
-public void ispromoted() {
-  for ( int j=0; j<8; j++) {
-    Piece piece = board[0][j];//scan first row for white pieces
-    Piece piece2 = board[7][j];//scan eighth row for black pieces
-    //checking to see if the pawn is promoted works, getting the pawn to promote doesn't
-    if (piece!= null && piece.getType() == 'p') {
-      //  print("promoted");
-      promote = true;
-      promoteY = j;
-      promoteX = 0;
-    }
-    if (piece2 != null && piece2.getType() == 'p') {
-      promote = true;
-      promoteY = j;
-      promoteX = 7;
-    }
-  }
-}
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
    move would lead to the capture of the king next turn */
@@ -466,7 +308,6 @@ public void ispromoted() {
     }
     return moves;
   }
-  
   //generates all possible moves for the board, taking check into account
   private ArrayList<Move> generateLegalMoves(int col) {
     ArrayList<Move> moves = generateAllMoves(col);
