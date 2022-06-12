@@ -29,6 +29,18 @@ class Timer{
   void swap(){
     activePlayer = -activePlayer;
   }
+  boolean isEnded(){
+    return whiteTime <= 0 || blackTime <= 0;
+  }
+  int winner(){
+    if(whiteTime <= 0){
+      return Board.BLACK;
+    }
+    if(blackTime <= 0){
+      return Board.WHITE;
+    }
+    return 0;
+  }
   public void displayTimer(){
     fill(111);
     rect(800, 200, 200, 400);

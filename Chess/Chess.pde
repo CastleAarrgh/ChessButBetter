@@ -76,7 +76,15 @@ void draw(){
     }
     timer.displayTimer();
     if (board.isEnded()){
-      board.gameOver();
+      int winner = board.winner();
+      board.gameOver(winner);
+      if(buttons.size() == 0){
+        buttons.add(new Button("Main Menu", 250, 400, 300, 100, 50, color(111,111,111, 220), GAMESELECT, gamemode, COMPUTER));
+      }
+    }
+    if(timer.isEnded()){
+      int winner = timer.winner();
+      board.gameOver(winner);
       if(buttons.size() == 0){
         buttons.add(new Button("Main Menu", 250, 400, 300, 100, 50, color(111,111,111, 220), GAMESELECT, gamemode, COMPUTER));
       }
@@ -99,7 +107,11 @@ void mouseClicked() {
   if(menu == GAME && computer == ON){
     if(!computerTurn && board.registerClick(mouseX, mouseY)){
       if(board.isEnded()){
-        board.gameOver();
+        int winner = board.winner();
+        board.gameOver(winner);
+      }else if(timer.isEnded()){
+        int winner = timer.winner();
+        board.gameOver(winner);
       } else{
         //board.makeLegalMove(randomMove);
         computerTurn = true;

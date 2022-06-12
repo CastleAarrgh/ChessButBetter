@@ -102,14 +102,23 @@ class Board {
   public boolean isEnded() {
     return generateLegalMoves(activePlayer).size() == 0;
   }
+  public int winner(){  
+    if(isTie()){
+      return 0;
+    }else if(activePlayer == WHITE){
+      return -1;
+    } else{
+      return 1;
+    }
+  }
   //display game over screen
-  public void gameOver() {
+  public void gameOver(int winner) {
     textAlign(CENTER);
     textSize(50);
     fill(255, 93, 98, 200);
-    if(isTie()){
+    if(winner == 0){
       text("It's a tie.", 400, 380);
-    } else if(activePlayer == WHITE){
+    } else if(winner == BLACK){
       text("Black Wins!", 400, 380);
     } else{
       text("White Wins!", 400, 380);
