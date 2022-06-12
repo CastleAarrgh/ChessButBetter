@@ -38,14 +38,14 @@ class Board {
     board[start[0]][start[1]] = null;
     //in charge of moving the pieces
 
-if (piece.getType() == 'r') {
-  if(start[0] == 7 && start[1] == 0){
-    wRookMoved1 = true;
-  }
-  if(start[0] == 7 && start[1] == 7){
-   wRookMoved2 = true;
-  }
-}
+    if (piece.getType() == 'r') {
+      if (start[0] == 7 && start[1] == 0) {
+        wRookMoved1 = true;
+      }
+      if (start[0] == 7 && start[1] == 7) {
+        wRookMoved2 = true;
+      }
+    }
     if (piece.getType() == 'p') {
       ispromoted();
     } //check to see if piece is promoted or not, send info to mousepressed
@@ -73,7 +73,7 @@ if (piece.getType() == 'r') {
         if (KingsideCastle) {
           board[7][4]=null;
           board[7][5]= new Rook(1);
-          board[7][6] = new King (1);
+          board[7][6] = new King(1);
           board [7][7] = null;
           this.wKingMoved = true;
           this.wRookMoved2 = true;
@@ -82,31 +82,32 @@ if (piece.getType() == 'r') {
           if (QueensideCastle) {
             board[7][4]=null;
             board[7][3]= new Rook(1);
-            board[7][2] = new King (1);
+            board[7][2] = new King(1);
             board [7][0] = null;
             this.wKingMoved = true;
             this.wRookMoved1 = true;
           }
         }
       }
-    } if (activePlayer == BLACK) {
+    } 
+    if (activePlayer == BLACK) {
       if (bKingMoved == false && bRookMoved2 == false) {
         if (KingsideCastle) {
           board[0][4]=null;
           board[0][5]= new Rook(1);
-          board[0][6] = new King (1);
+          board[0][6] = new King(1);
           board [0][7] = null;
-          this.wKingMoved = true;
-          this.wRookMoved2 = true;
+          this.bKingMoved = true;
+          this.bRookMoved2 = true;
         }
         if (wKingMoved == false && wRookMoved1 == false) {
           if (QueensideCastle) {
             board[0][4]=null;
             board[0][3]= new Rook(1);
-            board[0][2] = new King (1);
+            board[0][2] = new King(1);
             board [0][0] = null;
-            this.wKingMoved = true;
-            this.wRookMoved1 = true;
+            this.bKingMoved = true;
+            this.bRookMoved1 = true;
           }
         }
       }
