@@ -46,6 +46,8 @@ class Board {
         wRookMoved2 = true;
       }
     }
+    if (piece.getType() == 'k') {
+    }
     if (piece.getType() == 'p') {
       ispromoted();
     } //check to see if piece is promoted or not, send info to mousepressed
@@ -113,6 +115,45 @@ class Board {
       }
     }
   }
+
+  private void castling2() {
+    int xcor;
+    if (activePlayer == WHITE) {
+      xcor = 7;
+    }
+    else {
+      xcor = 0;
+    }
+    if (KingsideCastle) {
+      board[xcor][4]=null;
+      board[xcor][5]= new Rook(1);
+      board[xcor][6] = new King(1);
+      board [xcor][7] = null;
+      if (activePlayer == WHITE) {
+        this.wKingMoved = true;
+        this.wRookMoved2 = true;
+      }
+      if (activePlayer == BLACK) {
+        this.bKingMoved = true;
+        this.bRookMoved2 = true;
+      }
+    }
+    if (QueensideCastle) {
+      board[xcor][4]=null;
+      board[xcor][3]= new Rook(1);
+      board[xcor][2] = new King(1);
+      board [xcor][0] = null;
+      if (activePlayer == WHITE) {
+        this.wKingMoved = true;
+        this.wRookMoved1 = true;
+      }
+      if (activePlayer == BLACK) {
+        this.bKingMoved = true;
+        this.bRookMoved1 = true;
+      }
+    }
+  }
+
 
   //   } else if (Board[i0][j0] == wKing) {
   //    if (wKingMoved == false && j1 == 2) {//castle
