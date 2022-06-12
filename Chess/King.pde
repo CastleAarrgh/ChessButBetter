@@ -26,6 +26,7 @@ class King extends Piece {
     ArrayList<Move> moves = new ArrayList<Move>();
     int col = board[start[0]][start[1]].getColor();
     //white castling
+    if(!inCheck(BOARD, start)){
     if(col == WHITE){
       //kingside
       if(castlingRights[0] && board[7][5] == null && board[7][6] == null){
@@ -55,7 +56,20 @@ class King extends Piece {
         }
       }
     }
+    }
     return moves;
+  }
+  public boolean inCheck(Board BOARD, int[] start){
+    Piece[][] board = BOARD.getBoard();
+    int col = board[start[0]][start[1]].getColor();
+    ArrayList<Move> allMoves = BOARD.generateAllMoves(-col);
+    for(Move move: allMoves){
+      int[] target = move.getTarget();
+      if(Arrays.equals(start, target)){
+        return true;
+      }
+    }
+    return false;
   }
   public boolean kingMoveValid(Board BOARD, int[] start, int[] target){
       ArrayList<Move> movesToCheck = new ArrayList<Move>();
