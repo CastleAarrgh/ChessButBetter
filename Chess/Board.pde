@@ -89,18 +89,24 @@ if (piece.getType() == 'r') {
           }
         }
       }
-    } else {
-      if (activePlayer == BLACK) {
-        if (bKingMoved == false && bRookMoved1 == false && bRookMoved2 == false) {
-          if (KingsideCastle) {
-            board[0][4] = null;
-            board[0][5] = new Rook (-1);
-            board [0][6]= new King (-1);
-            board [0][7] = null;
-            this.bKingMoved = true;
-          }
-
+    } if (activePlayer == BLACK) {
+      if (bKingMoved == false && bRookMoved2 == false) {
+        if (KingsideCastle) {
+          board[0][4]=null;
+          board[0][5]= new Rook(1);
+          board[0][6] = new King (1);
+          board [0][7] = null;
+          this.wKingMoved = true;
+          this.wRookMoved2 = true;
+        }
+        if (wKingMoved == false && wRookMoved1 == false) {
           if (QueensideCastle) {
+            board[0][4]=null;
+            board[0][3]= new Rook(1);
+            board[0][2] = new King (1);
+            board [0][0] = null;
+            this.wKingMoved = true;
+            this.wRookMoved1 = true;
           }
         }
       }
