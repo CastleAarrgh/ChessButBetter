@@ -1,3 +1,4 @@
+
 import java.util.*;
 import processing.sound.*;
 class Board {
@@ -24,7 +25,7 @@ class Board {
   }
   /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
    */
-  Board(String startingFen) { //<>//
+  Board(String startingFen) {
     importFEN(startingFen);
   }
   // display the board background and the pieces

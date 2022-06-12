@@ -1,5 +1,4 @@
 import java.util.*;
-import processing.sound.*;
 class Board {
   final static int BLACK = -1;
   final static int WHITE = 1;
@@ -7,7 +6,7 @@ class Board {
   private int[] passantSquare;
   //castlingRights[0]: White Kingside, castlingRights[1]: White Queenside, [2]: Black Kingside, [3]: Black Queenside
   private boolean[] castlingRights;
-  private int activePlayer;
+  privateublic int activePlayer;
   private int halfmoveclock;
   private int fullmoveclock;
   private ArrayList<int[]> highlightedSquares = new ArrayList<int[]>();
@@ -22,9 +21,9 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
    */
-  Board(String startingFen) { //<>//
+  Board(String startingFen) {
     importFEN(startingFen);
   }
   // display the board background and the pieces
@@ -73,9 +72,7 @@ class Board {
   //passantSquare accessor method
   public int[] getPassant() {
     return passantSquare;
-  }
-  public int getActivePlayer(){
-    return activePlayer;
+  }Player;
   }
   //export board state as fen
   public String exportFen() {
@@ -210,18 +207,9 @@ class Board {
     return new minimaxReturn(bestEval, bestMove);
    }
   public void makeComputerMove(){
-    minimaxReturn res = minimax(3);
-    //println(res.move);
-    //println(res.val);
-    Move move = res.move;
-    if(isValid(move)){
-      makeLegalMove(move);
-    }
-    else{
-      ArrayList<Move> possibleMoves = generateLegalMoves(activePlayer);
-      int randNum = (int)random(possibleMoves.size());
-      Move randomMove = possibleMoves.get(randNum);
-      makeLegalMove(randomMove);
+    minimaxReturn res = nimax(3);
+    //printlnes.move);
+    //p     makeLegalMove(res.move);   o      
     }
   }
   //make move that is determined to be legal.
@@ -334,9 +322,9 @@ class Board {
   //convert chess Notation(e.g. e6) to something understandable by the program(int[])
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
-    int colNum = firstLetter - 'a';
-    int rowNum = 8 - Integer.parseInt("" + str.charAt(1));
-    return new int[]{rowNum, colNum};
+    int firstNum = firstLetter - 'a';
+    int secondNum = Integer.parseInt("" + str.charAt(1));
+    return new int[]{firstNum, secondNum};
   }
   //import standardized chess FORMAT FEN into Board class
   public void importFEN(String fen) {

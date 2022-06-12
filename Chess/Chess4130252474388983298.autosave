@@ -1,4 +1,3 @@
-import processing.sound.*;
 int GAMESELECT = 0;
 int INPUTSELECT = 1;
 int COMPUTERSELECT = 2;
@@ -12,16 +11,13 @@ int CHESSKERS = 5;
 int gamemode = 0;
 int OFF = 0;
 int ON = 1;
-int BOTH = 2;
 int computer = OFF;
 int menu;
 int secondTimer = millis();
-boolean computerTurn = false;
-int computerTimer;
 Board board;
+Checkers checkers;
 Timer timer;
 ArrayList<Button> buttons = new ArrayList<Button>();
-SoundFile file;
 void setup(){
   menu = GAMESELECT;
   //Board board = new Chess960();
@@ -29,7 +25,6 @@ void setup(){
   //board.displayBoard();
   size(1000, 800);
   timer = new Timer(300, 300);
-  file = new SoundFile(this, "moveSound.mp3");
   buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
   buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
   buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
@@ -40,7 +35,7 @@ void draw(){
   background(255);
   //menu controlling
   //println(gamemode);
-  if(menu == GAME){
+  if(menu == GAME && gamemode != CHESSKERS){
     if(board == null){
       if(gamemode == CHESS){
         board = new Board();
@@ -51,28 +46,11 @@ void draw(){
       if(gamemode == CHESS20){
         board = new Chess2();
       }
-      if(gamemode == CHESSKERS){
-        board = new Chesskers();
-      }
-      if(computer == BOTH){
-        computerTurn = true;
-      }
     }
     board.displayBoard(800,800);
     if(millis() - secondTimer >= 1000){
       timer.tick();
       secondTimer = millis();
-    }
-    if(computerTurn && millis() - computerTimer > 200){
-      int timeBefore = millis();
-      board.makeComputerMove();
-      int timeElapsed = millis() - timeBefore;
-      timer.swap();
-      timer.tick(timeElapsed / 1000.0);
-      timer.swap();
-      if(computer == ON){
-        computerTurn = false;
-      }
     }
     timer.displayTimer();
     if (board.isEnded()){
@@ -82,6 +60,12 @@ void draw(){
       }
     }
   }
+  if(menu == GAME && gamemode == CHESSKERS){
+    if(checkers == null){
+      checkers = new Checkers(0, 0, 500);
+    }
+     checkers.displayBoard();
+  }
   for(Button button: buttons){
     button.displayButton();
   }
@@ -90,21 +74,19 @@ void mouseClicked() {
   if(menu == GAME && computer == OFF){
     Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
-      file.play();
       timer.swap();
-      secondTimer = millis();
-      //println(board instanceof Chess2);
+      println(board instanceof Chess2);
     }
   }
   if(menu == GAME && computer == ON){
-    if(!computerTurn && board.registerClick(mouseX, mouseY)){
+    if(board.registerClick(mouseX, mouseY)){
       if(board.isEnded()){
         board.gameOver();
       } else{
-        //board.makeLegalMove(randomMove);
-        computerTurn = true;
-        computerTimer = millis();
-        //board.makeComputerMove();
+        ArrayList<Move> possibleMoves = board.generateLegalMoves(board.activePlayer);
+        int randNum = (int)random(possibleMoves.size());
+        Move randomMove = possibleMoves.get(randNum);
+        board.makeLegalMove(randomMove);
       }
     }
   }
@@ -124,7 +106,6 @@ void mouseClicked() {
   if(menu == COMPUTERSELECT){
     buttons.add(new Button("Play With Friend", 20, 20, GAME, gamemode, OFF));
     buttons.add(new Button("Play With Computer", 20, 240, GAME, gamemode, ON));
-    buttons.add(new Button("Computer Showdown", 20, 460, GAME, gamemode, BOTH));
   }
   if(menu == INPUTSELECT){
     buttons.add(new Button("Play From Start", 20, 20, GAME, gamemode, computer));
@@ -138,93 +119,6 @@ void mouseClicked() {
   }
   if(menu == FENINPUT){
   }
-}
-void keyPressed(){
-  //cheat keys
-  if(key == 'q'){
-    board = new Board("rnbqkbnr/ppp1pp1p/6p1/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>(); 
-  }
-  if(key == 'w'){
-    board = new Board("1nbqkbnr/Pppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR w KQk - 0 1");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'e'){
-    board = new Board("r1bqkbnr/pppp2pp/2n2p2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'r'){
-    board = new Board("r1bq1rk1/pp2ppbp/2np1np1/8/3NP3/2N1BP2/PPPQ2PP/R3KB1R w KQ - 3 9");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 't'){
-    board = new Board("r1bqkbnr/ppp2ppp/2B5/3pp3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 4");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'y'){
-    board = new Board("rnbqkbnr/2pp1ppp/1p6/p3p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 0 4");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'u'){
-    board = new Board("5k2/8/3KQ3/6R1/8/8/8/8 b - - 0 1");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'i'){
-    timer = new Timer(2, 300);
-    board = new Board();
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'u'){
-    board = new Board("5k2/8/3KQ3/6R1/8/8/8/8 b - - 0 1");
-    menu = GAME;
-    gamemode = CHESS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'o'){
-    board = new Chess960("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1R1K2R1 w kq - 0 1");
-    menu = GAME;
-    gamemode = CHESS960;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'p'){
-    board = new Chesskers("rnbqkbnr/pppp1ppp/8/4p3/3P1P2/4P3/PPP3PP/RNBQKBNR w KQkq - 0 1");
-    menu = GAME;
-    gamemode = CHESSKERS;
-    computer = OFF;
-    buttons = new ArrayList<Button>();
-  }
-  if(key == 'm'){
-    buttons = new ArrayList<Button>();
-    board = null;
-    menu = GAMESELECT;
-  }
-  
 }
 void mousePressed() {
   /*if (board.promote) {

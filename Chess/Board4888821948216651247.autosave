@@ -1,5 +1,4 @@
 import java.util.*;
-import processing.sound.*;
 class Board {
   final static int BLACK = -1;
   final static int WHITE = 1;
@@ -22,9 +21,9 @@ class Board {
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+  /* Generate Board based on provided FEN starting position //<>// //<>// //<>// //<>//
    */
-  Board(String startingFen) { //<>//
+  Board(String startingFen) {
     importFEN(startingFen);
   }
   // display the board background and the pieces
@@ -74,9 +73,6 @@ class Board {
   public int[] getPassant() {
     return passantSquare;
   }
-  public int getActivePlayer(){
-    return activePlayer;
-  }
   //export board state as fen
   public String exportFen() {
     return "";
@@ -91,11 +87,11 @@ class Board {
     textSize(50);
     fill(255, 93, 98, 200);
     if(isTie()){
-      text("It's a tie.", 400, 380);
+      text("It's a tie.", 400,400);
     } else if(activePlayer == WHITE){
-      text("Black Wins!", 400, 380);
+      text("Black Wins!", 400, 400);
     } else{
-      text("White Wins!", 400, 380);
+      text("White Wins!", 400, 400);
     }
     //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
@@ -133,99 +129,8 @@ class Board {
       return false;
     }
   }
-  private int evaluate(){
-    if(isEnded()){
-      if(isTie()){
-        return 0;
-      }
-      return activePlayer * Integer.MAX_VALUE;
-    }
-    HashMap<Character, Integer> pieceValues = new HashMap<Character, Integer>();
-    pieceValues.put('p', 1);
-    pieceValues.put('b', 3);
-    pieceValues.put('n', 3);
-    pieceValues.put('k', 0);
-    pieceValues.put('r', 5);
-    pieceValues.put('q', 9);
-    int sum = 0;
-    for(int r = 0; r < 8; r++){
-      for(int c = 0; c < 8; c++){
-        Piece piece = board[r][c];
-        if(piece != null){
-          sum += pieceValues.get(piece.getType()) * piece.getColor();
-        }
-      }
-    }
-    return sum;
-  }
-  public minimaxReturn minimax(int depth){
-    if(depth == 0){
-      if(evaluate() != 0){
-        //println(evaluate());
-      }
-      return new minimaxReturn(evaluate(), new Move(new int[]{-1, -1}, new int[]{-1, -1}));
-    }
-    //
-    //return new minimaxReturn(0, new Move(new int[]{0, 0}, new int[]{0,0}));
-    //println(this);
-    ArrayList<Move> possibleMoves = generateLegalMoves(activePlayer);
-    //println(this);
-    int[] oldPassantSquare = null;
-    if (passantSquare != null) {
-      oldPassantSquare = passantSquare.clone();
-    }
-    boolean[] oldCastlingRights = castlingRights.clone();
-    int oldActivePlayer = activePlayer;
-    Piece[][] oldBoard = deepCopy(board);
-    int bestEval = Integer.MAX_VALUE * -activePlayer;
-    Move bestMove = new Move(new int[]{-1, -1}, new int[]{-1, -1});
-    for (Move move : possibleMoves) {
-      //println(this);
-      //println(move);
-      makeMove(move);
-      minimaxReturn res = minimax(depth - 1);
-      int eval = res.val;
-      //println(this);
-      //println("bestEval: " + bestEval + " eval: " + eval);
-      if(oldActivePlayer == WHITE){
-        if(eval > bestEval){
-          bestEval = eval;
-          bestMove = move.clone();
-        }
-      } else{
-        if(eval < bestEval){
-           bestEval = eval;
-           bestMove = move.clone();
-        }
-      }
-      board = deepCopy(oldBoard);
-      if (oldPassantSquare == null) {
-        passantSquare = null;
-      } else {
-        passantSquare = oldPassantSquare.clone();
-      }
-      castlingRights = oldCastlingRights.clone();
-      activePlayer = oldActivePlayer;
-    }
-    return new minimaxReturn(bestEval, bestMove);
-   }
-  public void makeComputerMove(){
-    minimaxReturn res = minimax(3);
-    //println(res.move);
-    //println(res.val);
-    Move move = res.move;
-    if(isValid(move)){
-      makeLegalMove(move);
-    }
-    else{
-      ArrayList<Move> possibleMoves = generateLegalMoves(activePlayer);
-      int randNum = (int)random(possibleMoves.size());
-      Move randomMove = possibleMoves.get(randNum);
-      makeLegalMove(randomMove);
-    }
-  }
   //make move that is determined to be legal.
-  public void makeMove(Move move) {
+  private void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
     Piece piece = board[start[0]][start[1]];
@@ -248,7 +153,7 @@ class Board {
     if (moves.size() == 0) {
       return moves;
     }
-    int col = activePlayer;
+    int col = getMoveColor(moves.get(0));
     ArrayList<Move> newMoves = new ArrayList<Move>();
     int[] oldPassantSquare = null;
     if (passantSquare != null) {
@@ -270,7 +175,12 @@ class Board {
         }
       }
       if (IsValid) {
-          newMoves.add(move.clone());
+        try {
+          newMoves.add((Move)move.clone());
+        }
+        catch(CloneNotSupportedException e) {
+          e.printStackTrace();
+        }
       }
       board = deepCopy(oldBoard);
       if (oldPassantSquare == null) {
@@ -334,9 +244,9 @@ class Board {
   //convert chess Notation(e.g. e6) to something understandable by the program(int[])
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
-    int colNum = firstLetter - 'a';
-    int rowNum = 8 - Integer.parseInt("" + str.charAt(1));
-    return new int[]{rowNum, colNum};
+    int firstNum = firstLetter - 'a';
+    int secondNum = Integer.parseInt("" + str.charAt(1));
+    return new int[]{firstNum, secondNum};
   }
   //import standardized chess FORMAT FEN into Board class
   public void importFEN(String fen) {
