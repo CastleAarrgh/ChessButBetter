@@ -1,3 +1,4 @@
+//variable declaration stuff
 import java.util.*;
 class Board {
   final static int BLACK = -1;
@@ -23,35 +24,12 @@ class Board {
   boolean wRookMoved2 = false;
   boolean bRookMoved1 = false;
   boolean bRookMoved2 = false;
-  boolean KingsideCastle = false;
-  boolean QueensideCastle = false; //<>//
+  boolean KingsideCastle = false; //<>//
+  boolean QueensideCastle = false;
 
 
-  public int[] findPiece(char type, int col) {
-    for (int i = 0; i < 8; i++) {
-      for (int j = 0; j < 8; j++) {
-        Piece piece = board[i][j];
-        if (piece != null && piece.getType() == type && piece.getColor() == col) {
-          return new int[]{i, j};
-        }
-      }
-    }
-    return new int[]{-1, -1};
-  }
+  //movement-related stuff
 
-  //make a move requested by the main if it is legal
-  //if it's legal return true, else return false.
-  public boolean makeLegalMove(Move move) {
-    if (isValid(move)) {
-      makeMove(move);
-      return true;
-      //println(passantSquare);
-    } else {
-      print("move: " + move + " is invalid!");
-      return false;
-    }
-  }
-  //make move that is determined to be legal.
   private void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
@@ -59,7 +37,15 @@ class Board {
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
     //in charge of moving the pieces
-    
+
+if (piece.getType() == 'r') {
+  if(start[0] == 7 && start[1] == 0){
+    wRookMoved1 = true;
+  }
+  if(start[0] == 7 && start[1] == 7){
+   wRookMoved2 = true;
+  }
+}
     if (piece.getType() == 'p') {
       ispromoted();
     } //check to see if piece is promoted or not, send info to mousepressed
@@ -77,19 +63,30 @@ class Board {
     } else {
       passantSquare = null;
     }//en passant stuff
-   
+
     activePlayer = -activePlayer;
   }
 
   private void castling() {
     if (activePlayer == WHITE) {
-      if (wKingMoved ==false && wRookMoved1 ==false && wRookMoved2 == false) {
+      if (wKingMoved == false && wRookMoved2 == false) {
         if (KingsideCastle) {
           board[7][4]=null;
           board[7][5]= new Rook(1);
           board[7][6] = new King (1);
           board [7][7] = null;
           this.wKingMoved = true;
+          this.wRookMoved2 = true;
+        }
+        if (wKingMoved == false && wRookMoved1 == false) {
+          if (QueensideCastle) {
+            board[7][4]=null;
+            board[7][3]= new Rook(1);
+            board[7][2] = new King (1);
+            board [7][0] = null;
+            this.wKingMoved = true;
+            this.wRookMoved1 = true;
+          }
         }
       }
     } else {
@@ -100,66 +97,99 @@ class Board {
             board[0][5] = new Rook (-1);
             board [0][6]= new King (-1);
             board [0][7] = null;
+            this.bKingMoved = true;
+          }
+
+          if (QueensideCastle) {
           }
         }
       }
     }
   }
-   } else if (Board[i0][j0] == wKing) {
-    if (wKingMoved == false && j1 == 2) {//castle
-      Board[7][0] = null;
-      Board[7][3] = wRook;
-    }
-    if (wKingMoved == false && j1 == 6) {//castle
-      Board[7][7] = null;
-      Board[7][5] = wRook;
-    }
-      if (update)wKingMoved = true;
-  } else if (Board[i0][j0] == bKing) {
-    if (bKingMoved == false && j1 == 2) {
-      Board[0][0] = null;
-      Board[0][3] = bRook;
-    }
-    if (bKingMoved == false && j1 == 6) {
-Board[0][7] = null;
-      Board[0][5] = bRook;
-    }
-    if (update)bKingMoved = true;
-  } else if (Board[i0][j0] == wRook) {
-    if (update) {
-        if (!wRookMoved1 && j0 == 0) wRookMoved1 = true;
-      if (!wRookMoved2 && j0 == 7) wRookMoved2 = true;
-    }
-  } else if (Board[i0][j0] == bRook) {
-    if (update) {
-      if (!bRookMoved1 && j0 == 0) bRookMoved1 = true;
-      if (!bRookMoved2 && j0 == 7) bRookMoved2 = true;
+
+  //   } else if (Board[i0][j0] == wKing) {
+  //    if (wKingMoved == false && j1 == 2) {//castle
+  //      Board[7][0] = null;
+  //      Board[7][3] = wRook;
+  //    }
+  //    if (wKingMoved == false && j1 == 6) {//castle
+  //      Board[7][7] = null;
+  //      Board[7][5] = wRook;
+  //    }
+  //      if (update)wKingMoved = true;
+  //  } else if (Board[i0][j0] == bKing) {
+  //    if (bKingMoved == false && j1 == 2) {
+  //      Board[0][0] = null;
+  //      Board[0][3] = bRook;
+  //    }
+  //    if (bKingMoved == false && j1 == 6) {
+  //Board[0][7] = null;
+  //      Board[0][5] = bRook;
+  //    }
+  //    if (update)bKingMoved = true;
+  //  } else if (Board[i0][j0] == wRook) {
+  //    if (update) {
+  //        if (!wRookMoved1 && j0 == 0) wRookMoved1 = true;
+  //      if (!wRookMoved2 && j0 == 7) wRookMoved2 = true;
+  //    }
+  //  } else if (Board[i0][j0] == bRook) {
+  //    if (update) {
+  //      if (!bRookMoved1 && j0 == 0) bRookMoved1 = true;
+  //      if (!bRookMoved2 && j0 == 7) bRookMoved2 = true;
+  //    }
+  //  }
+
+  //---------------------------------------------------------------------
+
+  //    // Castling Conditions
+  //    if (selectedPiece.getName() == "King" && selectedPiece.inDefaultPosition() && selectedPiece!=chessPiecesAlive[indexOfPieceToDie]) // Prevent castling by undoing selection of kind
+  //    {
+  //      // Each quadrant for castling
+  //      if (checkEmpty(position) && position.equals("1c") && checkEmpty("1b") && checkEmpty("1d"))
+  //      {
+  //        chessPiecesAlive[0].updatePosition("1d");
+  //      }
+  //      if (checkEmpty(position) && position.equals("1g") && checkEmpty("1f"))
+  //      {
+  //        chessPiecesAlive[7].updatePosition("1f");
+  //      }
+  //      if (checkEmpty(position) && position.equals("8g") && checkEmpty("8f"))
+  //      {
+  //        chessPiecesAlive[31].updatePosition("8f");
+  //      }
+  //      if (checkEmpty(position) && position.equals("8c") && checkEmpty("8b") && checkEmpty("8d"))
+  //      {
+  //        chessPiecesAlive[24].updatePosition("8d");
+  //      }
+  //    }
+
+  //make move that is determined to be legal.
+  //make a move requested by the main if it is legal
+  //if it's legal return true, else return false.
+  public boolean makeLegalMove(Move move) {
+    if (isValid(move)) {
+      makeMove(move);
+      return true;
+      //println(passantSquare);
+    } else {
+      print("move: " + move + " is invalid!");
+      return false;
     }
   }
 
 
-
-    // Castling Conditions
-    if (selectedPiece.getName() == "King" && selectedPiece.inDefaultPosition() && selectedPiece!=chessPiecesAlive[indexOfPieceToDie]) // Prevent castling by undoing selection of kind
-    {
-      // Each quadrant for castling
-      if (checkEmpty(position) && position.equals("1c") && checkEmpty("1b") && checkEmpty("1d"))
-      {
-        chessPiecesAlive[0].updatePosition("1d");
-      }
-      if (checkEmpty(position) && position.equals("1g") && checkEmpty("1f"))
-      {
-        chessPiecesAlive[7].updatePosition("1f");
-      }
-      if (checkEmpty(position) && position.equals("8g") && checkEmpty("8f"))
-      {
-        chessPiecesAlive[31].updatePosition("8f");
-      }
-      if (checkEmpty(position) && position.equals("8c") && checkEmpty("8b") && checkEmpty("8d"))
-      {
-        chessPiecesAlive[24].updatePosition("8d");
+  public int[] findPiece(char type, int col) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        Piece piece = board[i][j];
+        if (piece != null && piece.getType() == type && piece.getColor() == col) {
+          return new int[]{i, j};
+        }
       }
     }
+    return new int[]{-1, -1};
+  }
+
   /*remove all moves which would allow the king to be captured next move(these positions only arise when a check 
    is left unresolved.  If the player is in checkmate, all possible moves should be removed, because any possible 
    move would lead to the capture of the king next turn */
@@ -210,12 +240,14 @@ Board[0][7] = null;
     activePlayer = oldActivePlayer;
     return newMoves;
   }
+
   //generates all possible moves for one piece
   private ArrayList<Move> generateMoves(int[] start) {
     ArrayList<Move> moves = board[start[0]][start[1]].generateMoves(this, start);
     moves = removeChecks(moves);
     return moves;
   }
+
   //generatesAllMoves posssible for the board(every piece on board of correct color)
   //does not take check into account
   private ArrayList<Move> generateAllMoves(int col) {
@@ -231,18 +263,21 @@ Board[0][7] = null;
     }
     return moves;
   }
+
   //generates all possible moves for the board, taking check into account
   private ArrayList<Move> generateLegalMoves(int col) {
     ArrayList<Move> moves = generateAllMoves(col);
     moves = removeChecks(moves);
     return moves;
   }
+
   //get the color of the piece being moved
   private int getMoveColor(Move move) {
     int[] start = move.getStart();
     int col = board[start[0]][start[1]].getColor();
     return col;
   }
+
   //check if a move attempted by the player isValid
   private boolean isValid(Move move) {
     //ArrayList<Move> possibleMoves = generateAllMoves(activePlayer);
@@ -255,6 +290,59 @@ Board[0][7] = null;
     }
     return false;
   }
+
+  boolean registerClick(int x, int y) {
+    if (firstClick) {
+      row1 = y/100;
+      col1 = x/100;
+      if (board[row1][col1] != null && board[row1][col1].getColor() == activePlayer) {
+        firstClick = false;
+        ArrayList<Move> possibleMoves = generateMoves(new int[]{row1, col1});
+        highlightedSquares.add(new int[]{row1, col1});
+        for (Move move : possibleMoves) {
+          int[] target = move.getTarget();
+          highlightedSquares.add(target);
+        }
+      }
+    } else {
+      row2 = y/100;
+      col2 = x/100;
+      highlightedSquares = new ArrayList<int[]>();
+      if (row2 == row1 && col2 == col1) {
+        firstClick = true;
+      } else {
+        Move attemptedMove = new Move(new int[]{row1, col1}, new int[]{row2, col2});
+        firstClick = true;
+        if (makeLegalMove(attemptedMove)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //not movement-related stuff
+  //------------------------------------------------------------------------------------------
   //convert chess Notation(e.g. e6) to something understandable by the program(int[])
   public int[] notationToPos(String str) {
     char firstLetter = str.charAt(0);
@@ -330,35 +418,6 @@ Board[0][7] = null;
     }
     return out;
   }
-  boolean registerClick(int x, int y) {
-    if (firstClick) {
-      row1 = y/100;
-      col1 = x/100;
-      if (board[row1][col1] != null && board[row1][col1].getColor() == activePlayer) {
-        firstClick = false;
-        ArrayList<Move> possibleMoves = generateMoves(new int[]{row1, col1});
-        highlightedSquares.add(new int[]{row1, col1});
-        for (Move move : possibleMoves) {
-          int[] target = move.getTarget();
-          highlightedSquares.add(target);
-        }
-      }
-    } else {
-      row2 = y/100;
-      col2 = x/100;
-      highlightedSquares = new ArrayList<int[]>();
-      if (row2 == row1 && col2 == col1) {
-        firstClick = true;
-      } else {
-        Move attemptedMove = new Move(new int[]{row1, col1}, new int[]{row2, col2});
-        firstClick = true;
-        if (makeLegalMove(attemptedMove)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
   public String toString() {
     String out = "";
     for (int i = 0; i < 8; i++) {
@@ -373,7 +432,7 @@ Board[0][7] = null;
     }
     return out;
   }
-    // display the board background and the pieces
+  // display the board background and the pieces
   public void displayBoard(int x, int y) {
     color Dark  = color(118, 150, 86);
     color Light = color(238, 238, 210);
@@ -398,15 +457,15 @@ Board[0][7] = null;
     }
     displayNotation();
   }
-  
-    /*
+
+  /*
   Board constructor takes in no positions and generates 
    the default starting chess position.
    */
   Board() {
     importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-    Board(String startingFen) {
+  Board(String startingFen) {
     importFEN(startingFen);
   }
 
@@ -424,7 +483,7 @@ Board[0][7] = null;
       text(""+(i+1), 790, 720 - i*100);
     }
   }
-    public void ispromoted() {
+  public void ispromoted() {
     for ( int j=0; j<8; j++) {
       Piece piece = board[0][j];//scan first row for black pieces
       Piece piece2 = board[7][j];//scan eighth row for white pieces
@@ -473,7 +532,7 @@ Board[0][7] = null;
     }
     //importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   }
-    private boolean isTie() {
+  private boolean isTie() {
     ArrayList<Move> possibleResponses = generateLegalMoves(-activePlayer);
     int[] kingPos = findPiece('k', activePlayer);
     for (Move move : possibleResponses) {

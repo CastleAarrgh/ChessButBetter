@@ -82,9 +82,19 @@ void draw(){
     button.displayButton();
   }
 }
+
+
+
+
+
+
+
+
+
+
 void mouseClicked() {
   if(menu == GAME && computer == OFF){
-    Piece[][] pieces = board.getBoard();
+   // Piece[][] pieces = board.getBoard();
     if(board.registerClick(mouseX, mouseY)){
       timer.swap();
     }
