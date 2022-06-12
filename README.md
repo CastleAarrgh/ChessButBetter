@@ -57,8 +57,15 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     5/29 - started work on castling
     5/30 - working on promoting, checkmate, finished notation, demo branch
     5/31 - added promotion menu to choose which piece the pawn is going to promote to, fixing nullpointerexceptions in board
-    6/1 - worked on debugging nullpointers from promition
+    6/1 - worked on debugging nullpointers from promotion
     6/2 - changed promotion mechanics from panel system to button system above the clock
     6/3 - updated prototype, modified promotion, started castling
     6/4 - castling method work
+    6/5 - working on checking to see if king/rook moved
+    6/6 - differentiated h and a rooks for separate castling
+    6/7 - differentiated kinside and queenside castling, added booleans for kinside and queenside castling
+    6/8 - 
+    6/9 - 
+    6/11 = finished promotion
+    6/12 - finished castling
     
