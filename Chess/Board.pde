@@ -349,6 +349,7 @@ private void updateCastling(Move move){
     int[] start = move.getStart();
     Piece piece = board[target[0]][target[1]];
     int col = piece.getColor();
+    //king moved
     if(piece.getType() == 'k'){
       if(col == WHITE){
         castlingRights[0] = false;
@@ -356,6 +357,29 @@ private void updateCastling(Move move){
       } else{
         castlingRights[2] = false;
         castlingRights[3] = false;
+      }
+    }
+    if(piece.getType() == 'r'){
+      //white rook moved
+      if(col == WHITE){
+        //kingside lost
+        if(start[1] == 7){
+          castlingRights[0] = false;
+        }
+        //queenside lost
+        if(start[1] == 0){
+          castlingRights[1] = false;
+        }
+      }
+      //col is BLACK
+      else{
+         if(start[1] == 7){
+          castlingRights[2] = false;
+        }
+        //queenside lost
+        if(start[1] == 0){
+          castlingRights[3] = false;
+        }
       }
     }
 }
