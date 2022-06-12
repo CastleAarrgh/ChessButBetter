@@ -29,27 +29,39 @@ class King extends Piece {
     if(col == WHITE){
       //kingside
       if(castlingRights[0] && board[7][5] == null && board[7][6] == null){
-        moves.add(new Move(start, new int[]{7,6}));
+        if(kingMoveValid(BOARD, start, new int[]{7,5})){
+          moves.add(new Move(start, new int[]{7,6}));
+        }
       }
       //queenside
       if(castlingRights[1] && board[7][1] == null && board[7][2] == null && board[7][3] == null){
+        if(kingMoveValid(BOARD, start, new int[]{7,3})){
         moves.add(new Move(start, new int[]{7,2}));
+        }
       }
     }
     //black castling
     else{
       //kingside
       if(castlingRights[2] && board[0][5] == null && board[0][6] == null){
+        if(kingMoveValid(BOARD, start, new int[]{0,5})){
         moves.add(new Move(start, new int[]{0,6}));
+        }
       }
       //queenside
       if(castlingRights[3] && board[0][1] == null && board[0][2] == null && board[0][3] == null){
-        moves.add(new Move(start, new int[]{0,2}));
+        if(kingMoveValid(BOARD, start, new int[]{0,3})){
+          moves.add(new Move(start, new int[]{0,2}));
+        }
       }
     }
     return moves;
   }
- 
+  public boolean kingMoveValid(Board BOARD, int[] start, int[] target){
+      ArrayList<Move> movesToCheck = new ArrayList<Move>();
+      movesToCheck.add(new Move(start, target));
+      return BOARD.removeChecks(movesToCheck).size() == 1;
+  }
   public PImage getPieceImage() {
     if (getColor()== WHITE) {
       return loadImage("Pieces/WhiteKing.png");
