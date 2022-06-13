@@ -3,6 +3,10 @@ public class Chess960 extends Board {
   Chess960() {
     String startingPos = makeStartingPosition();
     importFEN(startingPos);
+    while(board[0][1] == null){
+       String startingPos = makeStartingPosition();
+       importFEN(startingPos);
+    }
   }
   Chess960(String startingFen) {
     super(startingFen);
