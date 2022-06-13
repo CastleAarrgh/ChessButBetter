@@ -29,7 +29,7 @@ void setup(){
   //board.displayBoard();
   size(1000, 800);
   timer = new Timer(300, 300);
-  moveSound = new SoundFile(this, "moveSound.mp3"); //<>//
+  moveSound = new SoundFile(this, "moveSound.mp3");
   buttons.add(new Button("Regular Chess", 20, 20, COMPUTERSELECT, CHESS, OFF));
   buttons.add(new Button("Chess 960", 20, 210, COMPUTERSELECT, CHESS960, OFF));
   buttons.add(new Button("Chesskers", 20, 400, COMPUTERSELECT, CHESSKERS, OFF));
@@ -66,6 +66,7 @@ void draw(){
     if(computerTurn && millis() - computerTimer > 200){
       int timeBefore = millis();
       board.makeComputerMove();
+      moveSound.play();
       int timeElapsed = millis() - timeBefore;
       timer.swap();
       timer.tick(timeElapsed / 1000.0);
@@ -106,6 +107,7 @@ void mouseClicked() {
   }
   if(menu == GAME && computer == ON){
     if(!computerTurn && board.registerClick(mouseX, mouseY)){
+      moveSound.play();
       if(board.isEnded()){
         int winner = board.winner();
         board.gameOver(winner);
@@ -132,6 +134,9 @@ void mouseClicked() {
       gamemode = newScreen[1];
       computer = newScreen[2];
       buttons = new ArrayList<Button>();
+      if(gamemode == CHESS20){
+        menu = GAME;
+      }
     }
   }
   if(menu == COMPUTERSELECT){

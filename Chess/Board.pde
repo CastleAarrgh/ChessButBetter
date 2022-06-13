@@ -22,9 +22,9 @@ class Board {
   boolean bKingMoved = false;
   boolean wRookMoved1 = false;
   boolean wRookMoved2 = false;
-  boolean bRookMoved1 = false; //<>//
+  boolean bRookMoved1 = false;
   boolean bRookMoved2 = false;
-  boolean KingsideCastle = false; //<>//
+  boolean KingsideCastle = false;
   boolean QueensideCastle = false;
 
   /*
@@ -173,6 +173,7 @@ class Board {
     pieceValues.put('k', 0);
     pieceValues.put('r', 5);
     pieceValues.put('q', 9);
+    pieceValues.put('c', 1);
     int sum = 0;
     for(int r = 0; r < 8; r++){
       for(int c = 0; c < 8; c++){
@@ -234,7 +235,7 @@ class Board {
       activePlayer = oldActivePlayer;
     }
     return new minimaxReturn(bestEval, bestMove);
-   } //<>//
+   }
   public void makeComputerMove(){
     minimaxReturn res = minimax(3);
     //println(res.move);
@@ -258,6 +259,7 @@ class Board {
     int col = piece.getColor();
     board[target[0]][target[1]] = piece;
     board[start[0]][start[1]] = null;
+    //println(1);
     //if promoted, make into queen
     if (piece.getType() == 'p') {
       if(col == WHITE && target[0] == 0){
@@ -267,6 +269,7 @@ class Board {
         board[target[0]][target[1]] = new Queen(col);
       }
     }
+    //println(2);
     //do castle move
     if(piece.getType() == 'k' && abs(target[1] - start[1]) == 2){
       //place rook
@@ -278,8 +281,9 @@ class Board {
         board[start[0]][0] = null;
       }
     }
+    //println(3);
     if(piece.getType() == 'r' || piece.getType() == 'k'){
-      updateCastling(move);
+      updateCastling(piece, move);
     }
     if (piece.getType() == 'p' && passantSquare != null && Arrays.equals(target, passantSquare)) {
       board[start[0]][target[1]] = null;
@@ -289,7 +293,7 @@ class Board {
     } else {
       passantSquare = null;
     }//en passant stuff
-  
+    //println(4);
   activePlayer = -activePlayer;
    /*if (piece.getType() == 'r') {
       if (activePlayer == WHITE) {
@@ -353,10 +357,9 @@ class Board {
     */
 }
 //castlingRights[0]: White Kingside, castlingRights[1]: White Queenside, [2]: Black Kingside, [3]: Black Queenside
-private void updateCastling(Move move){
+private void updateCastling(Piece piece, Move move){
     int[] target = move.getTarget();
     int[] start = move.getStart();
-    Piece piece = board[target[0]][target[1]];
     int col = piece.getColor();
     //king moved
     if(piece.getType() == 'k'){
