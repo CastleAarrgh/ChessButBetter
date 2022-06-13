@@ -252,6 +252,20 @@ class Board {
     }
   }
   //make move that is determined to be legal.
+ public void promote(Move move){
+    int[] target = move.getTarget();
+    int[] start = move.getStart();
+    Piece piece = board[target[0]][target[1]];
+    int col = piece.getColor();
+       if (piece.getType() == 'p') {
+      if(col == WHITE && target[0] == 0){
+        board[target[0]][target[1]] = new Queen(col);
+      }
+      if(col == BLACK && target[0] == 7){
+        board[target[0]][target[1]] = new Queen(col);
+      }
+    }
+ }
  public void makeMove(Move move) {
     int[] target = move.getTarget();
     int[] start = move.getStart();
@@ -261,14 +275,7 @@ class Board {
     board[start[0]][start[1]] = null;
     //println(1);
     //if promoted, make into queen
-    if (piece.getType() == 'p') {
-      if(col == WHITE && target[0] == 0){
-        board[target[0]][target[1]] = new Queen(col);
-      }
-      if(col == BLACK && target[0] == 7){
-        board[target[0]][target[1]] = new Queen(col);
-      }
-    }
+    promote(move);
     //println(2);
     //do castle move
     if(piece.getType() == 'k' && abs(target[1] - start[1]) == 2){

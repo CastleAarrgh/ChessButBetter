@@ -8,9 +8,9 @@ public class CheckerKing extends Checker{
   }
   public PImage getPieceImage(){
    if(getColor() == WHITE){
-    return loadImage("Pieces/WhiteChecker.png");
+    return loadImage("Pieces/WhiteCheckersKing.png");
    } else{
-    return loadImage("Pieces/BlackChecker.png");
+    return loadImage("Pieces/BlackCheckersKing.png");
    }
   }
 }

@@ -51,4 +51,18 @@ public class Chesskers extends Board{
     }
     super.makeMove(move);
   }
+  public void promote(Move move){
+    int[] target = move.getTarget();
+    int[] start = move.getStart();
+    Piece piece = board[target[0]][target[1]];
+    int col = piece.getColor();
+    if(piece.getType() == 'c') {
+      if(col == WHITE && target[0] == 0){
+        board[target[0]][target[1]] = new CheckerKing(col);
+      }
+      if(col == BLACK && target[0] == 7){
+        board[target[0]][target[1]] = new CheckerKing(col);
+      }
+    }
+  }
 }

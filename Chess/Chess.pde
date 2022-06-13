@@ -231,6 +231,13 @@ void keyPressed(){
     computer = OFF;
     buttons = new ArrayList<Button>();
   }
+  if(key == 'p'){
+    board = new Chesskers("1nbqkbnr/1ppppppp/2P5/8/8/8/1PPPPPPP/RNBQKBNR w KQk - 0 1");
+    menu = GAME;
+    gamemode = CHESSKERS;
+    computer = OFF;
+    buttons = new ArrayList<Button>();
+  }
   if(key == 'm'){
     buttons = new ArrayList<Button>();
     board = null;
