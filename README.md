@@ -3,16 +3,13 @@ Sam Lubelsky, Jason Xia
 
 It’s Chess, the 1500-year-old open  pvp strategy game, but with additional variants and features attached that make it objectively better and cooler. These will range from being fairly small changes that are easy to implement to larger overhauls of the game that will require a greater work investment, such as alternate game variations.
 
-Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actually Jason writing code because it is her windows account Jason is using. 
-
-
 
 ## Link To The Prototype: https://docs.google.com/document/d/1uOZb5EjacHRWJZKRKkogWzKWCsG52Fl7tPDo-tDyDxk/edit?usp=sharing
 ## How to Compile/Run:
   * git clone the repo
   * install the inbuilt processing sound library if you don't already have it
     * On the toolbar at the top: Sketch --> Import Library --> add Library
-    * input sound in the search bar which says "Filter", select Sound from the shown options and click install
+    * input sound in the search bar, select Sound from the shown options and click install
   * run the program from processing: there is a basic UI which will allow you to select each mode and who your opponent will be.
   * cheat keys exist to show off the various features of the program that are maybe not as easy to find just moving pieces around: the purpose of each cheat key is outlined below.  Pressing the key shown will take you to a position which allows you to easily demo the specified feature.
     * q: en-passant
@@ -23,7 +20,8 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     * y: checkmate 
     * u: tie
     * i: timer loss
-    * o: Chesskers capturing
+    * o: Chess960 castling
+    * p: Chesskers capturing
     * m: back to main menu
 
 ## Development Log
@@ -47,8 +45,6 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     6/8 - More work on Chesskers, had to rewrite a lot of the code.  Checkers piece almost done i think
     6/9 - Completely redid Checkers Piece move generation and it's interaction with the Chesskers class due to technical difficulties involving use of CheckersMove class.  Simplified it substantially and scaled back scope but should work now.
     6/10 - Chesskers is complete besides promotion to ChesskersKing if I ever get around to that.
-    6/11 - Finishing touches to Chesskers, added cheat keys, updated the README, and other minor changes
-    6/12 - Fixed up promotion and castling, updated the readme and cheatkeys further and made adjustments to prototype.
   ### Jason
     5/23 - figured out git branching, finished method displaying board background in board class
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
@@ -64,9 +60,8 @@ Note: Tracy Zhang is Jason's mom, and the branch labeled with that name is actua
     6/4 - castling method work
     6/5 - working on checking to see if king/rook moved
     6/6 - differentiated h and a rooks for separate castling
-    6/7 - differentiated kinside and queenside castling, added booleans for kinside and queenside castling
-    6/8 - 
-    6/9 - 
+    6/7 - differentiated kingside and queenside castling, added booleans for kinside and queenside castling
+    6/8 -  moved promotion function to board class
     6/11 = finished promotion
-    6/12 - finished castling, moved promotion function to board class
+    6/12 - finished castling, updated prototype, updated uml
     
