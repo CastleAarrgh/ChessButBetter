@@ -45,6 +45,8 @@ It’s Chess, the 1500-year-old open  pvp strategy game, but with additional var
     6/8 - More work on Chesskers, had to rewrite a lot of the code.  Checkers piece almost done i think
     6/9 - Completely redid Checkers Piece move generation and it's interaction with the Chesskers class due to technical difficulties involving use of CheckersMove class.  Simplified it substantially and scaled back scope but should work now.
     6/10 - Chesskers is complete besides promotion to ChesskersKing if I ever get around to that.
+    6/11 - updated readme, added cheat keys, added move sounds and other minor changes
+    6/12 - fixed promotion and castling.  added more cheat keys and made more updates to readme.  added checkers promotion and fixed various bugs.
   ### Jason
     5/23 - figured out git branching, finished method displaying board background in board class
     5/24 - consolidated display board and piece methods into single method, finished displayBoard()
