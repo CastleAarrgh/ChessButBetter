@@ -239,6 +239,7 @@ void keyPressed(){
     buttons = new ArrayList<Button>();
   }
   if(key == 'm'){
+    timer = new Timer(300, 300);
     buttons = new ArrayList<Button>();
     board = null;
     menu = GAMESELECT;
