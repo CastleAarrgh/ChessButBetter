@@ -20,8 +20,8 @@ It’s Chess, the 1500-year-old open  pvp strategy game, but with additional var
     * y: checkmate 
     * u: tie
     * i: timer loss
-    * o: Chess960 castling
-    * p: Chesskers capturing
+    * o: Chesskers capturing
+    * p: Chesskers promotion
     * m: back to main menu
 
 ## Development Log
