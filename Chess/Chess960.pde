@@ -4,7 +4,7 @@ public class Chess960 extends Board {
     String startingPos = makeStartingPosition();
     importFEN(startingPos);
     while(board[0][1] == null){
-       String startingPos = makeStartingPosition();
+       startingPos = makeStartingPosition();
        importFEN(startingPos);
     }
   }
